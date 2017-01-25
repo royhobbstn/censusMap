@@ -24,7 +24,7 @@
     "county": {
       "type": "vector",
       "tiles": [
-        "https://nodejs-server-royhobbstn.c9users.io/county_carto_2015/{z}/{x}/{y}.pbf"
+        "http://34.194.174.205/county_carto_2015/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
       "maxZoom": 6,
