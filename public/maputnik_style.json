@@ -19,7 +19,12 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "https://free.tilehosting.com/data/v3.json?key=igsf1AR2UOc8hfBlRsM2"
+      "tiles": [
+        "http://34.194.174.205/united_states_of_america/{z}/{x}/{y}.pbf"
+      ],
+      "minZoom": 0,
+      "maxZoom": 13,
+      "maxzoom": 13
     },
     "county": {
       "type": "vector",
@@ -27,8 +32,8 @@
         "http://34.194.174.205/county_carto_2015/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
-      "maxZoom": 6,
-      "maxzoom": 6
+      "maxZoom": 13,
+      "maxzoom": 13
     }
   },
   "glyphs": "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=igsf1AR2UOc8hfBlRsM2",
