@@ -4,10 +4,7 @@
   "metadata": {
     "mapbox:autocomposite": false,
     "mapbox:type": "template",
-    "maputnik:renderer": "mbgljs",
-    "openmaptiles:version": "3.x",
-    "openmaptiles:mapbox:owner": "openmaptiles",
-    "openmaptiles:mapbox:source:url": "mapbox://openmaptiles.4qljc88t"
+    "maputnik:renderer": "mbgljs"
   },
   "center": [
     8.54806714892635,
@@ -20,7 +17,7 @@
     "openmaptiles": {
       "type": "vector",
       "tiles": [
-        "http://34.194.174.205/united_states_of_america/{z}/{x}/{y}.pbf"
+        "http://red-meteor.com/united_states_of_america/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
       "maxZoom": 13,
@@ -29,7 +26,7 @@
     "county": {
       "type": "vector",
       "tiles": [
-        "http://34.194.174.205/county_carto_2015/{z}/{x}/{y}.pbf"
+        "http://red-meteor.com/county_carto_2015/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
       "maxZoom": 13,
