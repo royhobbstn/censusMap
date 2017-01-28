@@ -2,4 +2,6 @@ This project is a front-end application extension of the amazing work of Christo
 
 ==============
 
-More info to follow.
+Example link: [https://red-meteor.com/censusvectortiles/](https://red-meteor.com/censusvectortiles/)
+
+
