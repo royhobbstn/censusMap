@@ -6,7 +6,7 @@
 
 Promise.all([
     fetch('maputnik_style.json'),
-    fetch('https://red-meteor.com/censusapi/demog?limit=99999&db=acs1115&table=b25077,b19013&sumlev=50')
+    fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=b25077,b19013&sumlev=50')
     ]).then(function (response) {
     return Promise.all(response.map(d => d.json())).then(data => {
         createMap(data);
