@@ -71,7 +71,6 @@ function createMap(data) {
 
     map.addControl(new mapboxgl.NavigationControl());
 
-
     var popup = null;
 
     map.on('mousemove', function (e) {
