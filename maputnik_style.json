@@ -15,7 +15,7 @@
   "pitch": 0,
   "sources": {
     "openmaptiles": {
-      "attribution": "My custom attribution text."
+      "attribution": "My custom attribution text.",
       "type": "vector",
       "tiles": [
         "https://red-meteor.com/censusvectortiles/united_states_of_america/{z}/{x}/{y}.pbf"
