@@ -18,7 +18,7 @@
       "attribution": "<a href='http://openmaptiles.org/'>©OpenMapTiles</a> <a href='www.openstreetmap.org/copyright' >©OpenStreetMap contributors</a>",
       "type": "vector",
       "tiles": [
-        "https://red-meteor.com/censusvectortiles/united_states_of_america/{z}/{x}/{y}.pbf"
+        "https://red-meteor.com/mbtiles/united_states_of_america/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
       "maxZoom": 13,
@@ -27,7 +27,7 @@
     "county": {
       "type": "vector",
       "tiles": [
-        "https://red-meteor.com/censusvectortiles/county_carto_2015/{z}/{x}/{y}.pbf"
+        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
       ],
       "minZoom": 0,
       "maxZoom": 13,
