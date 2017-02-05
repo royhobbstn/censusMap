@@ -70,7 +70,6 @@ function createMap(data) {
     });
 
     map.addControl(new mapboxgl.NavigationControl());
-    map.addControl(new mapboxgl.AttributionControl());
 
     var popup = null;
 
