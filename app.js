@@ -21,11 +21,13 @@ function createMap(data) {
     let style = data[0];
     let census_data = data[1];
 
-    var stops = [];
+    var stops = [];  // mhi
+    var value_stops = []; // mhv
 
     census_data.data.forEach(function (row) {
 
         let color = "#edf8fb";
+        let value_color = "#edf8fb";
 
         if (row.b19013001 > 26527) {
             color = "#ccece6";
@@ -46,7 +48,29 @@ function createMap(data) {
             color = "#005824";
         }
 
+
+        if (row.b25077001 > 100000) {
+            value_color = "#ccece6";
+        }
+        if (row.b25077001 > 200000) {
+            value_color = "#99d8c9";
+        }
+        if (row.b25077001 > 300000) {
+            value_color = "#66c2a4";
+        }
+        if (row.b25077001 > 400000) {
+            value_color = "#41ae76";
+        }
+        if (row.b25077001 > 500000) {
+            value_color = "#238b45";
+        }
+        if (row.b25077001 > 600000) {
+            value_color = "#005824";
+        }
+        
         stops.push([row.geonum, color]);
+        value_stops.push([row.geonum, value_color]);
+
     });
 
 
@@ -56,11 +80,16 @@ function createMap(data) {
         "stops": stops
     };
 
-
+    let median_home_value_style = {
+        "property": "geonum",
+        "type": "categorical",
+        "stops": value_stops
+    };
 
     let choropleth_layer_index = getLayerIndex();
 
     style.layers[choropleth_layer_index].paint['fill-color'] = median_household_income_style;
+    
 
     var map = new mapboxgl.Map({
         container: 'map',
@@ -68,6 +97,10 @@ function createMap(data) {
         zoom: 3,
         center: [-104, 39]
     });
+    
+    window.setTimeout(function () {
+        map.setPaintProperty('county-fill', 'fill-color', median_home_value_style);
+    }, 5000);
 
     map.addControl(new mapboxgl.NavigationControl());
 
