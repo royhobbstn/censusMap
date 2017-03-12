@@ -1,0 +1,77 @@
+export default function stateLookup(statefips_int) {
+
+    let state_hash = [];
+
+    state_hash[1] = "Alabama";
+    state_hash[2] = "Alaska";
+    state_hash[4] = "Arizona";
+    state_hash[5] = "Arkansas";
+    state_hash[6] = "California";
+    state_hash[8] = "Colorado";
+    state_hash[9] = "Connecticut";
+    state_hash[10] = "Delaware";
+    state_hash[11] = "District of Columbia";
+    state_hash[12] = "Florida";
+    state_hash[13] = "Georgia";
+    state_hash[15] = "Hawaii";
+    state_hash[16] = "Idaho";
+    state_hash[17] = "Illinois";
+    state_hash[18] = "Indiana";
+    state_hash[19] = "Iowa";
+    state_hash[20] = "Kansas";
+    state_hash[21] = "Kentucky";
+    state_hash[22] = "Louisiana";
+    state_hash[23] = "Maine";
+    state_hash[24] = "Maryland";
+    state_hash[25] = "Massachusetts";
+    state_hash[26] = "Michigan";
+    state_hash[27] = "Minnesota";
+    state_hash[28] = "Mississippi";
+    state_hash[29] = "Missouri";
+    state_hash[30] = "Montana";
+    state_hash[31] = "Nebraska";
+    state_hash[32] = "Nevada";
+    state_hash[33] = "New Hampshire";
+    state_hash[34] = "New Jersey";
+    state_hash[35] = "New Mexico";
+    state_hash[36] = "New York";
+    state_hash[37] = "North Carolina";
+    state_hash[38] = "North Dakota";
+    state_hash[39] = "Ohio";
+    state_hash[40] = "Oklahoma";
+    state_hash[41] = "Oregon";
+    state_hash[42] = "Pennsylvania";
+    state_hash[44] = "Rhode Island";
+    state_hash[45] = "South Carolina";
+    state_hash[46] = "South Dakota";
+    state_hash[47] = "Tennessee";
+    state_hash[48] = "Texas";
+    state_hash[49] = "Utah";
+    state_hash[50] = "Vermont";
+    state_hash[51] = "Virginia";
+    state_hash[53] = "Washington";
+    state_hash[54] = "West Virginia";
+    state_hash[55] = "Wisconsin";
+    state_hash[56] = "Wyoming";
+    state_hash[60] = "American Samoa";
+    state_hash[64] = "Federated States of Micronesia";
+    state_hash[66] = "Guam";
+    state_hash[67] = "Johnston Atoll";
+    state_hash[68] = "Marshall Islands";
+    state_hash[69] = "Northern Mariana Islands";
+    state_hash[70] = "Palau";
+    state_hash[71] = "Midway Islands";
+    state_hash[72] = "Puerto Rico";
+    state_hash[74] = "U.S. Minor Outlying Islands";
+    state_hash[76] = "Navassa Island";
+    state_hash[78] = "Virgin Islands of the U.S.";
+    state_hash[79] = "Wake Island";
+    state_hash[81] = "Baker Island";
+    state_hash[84] = "Howland Island";
+    state_hash[86] = "Jarvis Island";
+    state_hash[89] = "Kingman Reef";
+    state_hash[95] = "Palmyra Atoll";
+
+    return state_hash[statefips_int] || 'Unknown';
+
+}

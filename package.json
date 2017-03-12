@@ -1,0 +1,29 @@
+{
+  "name": "census-vector-tiles",
+  "version": "0.0.1",
+  "description": "census map example",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royhobbstn/censusVectorTiles.git"
+  },
+  "keywords": [
+    "census",
+    "vector",
+    "tiles",
+    "acs",
+    "demography"
+  ],
+  "author": "Daniel Trone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/royhobbstn/censusVectorTiles/issues"
+  },
+  "homepage": "https://github.com/royhobbstn/censusVectorTiles#readme",
+  "devDependencies": {
+    "rollup": "^0.41.5"
+  }
+}
