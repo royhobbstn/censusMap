@@ -4,6 +4,8 @@
   "description": "census map example",
   "main": "index.html",
   "scripts": {
+    "build": "rollup src/app.js --format iife --output dist/bundle.js",
+    "watch": "./node_modules/.bin/watch \"npm run build\" src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,7 @@
   },
   "homepage": "https://github.com/royhobbstn/censusVectorTiles#readme",
   "devDependencies": {
-    "rollup": "^0.41.5"
+    "rollup": "^0.41.5",
+    "watch": "^1.0.2"
   }
 }

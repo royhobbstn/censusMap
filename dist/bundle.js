@@ -1,4 +1,147 @@
-{
+(function () {
+'use strict';
+
+function stateLookup(statefips_int) {
+
+    let state_hash = [];
+
+    state_hash[1] = "Alabama";
+    state_hash[2] = "Alaska";
+    state_hash[4] = "Arizona";
+    state_hash[5] = "Arkansas";
+    state_hash[6] = "California";
+    state_hash[8] = "Colorado";
+    state_hash[9] = "Connecticut";
+    state_hash[10] = "Delaware";
+    state_hash[11] = "District of Columbia";
+    state_hash[12] = "Florida";
+    state_hash[13] = "Georgia";
+    state_hash[15] = "Hawaii";
+    state_hash[16] = "Idaho";
+    state_hash[17] = "Illinois";
+    state_hash[18] = "Indiana";
+    state_hash[19] = "Iowa";
+    state_hash[20] = "Kansas";
+    state_hash[21] = "Kentucky";
+    state_hash[22] = "Louisiana";
+    state_hash[23] = "Maine";
+    state_hash[24] = "Maryland";
+    state_hash[25] = "Massachusetts";
+    state_hash[26] = "Michigan";
+    state_hash[27] = "Minnesota";
+    state_hash[28] = "Mississippi";
+    state_hash[29] = "Missouri";
+    state_hash[30] = "Montana";
+    state_hash[31] = "Nebraska";
+    state_hash[32] = "Nevada";
+    state_hash[33] = "New Hampshire";
+    state_hash[34] = "New Jersey";
+    state_hash[35] = "New Mexico";
+    state_hash[36] = "New York";
+    state_hash[37] = "North Carolina";
+    state_hash[38] = "North Dakota";
+    state_hash[39] = "Ohio";
+    state_hash[40] = "Oklahoma";
+    state_hash[41] = "Oregon";
+    state_hash[42] = "Pennsylvania";
+    state_hash[44] = "Rhode Island";
+    state_hash[45] = "South Carolina";
+    state_hash[46] = "South Dakota";
+    state_hash[47] = "Tennessee";
+    state_hash[48] = "Texas";
+    state_hash[49] = "Utah";
+    state_hash[50] = "Vermont";
+    state_hash[51] = "Virginia";
+    state_hash[53] = "Washington";
+    state_hash[54] = "West Virginia";
+    state_hash[55] = "Wisconsin";
+    state_hash[56] = "Wyoming";
+    state_hash[60] = "American Samoa";
+    state_hash[64] = "Federated States of Micronesia";
+    state_hash[66] = "Guam";
+    state_hash[67] = "Johnston Atoll";
+    state_hash[68] = "Marshall Islands";
+    state_hash[69] = "Northern Mariana Islands";
+    state_hash[70] = "Palau";
+    state_hash[71] = "Midway Islands";
+    state_hash[72] = "Puerto Rico";
+    state_hash[74] = "U.S. Minor Outlying Islands";
+    state_hash[76] = "Navassa Island";
+    state_hash[78] = "Virgin Islands of the U.S.";
+    state_hash[79] = "Wake Island";
+    state_hash[81] = "Baker Island";
+    state_hash[84] = "Howland Island";
+    state_hash[86] = "Jarvis Island";
+    state_hash[89] = "Kingman Reef";
+    state_hash[95] = "Palmyra Atoll";
+
+    return state_hash[statefips_int] || 'Unknown';
+
+}
+
+// Control implemented as ES6 class
+class DropdownCtrl {
+    onAdd(map) {
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl';
+        this._select = document.createElement('select');
+        this._select.id = 'acs_stat';
+
+        this._option1 = document.createElement('option');
+        this._option1.text = 'Median Household Income';
+        this._option1.value = 'mhi';
+        this._option2 = document.createElement('option');
+        this._option2.text = 'Median Home Value';
+        this._option2.value = 'mhv';
+        this._select.appendChild(this._option1);
+        this._select.appendChild(this._option2);
+        this._container.appendChild(this._select);
+        return this._container;
+    }
+
+    onRemove() {
+        this._container.parentNode.removeChild(this._container);
+        this._map = undefined;
+    }
+}
+
+var computed_breaks = {
+    "mhi": {
+        "table": "b19013",
+        "expression": "b19013001",
+        "popup_label": "MHI: $",
+        "default_color": "#fff",
+        "null_color": "#fff",
+        "zero_color": "#fff",
+        "array": [
+        {"break": 26527, color: "#ccece6"},
+        {"break": 37201, color: "#99d8c9"},
+        {"break": 44517, color: "#66c2a4"},
+        {"break": 52137, color: "#41ae76"},
+        {"break": 62302, color: "#238b45"},
+        {"break": 77930, color: "#005824"}
+        ]
+    },
+    "mhv": {
+        "table": "b25077",
+        "expression": "b25077001",
+        "popup_label": "MHV: $",
+        "default_color": "#fff",
+        "null_color": "#fff",
+        "zero_color": "#fff",
+        "array": [
+        {"break": 50000, color: "#eff3ff"},
+        {"break": 100000, color: "#c6dbef"},
+        {"break": 150000, color: "#9ecae1"},
+        {"break": 200000, color: "#6baed6"},
+        {"break": 300000, color: "#3182bd"},
+        {"break": 500000, color: "#08519c"}
+        ]
+    },
+};
+
+var style = {
   "version": 8,
   "name": "Klokantech Basic",
   "metadata": {
@@ -1153,4 +1296,166 @@
     }
   ],
   "id": "ciwf4zbsv007y2pmt2rspc1dc"
+};
+
+/* global mapboxgl */
+/* global fetch */
+
+// set up map
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: style,
+    zoom: 3,
+    center: [-104, 39]
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new DropdownCtrl(), 'top-left');
+
+
+// add map event listeners
+// map.on('click', createPopup);
+
+document.getElementById('acs_stat').addEventListener('change', updateMap, false);
+
+
+
+function updateMap() {
+    if (map.popup) {
+        map.popup.remove();
+    }
+    var current_dropdown_value = getSelectValues(document.getElementById('acs_stat'))[0];
+    
+    fetchCensusData(current_dropdown_value).then((acs_data) => {
+        map.on('click', function(e) {
+            var map_reference = this;
+            createPopup(e, acs_data, current_dropdown_value, map_reference);
+        });
+        map.setPaintProperty('county-fill', 'fill-opacity', 0.8); // make county-fill layer visible
+        map.setPaintProperty('county-fill', 'fill-color', getMapStyle(current_dropdown_value, acs_data));
+    });
 }
+
+function fetchCensusData(style_code) {
+    // load census data
+    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=' + computed_breaks[style_code].table + '&sumlev=50').then(function(fetch_response) {
+        return fetch_response.json();
+    }).then(function(census_response) {
+        return census_response.data;
+    });
+}
+
+function getMapStyle(style_code, acs_data) {
+
+    let expression = computed_breaks[style_code].expression;
+    let default_color = computed_breaks[style_code].default_color;
+    let null_color = computed_breaks[style_code].null_color;
+    let zero_color = computed_breaks[style_code].zero_color;
+    let array = computed_breaks[style_code].array;
+
+    let stops = acs_data.map(function(row) {
+        // default case
+        let color = default_color;
+
+        // iterate through array breaks
+        array.forEach(function(entry) {
+            if (row[expression] > entry.break) {
+                color = entry.color;
+            }
+        });
+
+        // null case
+        if (!row[expression]) {
+            color = null_color;
+        }
+
+        // zero case: always after the null case
+        if (row[expression] === 0) {
+            color = zero_color;
+        }
+
+        return [row.geonum, color];
+    });
+
+    return {
+        "property": "geonum",
+        "type": "categorical",
+        "stops": stops
+    };
+
+}
+
+function getSelectValues(select) {
+    var result = [];
+    var options = select && select.options;
+    var opt;
+
+    for (var i = 0, iLen = options.length; i < iLen; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+            result.push(opt.value || opt.text);
+        }
+    }
+    return result;
+}
+
+init();
+
+function init() {
+    updateMap();
+}
+
+
+
+function createPopup(e, acs_data, style_code, map_reference) {
+
+    // 'this' here represents the map. ??!
+
+    // a popup property is conveniently tacked on to the map
+    if (map_reference.popup) {
+        map_reference.popup.remove();
+    }
+
+    var features = map_reference.queryRenderedFeatures(e.point, {
+        layers: ['county-fill']
+    });
+
+    if (!features.length) {
+        return;
+    }
+
+    var feature = features[0];
+
+    var geoname = feature.properties.geoname;
+    var state = stateLookup(feature.properties.state);
+    
+    var label = computed_breaks[style_code].popup_label;
+    var popup_stat = getPopupStat(feature.properties.geonum, computed_breaks[style_code].expression, acs_data);
+
+
+    map_reference.popup = new mapboxgl.Popup({
+            closeButton: false
+        })
+        .setLngLat(e.lngLat)
+        .setHTML(geoname + " County, " + state + "<br />" + label + " " + popup_stat)
+        .addTo(map_reference);
+}
+
+
+function getPopupStat(geonum, expression, acs_data) {
+
+    var stat = null;
+
+    for (var i = 0; i < acs_data.length; i++) {
+        if(acs_data[i].geonum === geonum.toString()) {
+            stat = acs_data[i][expression];
+            break;
+        }
+    }
+
+    return parseInt(stat, 10).toLocaleString() || 'Unknown';
+}
+
+}());
