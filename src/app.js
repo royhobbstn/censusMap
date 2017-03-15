@@ -3,6 +3,7 @@
 
 import stateLookup from './module/stateLookup.js';
 import DropdownCtrl from './module/DropdownCtrl.js';
+import LegendCtrl from './module/LegendCtrl.js';
 import computed_breaks from './module/computed_breaks.json';
 import style from './module/maputnik_style.json';
 
@@ -18,8 +19,11 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new DropdownCtrl(), 'top-left');
 
+var dropdownCtrl = new DropdownCtrl();
+map.addControl(dropdownCtrl, 'top-left');
+var legendCtrl = new LegendCtrl();
+map.addControl(legendCtrl, 'bottom-left');
 
 // add map event listeners
 // map.on('click', createPopup);
@@ -29,6 +33,11 @@ document.getElementById('acs_stat').addEventListener('change', updateMap, false)
 
 
 function updateMap() {
+    console.log(legendCtrl);
+    window.setTimeout(function () {
+        legendCtrl.remove();
+    }, 5000);
+    
     if (map.popup) {
         map.popup.remove();
     }
