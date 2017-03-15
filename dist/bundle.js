@@ -115,7 +115,7 @@ class LegendCtrl {
         this._container.id = 'legend-ctrl';
         this._container.className = 'mapboxgl-ctrl';
         this._ptag = document.createElement('p');
-        this._ptag.textContent = 'Removable Legend';
+        this._ptag.textContent = 'Removable Legend !';
         this._container.appendChild(this._ptag);
         return this._container;
     }
