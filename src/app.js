@@ -1,12 +1,12 @@
 /* global mapboxgl */
 /* global fetch */
 
-import stateLookup from './module/stateLookup.js';
-import DropdownCtrl from './module/DropdownCtrl.js';
-import LegendCtrl from './module/LegendCtrl.js';
-import computed_breaks from './module/computed_breaks.json';
-import style from './module/maputnik_style.json';
-
+import stateLookup from './lookups/stateLookup.js';
+import DropdownCtrl from './widgets/DropdownCtrl.js';
+import LegendCtrl from './widgets/LegendCtrl.js';
+import computed_breaks from './json/computed_breaks.json';
+import style from './json/maputnik_style.json';
+import updateLegend from './module/updateLegend.js';
 
 
 // set up map
@@ -17,6 +17,7 @@ var map = new mapboxgl.Map({
     zoom: 3,
     center: [-104, 39]
 });
+
 
 map.addControl(new mapboxgl.NavigationControl());
 
@@ -33,15 +34,15 @@ document.getElementById('acs_stat').addEventListener('change', updateMap, false)
 
 
 function updateMap() {
-    console.log(legendCtrl);
-    window.setTimeout(function () {
-        legendCtrl.remove();
-    }, 5000);
-    
+
     if (map.popup) {
         map.popup.remove();
     }
+    
     var current_dropdown_value = getSelectValues(document.getElementById('acs_stat'))[0];
+    
+    updateLegend(current_dropdown_value);
+
     
     fetchCensusData(current_dropdown_value).then((acs_data) => {
         map.on('click', function(e) {

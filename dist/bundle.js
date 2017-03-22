@@ -108,15 +108,12 @@ class DropdownCtrl {
 
 // Control implemented as ES6 class
 class LegendCtrl {
-    
+
     onAdd(map) {
         this._map = map;
         this._container = document.createElement('div');
         this._container.id = 'legend-ctrl';
         this._container.className = 'mapboxgl-ctrl';
-        this._ptag = document.createElement('p');
-        this._ptag.textContent = 'Removable Legend !';
-        this._container.appendChild(this._ptag);
         return this._container;
     }
 
@@ -136,32 +133,34 @@ var computed_breaks = {
         "table": "b19013",
         "expression": "b19013001",
         "popup_label": "MHI: $",
+        "type": "currency",
         "default_color": "#fff",
         "null_color": "#fff",
         "zero_color": "#fff",
         "array": [
-        {"break": 26527, color: "#ccece6"},
-        {"break": 37201, color: "#99d8c9"},
-        {"break": 44517, color: "#66c2a4"},
-        {"break": 52137, color: "#41ae76"},
-        {"break": 62302, color: "#238b45"},
-        {"break": 77930, color: "#005824"}
+        {"break": 26527, "color": "#ccece6"},
+        {"break": 37201, "color": "#99d8c9"},
+        {"break": 44517, "color": "#66c2a4"},
+        {"break": 52137, "color": "#41ae76"},
+        {"break": 62302, "color": "#238b45"},
+        {"break": 77930, "color": "#005824"}
         ]
     },
     "mhv": {
         "table": "b25077",
         "expression": "b25077001",
         "popup_label": "MHV: $",
+        "type": "currency",
         "default_color": "#fff",
         "null_color": "#fff",
         "zero_color": "#fff",
         "array": [
-        {"break": 50000, color: "#eff3ff"},
-        {"break": 100000, color: "#c6dbef"},
-        {"break": 150000, color: "#9ecae1"},
-        {"break": 200000, color: "#6baed6"},
-        {"break": 300000, color: "#3182bd"},
-        {"break": 500000, color: "#08519c"}
+        {"break": 50000, "color": "#eff3ff"},
+        {"break": 100000, "color": "#c6dbef"},
+        {"break": 150000, "color": "#9ecae1"},
+        {"break": 200000, "color": "#6baed6"},
+        {"break": 300000, "color": "#3182bd"},
+        {"break": 500000, "color": "#08519c"}
         ]
     },
 };
@@ -1323,6 +1322,36 @@ var style = {
   "id": "ciwf4zbsv007y2pmt2rspc1dc"
 };
 
+function updateLegend (current_dropdown_value) {
+    
+    let legend_breaks = computed_breaks[current_dropdown_value].array;
+    let type = computed_breaks[current_dropdown_value].type;
+    let default_color = computed_breaks[current_dropdown_value].default_color;
+    
+    let html_string = "";  // inner HTML to be inserted into legend
+    
+    for (let i=legend_breaks.length-1; i>-1; i--) {
+        html_string += '<div><span class="legend-box" style="background-color:' + legend_breaks[i].color +
+        ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + formatValue(legend_breaks[i].break, type) + '</div>';
+    }
+    
+    // default color
+    html_string += '<div><span class="legend-box" style="background-color:' + default_color +
+        ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;' + formatValue(legend_breaks[0].break, type) + '</div>';
+    
+    document.getElementById('legend-ctrl').innerHTML = html_string;
+    
+}
+
+
+function formatValue (val, type) {
+    
+    if (type === 'currency') {
+        return ' $' + val.toLocaleString();
+    }
+    
+}
+
 /* global mapboxgl */
 /* global fetch */
 
@@ -1334,6 +1363,7 @@ var map = new mapboxgl.Map({
     zoom: 3,
     center: [-104, 39]
 });
+
 
 map.addControl(new mapboxgl.NavigationControl());
 
@@ -1350,15 +1380,15 @@ document.getElementById('acs_stat').addEventListener('change', updateMap, false)
 
 
 function updateMap() {
-    console.log(legendCtrl);
-    window.setTimeout(function () {
-        legendCtrl.remove();
-    }, 5000);
-    
+
     if (map.popup) {
         map.popup.remove();
     }
+    
     var current_dropdown_value = getSelectValues(document.getElementById('acs_stat'))[0];
+    
+    updateLegend(current_dropdown_value);
+
     
     fetchCensusData(current_dropdown_value).then((acs_data) => {
         map.on('click', function(e) {
