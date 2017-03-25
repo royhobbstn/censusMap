@@ -1,0 +1,47 @@
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    #legend-ctrl {
+        width: 100px;
+        height: auto;
+    }
+    
+    .legend-box {
+        position: absolute;
+        display: block;
+        height: 15px;
+        width: 15px;
+        opacity: 0.8;
+        border: 1px solid grey;
+    }
+    
+    .custom-control-style {
+        background: white;
+        color: black;
+        padding: 6px;
+        border-radius: 4px;
+    }
+    
+    .mapboxgl-ctrl-compass {
+        display: none !important;
+    }
+    
+    .easy-btn {
+        font-size: 1.2em;
+        text-align: center;
+        width: 17px;
+    }
+    
+    .mapboxgl-popup-content {
+        padding-top: 16px;
+    }
+    

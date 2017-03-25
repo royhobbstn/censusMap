@@ -33,11 +33,11 @@ export default {
         {"break": 500000, "color": "#08519c"}
         ]
     },
-    "com": {
+    "pop": {
         "table": "b01001",
-        "expression": ["b01001001","+","b01001001"],
-        "popup_label": "MHV: $",
-        "type": "currency",
+        "expression": ["b01001001"],
+        "popup_label": "Population: ",
+        "type": "number",
         "default_color": "#fff",
         "null_color": "#fff",
         "zero_color": "#fff",

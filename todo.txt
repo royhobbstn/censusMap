@@ -1,13 +1,13 @@
 
 
 
-add a whole number type for computed breaks (rather than just currency)
-
-mimic button setup / ui from previous map
+add title to legend
 read attributes from json rather than hardcode to menu
+
+color breaks json
 import all acs attributes from old acs map
 
-
+table-ify legend (line up < + symbols)
 
 
 interesting ideas
@@ -26,6 +26,7 @@ precompute all breaks into own json file (add as npm task)
 
 roadmap
 ----------
+add search
 additional vector tile layers for differing census geographies
 additional vintages of acs
 add census 2010

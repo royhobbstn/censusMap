@@ -3,15 +3,17 @@
 /* global exprEval */
 
 import stateLookup from './lookups/stateLookup.js';
+
 import DropdownCtrl from './widgets/DropdownCtrl.js';
 import LegendCtrl from './widgets/LegendCtrl.js';
+import EasyButton from './widgets/EasyButtonCtrl.js';
+
 import computed_breaks from './json/computed_breaks.json';
 import style from './json/maputnik_style.json';
 import updateLegend from './module/updateLegend.js';
 
 
 // set up map
-
 var map = new mapboxgl.Map({
     container: 'map',
     style: style,
@@ -19,20 +21,32 @@ var map = new mapboxgl.Map({
     center: [-104, 39]
 });
 
+map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
 
 map.addControl(new mapboxgl.NavigationControl());
 
-var dropdownCtrl = new DropdownCtrl();
-map.addControl(dropdownCtrl, 'top-left');
-var legendCtrl = new LegendCtrl();
-map.addControl(legendCtrl, 'bottom-left');
+map.addControl(new DropdownCtrl(), 'top-left');
+map.addControl(new LegendCtrl(), 'bottom-right');
+
+map.addControl(new EasyButton('choose_statistic', 'fa-bars', 'Select a Statistic'), 'top-left');
+map.addControl(new EasyButton('choose_geography', 'fa-compass', 'Change the Geography Layer'), 'top-left');
+map.addControl(new EasyButton('view_table', 'fa-table', 'View a Data Table'), 'top-left');
+map.addControl(new EasyButton('view_chart', 'fa-line-chart', 'View a Chart'), 'top-left');
+map.addControl(new EasyButton('save_map', 'fa-floppy-o', 'Save a Map Image'), 'top-left');
+map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection'), 'top-left');
 
 // add map event listeners
 // map.on('click', createPopup);
 
 document.getElementById('acs_stat').addEventListener('change', updateMap, false);
+document.getElementById('choose_statistic').addEventListener('click', clickChooseStatistic, false);
 
 
+
+
+function clickChooseStatistic() {
+    console.log('choose_statistic clicked');
+}
 
 function updateMap() {
 
@@ -46,7 +60,7 @@ function updateMap() {
 
 
     fetchCensusData(current_dropdown_value).then((acs_data) => {
-        map.on('click', function(e) {
+        map.on('click', function (e) {
             var map_reference = this;
             createPopup(e, acs_data, current_dropdown_value, map_reference);
         });
@@ -57,9 +71,9 @@ function updateMap() {
 
 function fetchCensusData(style_code) {
     // load census data
-    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=' + computed_breaks[style_code].table + '&sumlev=50').then(function(fetch_response) {
+    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=' + computed_breaks[style_code].table + '&sumlev=50').then(function (fetch_response) {
         return fetch_response.json();
-    }).then(function(census_response) {
+    }).then(function (census_response) {
         return census_response.data;
     });
 }
@@ -77,7 +91,7 @@ function getMapStyle(style_code, acs_data) {
     var exp = parser.parse(expression.join(""));
 
     // iterate through acs data
-    let stops = acs_data.map(function(row) {
+    let stops = acs_data.map(function (row) {
 
         let evaluated_value;
 
@@ -87,9 +101,9 @@ function getMapStyle(style_code, acs_data) {
 
             let replacers_object = {};
 
-            getUniqueExpressionKeys(expression).forEach(function(key) {
+            getUniqueExpressionKeys(expression).forEach(function (key) {
                 replacers_object[key] = row[key];
-            })
+            });
 
             evaluated_value = exp.evaluate(replacers_object);
         }
@@ -102,7 +116,7 @@ function getMapStyle(style_code, acs_data) {
         let color = default_color;
 
         // iterate through array breaks
-        array.forEach(function(entry) {
+        array.forEach(function (entry) {
             if (evaluated_value > entry.break) {
                 color = entry.color;
             }
@@ -179,9 +193,7 @@ function createPopup(e, acs_data, style_code, map_reference) {
     var popup_stat = getPopupStat(feature.properties.geonum, computed_breaks[style_code].expression, acs_data);
 
 
-    map_reference.popup = new mapboxgl.Popup({
-            closeButton: false
-        })
+    map_reference.popup = new mapboxgl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(geoname + " County, " + state + "<br />" + label + " " + popup_stat)
         .addTo(map_reference);
@@ -191,20 +203,20 @@ function createPopup(e, acs_data, style_code, map_reference) {
 function getPopupStat(geonum, expression, acs_data) {
 
     var stat = null;
-    
-     // set up parser (https://github.com/silentmatt/expr-eval)
+
+    // set up parser (https://github.com/silentmatt/expr-eval)
     var parser = new exprEval.Parser();
     var exp = parser.parse(expression.join(""));
-    
+
     let replacers_object = {};
 
     for (var i = 0; i < acs_data.length; i++) {
         if (acs_data[i].geonum === geonum.toString()) {
-            
-            getUniqueExpressionKeys(expression).forEach(function(key) {
+
+            getUniqueExpressionKeys(expression).forEach(function (key) {
                 replacers_object[key] = acs_data[i][key];
             })
-            
+
             stat = exp.evaluate(replacers_object);
             break;
         }
@@ -215,17 +227,16 @@ function getPopupStat(geonum, expression, acs_data) {
 
 
 
-function getUniqueExpressionKeys (expression) {
-    
+function getUniqueExpressionKeys(expression) {
+
     // extract data fields from expression (example: ["b01001001", "b01001002"])
-    let keys = expression.filter(function(d) {
+    let keys = expression.filter(function (d) {
         if (d !== "+" && d !== "-" & d !== "(" & d !== ")" & d !== "*" & d !== "/") {
             return true;
         }
     });
 
     let unique_keys = Array.from(new Set(keys));
-    
+
     return unique_keys;
 }
-

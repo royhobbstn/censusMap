@@ -5,7 +5,7 @@ export default class LegendCtrl {
         this._map = map;
         this._container = document.createElement('div');
         this._container.id = 'legend-ctrl';
-        this._container.className = 'mapboxgl-ctrl';
+        this._container.className = 'mapboxgl-ctrl custom-control-style';
         return this._container;
     }
 

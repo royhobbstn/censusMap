@@ -28,5 +28,7 @@ function formatValue (val, type) {
     if (type === 'currency') {
         return ' $' + val.toLocaleString();
     }
-    
+    if (type === 'number') {
+        return val.toLocaleString();
+    }
 }
