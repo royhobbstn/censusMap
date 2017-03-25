@@ -4,8 +4,8 @@
   "description": "census map example",
   "main": "index.html",
   "scripts": {
-    "build": "rollup src/app.js --format iife --output dist/bundle.js",
-    "watch": "rollup src/app.js --format iife --output dist/bundle.js --watch",
+    "build": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap",
+    "watch": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,5 +28,8 @@
   "devDependencies": {
     "rollup": "^0.41.5",
     "rollup-watch": "^3.2.2"
+  },
+  "dependencies": {
+    "expr-eval": "^1.0.0"
   }
 }

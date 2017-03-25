@@ -94,8 +94,14 @@ class DropdownCtrl {
         this._option2 = document.createElement('option');
         this._option2.text = 'Median Home Value';
         this._option2.value = 'mhv';
+        this._option3 = document.createElement('option');
+        this._option3.text = 'Composite';
+        this._option3.value = 'com';
         this._select.appendChild(this._option1);
         this._select.appendChild(this._option2);
+        this._select.appendChild(this._option3);
+
+        
         this._container.appendChild(this._select);
         return this._container;
     }
@@ -131,7 +137,7 @@ class LegendCtrl {
 var computed_breaks = {
     "mhi": {
         "table": "b19013",
-        "expression": "b19013001",
+        "expression": ["b19013001"],
         "popup_label": "MHI: $",
         "type": "currency",
         "default_color": "#fff",
@@ -148,7 +154,7 @@ var computed_breaks = {
     },
     "mhv": {
         "table": "b25077",
-        "expression": "b25077001",
+        "expression": ["b25077001"],
         "popup_label": "MHV: $",
         "type": "currency",
         "default_color": "#fff",
@@ -163,6 +169,23 @@ var computed_breaks = {
         {"break": 500000, "color": "#08519c"}
         ]
     },
+    "com": {
+        "table": "b01001",
+        "expression": ["b01001001","+","b01001001"],
+        "popup_label": "MHV: $",
+        "type": "currency",
+        "default_color": "#fff",
+        "null_color": "#fff",
+        "zero_color": "#fff",
+        "array": [
+        {"break": 50000, "color": "#eff3ff"},
+        {"break": 100000, "color": "#c6dbef"},
+        {"break": 150000, "color": "#9ecae1"},
+        {"break": 200000, "color": "#6baed6"},
+        {"break": 300000, "color": "#3182bd"},
+        {"break": 500000, "color": "#08519c"}
+        ]
+    }
 };
 
 var style = {
@@ -1354,8 +1377,7 @@ function formatValue (val, type) {
 
 /* global mapboxgl */
 /* global fetch */
-
-// set up map
+/* global exprEval */
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -1384,12 +1406,12 @@ function updateMap() {
     if (map.popup) {
         map.popup.remove();
     }
-    
+
     var current_dropdown_value = getSelectValues(document.getElementById('acs_stat'))[0];
-    
+
     updateLegend(current_dropdown_value);
 
-    
+
     fetchCensusData(current_dropdown_value).then((acs_data) => {
         map.on('click', function(e) {
             var map_reference = this;
@@ -1417,28 +1439,54 @@ function getMapStyle(style_code, acs_data) {
     let zero_color = computed_breaks[style_code].zero_color;
     let array = computed_breaks[style_code].array;
 
+    // set up parser (https://github.com/silentmatt/expr-eval)
+    var parser = new exprEval.Parser();
+    var exp = parser.parse(expression.join(""));
+
+    // iterate through acs data
     let stops = acs_data.map(function(row) {
+
+        let evaluated_value;
+
+        // don't attempt to use expression parser if array is only 1 element
+        // which means single variable
+        if (expression.length > 1) {
+
+            let replacers_object = {};
+
+            getUniqueExpressionKeys(expression).forEach(function(key) {
+                replacers_object[key] = row[key];
+            });
+
+            evaluated_value = exp.evaluate(replacers_object);
+        }
+        else {
+            evaluated_value = row[expression[0]];
+        }
+
+
         // default case
         let color = default_color;
 
         // iterate through array breaks
         array.forEach(function(entry) {
-            if (row[expression] > entry.break) {
+            if (evaluated_value > entry.break) {
                 color = entry.color;
             }
         });
 
         // null case
-        if (!row[expression]) {
+        if (!evaluated_value) {
             color = null_color;
         }
 
         // zero case: always after the null case
-        if (row[expression] === 0) {
+        if (evaluated_value === 0) {
             color = zero_color;
         }
 
         return [row.geonum, color];
+
     });
 
     return {
@@ -1493,7 +1541,7 @@ function createPopup(e, acs_data, style_code, map_reference) {
 
     var geoname = feature.properties.geoname;
     var state = stateLookup(feature.properties.state);
-    
+
     var label = computed_breaks[style_code].popup_label;
     var popup_stat = getPopupStat(feature.properties.geonum, computed_breaks[style_code].expression, acs_data);
 
@@ -1510,10 +1558,21 @@ function createPopup(e, acs_data, style_code, map_reference) {
 function getPopupStat(geonum, expression, acs_data) {
 
     var stat = null;
+    
+     // set up parser (https://github.com/silentmatt/expr-eval)
+    var parser = new exprEval.Parser();
+    var exp = parser.parse(expression.join(""));
+    
+    let replacers_object = {};
 
     for (var i = 0; i < acs_data.length; i++) {
-        if(acs_data[i].geonum === geonum.toString()) {
-            stat = acs_data[i][expression];
+        if (acs_data[i].geonum === geonum.toString()) {
+            
+            getUniqueExpressionKeys(expression).forEach(function(key) {
+                replacers_object[key] = acs_data[i][key];
+            });
+            
+            stat = exp.evaluate(replacers_object);
             break;
         }
     }
@@ -1521,4 +1580,21 @@ function getPopupStat(geonum, expression, acs_data) {
     return parseInt(stat, 10).toLocaleString() || 'Unknown';
 }
 
+
+
+function getUniqueExpressionKeys (expression) {
+    
+    // extract data fields from expression (example: ["b01001001", "b01001002"])
+    let keys = expression.filter(function(d) {
+        if (d !== "+" && d !== "-" & d !== "(" & d !== ")" & d !== "*" & d !== "/") {
+            return true;
+        }
+    });
+
+    let unique_keys = Array.from(new Set(keys));
+    
+    return unique_keys;
+}
+
 }());
+//# sourceMappingURL=bundle.js.map

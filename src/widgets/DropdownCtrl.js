@@ -13,8 +13,14 @@ export default class DropdownCtrl {
         this._option2 = document.createElement('option');
         this._option2.text = 'Median Home Value';
         this._option2.value = 'mhv';
+        this._option3 = document.createElement('option');
+        this._option3.text = 'Composite';
+        this._option3.value = 'com';
         this._select.appendChild(this._option1);
         this._select.appendChild(this._option2);
+        this._select.appendChild(this._option3);
+
+        
         this._container.appendChild(this._select);
         return this._container;
     }

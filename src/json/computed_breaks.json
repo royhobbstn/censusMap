@@ -1,7 +1,7 @@
 export default {
     "mhi": {
         "table": "b19013",
-        "expression": "b19013001",
+        "expression": ["b19013001"],
         "popup_label": "MHI: $",
         "type": "currency",
         "default_color": "#fff",
@@ -18,7 +18,7 @@ export default {
     },
     "mhv": {
         "table": "b25077",
-        "expression": "b25077001",
+        "expression": ["b25077001"],
         "popup_label": "MHV: $",
         "type": "currency",
         "default_color": "#fff",
@@ -33,4 +33,21 @@ export default {
         {"break": 500000, "color": "#08519c"}
         ]
     },
+    "com": {
+        "table": "b01001",
+        "expression": ["b01001001","+","b01001001"],
+        "popup_label": "MHV: $",
+        "type": "currency",
+        "default_color": "#fff",
+        "null_color": "#fff",
+        "zero_color": "#fff",
+        "array": [
+        {"break": 50000, "color": "#eff3ff"},
+        {"break": 100000, "color": "#c6dbef"},
+        {"break": 150000, "color": "#9ecae1"},
+        {"break": 200000, "color": "#6baed6"},
+        {"break": 300000, "color": "#3182bd"},
+        {"break": 500000, "color": "#08519c"}
+        ]
+    }
 };

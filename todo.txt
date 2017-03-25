@@ -1,0 +1,39 @@
+
+
+
+add a whole number type for computed breaks (rather than just currency)
+
+mimic button setup / ui from previous map
+read attributes from json rather than hardcode to menu
+import all acs attributes from old acs map
+
+
+
+
+interesting ideas
+------------
+api data returned as hash map where key is geonum - much faster
+mouseover on legend to highlight those values on map
+cache data from ajax calls
+
+
+supplemental service
+------------
+update tile server to eliminate 404s
+webshot service
+precompute all breaks into own json file (add as npm task)
+
+
+roadmap
+----------
+additional vector tile layers for differing census geographies
+additional vintages of acs
+add census 2010
+last - adapt to own census api
+
+
+build todos
+--------------
+rollup cache busting 
+rollup uglify
+
