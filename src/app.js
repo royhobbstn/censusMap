@@ -10,6 +10,8 @@ import EasyButton from './widgets/EasyButtonCtrl.js';
 
 import computed_breaks from './json/computed_breaks.json';
 import style from './json/maputnik_style.json';
+import colortree from './json/colortree.json';
+
 import updateLegend from './module/updateLegend.js';
 
 
@@ -81,10 +83,11 @@ function fetchCensusData(style_code) {
 function getMapStyle(style_code, acs_data) {
 
     let expression = computed_breaks[style_code].expression;
-    let default_color = computed_breaks[style_code].default_color;
-    let null_color = computed_breaks[style_code].null_color;
-    let zero_color = computed_breaks[style_code].zero_color;
-    let array = computed_breaks[style_code].array;
+    let default_color = "#fff"; // lowest break color
+    let null_color = "#fff";
+    let zero_color = "#fff";
+    let array = computed_breaks[style_code].array_7;
+    let colorscheme = computed_breaks[style_code].default_7;
 
     // set up parser (https://github.com/silentmatt/expr-eval)
     var parser = new exprEval.Parser();
@@ -116,9 +119,9 @@ function getMapStyle(style_code, acs_data) {
         let color = default_color;
 
         // iterate through array breaks
-        array.forEach(function (entry) {
-            if (evaluated_value > entry.break) {
-                color = entry.color;
+        array.forEach(function (entry, i) {
+            if (evaluated_value > entry) {
+                color = colortree[colorscheme][i];
             }
         });
 

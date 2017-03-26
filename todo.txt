@@ -1,13 +1,12 @@
 
 
-
-add title to legend
-read attributes from json rather than hardcode to menu
-
-color breaks json
 import all acs attributes from old acs map
 
+read attributes from json rather than hardcode to menu
+
+
 table-ify legend (line up < + symbols)
+small legend tweaks
 
 
 interesting ideas

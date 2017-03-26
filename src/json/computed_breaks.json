@@ -1,5 +1,6 @@
 export default {
     "mhi": {
+        "title": "Median Household Income",
         "table": "b19013",
         "expression": ["b19013001"],
         "popup_label": "MHI: $",
@@ -7,16 +8,11 @@ export default {
         "default_color": "#fff",
         "null_color": "#fff",
         "zero_color": "#fff",
-        "array": [
-        {"break": 26527, "color": "#ccece6"},
-        {"break": 37201, "color": "#99d8c9"},
-        {"break": 44517, "color": "#66c2a4"},
-        {"break": 52137, "color": "#41ae76"},
-        {"break": 62302, "color": "#238b45"},
-        {"break": 77930, "color": "#005824"}
-        ]
+        "array_7": [0, 26527, 37201, 44517, 52137, 62302, 77930],
+        "default_7": "mh2_7"
     },
     "mhv": {
+        "title": "Median Home Value",
         "table": "b25077",
         "expression": ["b25077001"],
         "popup_label": "MHV: $",
@@ -25,15 +21,34 @@ export default {
         "null_color": "#fff",
         "zero_color": "#fff",
         "array": [
-        {"break": 50000, "color": "#eff3ff"},
-        {"break": 100000, "color": "#c6dbef"},
-        {"break": 150000, "color": "#9ecae1"},
-        {"break": 200000, "color": "#6baed6"},
-        {"break": 300000, "color": "#3182bd"},
-        {"break": 500000, "color": "#08519c"}
+            {
+                "break": 50000,
+                "color": "#eff3ff"
+            },
+            {
+                "break": 100000,
+                "color": "#c6dbef"
+            },
+            {
+                "break": 150000,
+                "color": "#9ecae1"
+            },
+            {
+                "break": 200000,
+                "color": "#6baed6"
+            },
+            {
+                "break": 300000,
+                "color": "#3182bd"
+            },
+            {
+                "break": 500000,
+                "color": "#08519c"
+            }
         ]
     },
     "pop": {
+        "title": "Total Population",
         "table": "b01001",
         "expression": ["b01001001"],
         "popup_label": "Population: ",
@@ -42,12 +57,30 @@ export default {
         "null_color": "#fff",
         "zero_color": "#fff",
         "array": [
-        {"break": 50000, "color": "#eff3ff"},
-        {"break": 100000, "color": "#c6dbef"},
-        {"break": 150000, "color": "#9ecae1"},
-        {"break": 200000, "color": "#6baed6"},
-        {"break": 300000, "color": "#3182bd"},
-        {"break": 500000, "color": "#08519c"}
+            {
+                "break": 50000,
+                "color": "#eff3ff"
+            },
+            {
+                "break": 100000,
+                "color": "#c6dbef"
+            },
+            {
+                "break": 150000,
+                "color": "#9ecae1"
+            },
+            {
+                "break": 200000,
+                "color": "#6baed6"
+            },
+            {
+                "break": 300000,
+                "color": "#3182bd"
+            },
+            {
+                "break": 500000,
+                "color": "#08519c"
+            }
         ]
     }
 };
