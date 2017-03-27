@@ -1,6 +1,9 @@
 
 
-import all acs attributes from old acs map
+coordinate data, colors, breaks
+
+precompute all breaks into own json file (add as npm task)
+
 
 read attributes from json rather than hardcode to menu
 
@@ -9,8 +12,12 @@ table-ify legend (line up < + symbols)
 small legend tweaks
 
 
+REDUX
+
+
 interesting ideas
 ------------
+PREACT?
 api data returned as hash map where key is geonum - much faster
 mouseover on legend to highlight those values on map
 cache data from ajax calls
@@ -20,7 +27,6 @@ supplemental service
 ------------
 update tile server to eliminate 404s
 webshot service
-precompute all breaks into own json file (add as npm task)
 
 
 roadmap
