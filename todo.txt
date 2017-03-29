@@ -4,20 +4,23 @@ coordinate data, colors, breaks
 
 precompute all breaks into own json file (add as npm task)
 
-
-read attributes from json rather than hardcode to menu
-
-
 table-ify legend (line up < + symbols)
 small legend tweaks
 
-
-REDUX
+controls
+-hamburger
+dataset picker
+subject picker
+ read attributes from json rather than hardcode to menu
+geography picker
+ expanded geographies
+colorscheme picker / classification picker
 
 
 interesting ideas
 ------------
 PREACT?
+REDUX
 api data returned as hash map where key is geonum - much faster
 mouseover on legend to highlight those values on map
 cache data from ajax calls

@@ -1,6 +1,10 @@
-export default {
-    "acs1115": {
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    "acs1115": {
 
         "mhi": {
             "title": "Median Household Income",
@@ -1075,8 +1079,6 @@ export default {
             "favstyle": ["jenks", "7", "mh10"],
             "bg": "no"
         }
-
-
 
     }
 };

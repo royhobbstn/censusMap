@@ -8,8 +8,9 @@ import DropdownCtrl from './widgets/DropdownCtrl.js';
 import LegendCtrl from './widgets/LegendCtrl.js';
 import EasyButton from './widgets/EasyButtonCtrl.js';
 
-import computed_breaks from './json/computed_breaks.json';
 import style from './json/maputnik_style.json';
+import computed_breaks from './json/computed_breaks.json';
+import datatree from './json/datatree.json';
 import colortree from './json/colortree.json';
 
 import updateLegend from './module/updateLegend.js';
@@ -73,7 +74,7 @@ function updateMap() {
 
 function fetchCensusData(style_code) {
     // load census data
-    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=' + computed_breaks[style_code].table + '&sumlev=50').then(function (fetch_response) {
+    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=acs1115&table=' + datatree.acs1115[style_code].table + '&sumlev=50').then(function (fetch_response) {
         return fetch_response.json();
     }).then(function (census_response) {
         return census_response.data;
@@ -82,12 +83,16 @@ function fetchCensusData(style_code) {
 
 function getMapStyle(style_code, acs_data) {
 
-    let expression = computed_breaks[style_code].expression;
+    let expression = datatree.acs1115[style_code].expression;
     let default_color = "#fff"; // lowest break color
     let null_color = "#fff";
     let zero_color = "#fff";
-    let array = computed_breaks[style_code].array_7;
-    let colorscheme = computed_breaks[style_code].default_7;
+    let array = computed_breaks.acs1115[style_code].jenks5;
+    let colorscheme = colortree.mh1_5;
+
+    console.log(expression);
+    console.log(array);
+    console.log(colorscheme);
 
     // set up parser (https://github.com/silentmatt/expr-eval)
     var parser = new exprEval.Parser();
@@ -121,7 +126,7 @@ function getMapStyle(style_code, acs_data) {
         // iterate through array breaks
         array.forEach(function (entry, i) {
             if (evaluated_value > entry) {
-                color = colortree[colorscheme][i];
+                color = colorscheme[i];
             }
         });
 
