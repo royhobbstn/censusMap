@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-version": "babel --version",
     "convert-datatree": "babel --plugins transform-es2015-modules-commonjs ./src/json/datatree.json --out-file ./breaks/datatree.js",
-    "compute": "npm run convert-datatree && node breaks/compute-breaks.js"
+    "full-compute": "npm run convert-datatree && node breaks/compute-breaks.js",
+    "compute": "node breaks/compute-breaks.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
   },
   "dependencies": {
     "expr-eval": "^1.0.0",
+    "request": "^2.81.0",
+    "simple-statistics": "^2.5.0",
     "source-map-support": "^0.4.14"
   }
 }

@@ -1,5 +1,5 @@
 
-
+see compute_breaks.js middle of work
 coordinate data, colors, breaks
 
 precompute all breaks into own json file (add as npm task)
@@ -19,6 +19,7 @@ colorscheme picker / classification picker
 
 interesting ideas
 ------------
+streaming
 PREACT?
 REDUX
 api data returned as hash map where key is geonum - much faster
