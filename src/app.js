@@ -63,10 +63,10 @@ function updateMap() {
 
 
     fetchCensusData(current_dropdown_value).then((acs_data) => {
-        map.on('click', function (e) {
-            var map_reference = this;
-            createPopup(e, acs_data, current_dropdown_value, map_reference);
-        });
+        // map.on('click', function (e) {
+        //    var map_reference = this;
+        //    createPopup(e, acs_data, current_dropdown_value, map_reference);
+        //});
         map.setPaintProperty('county-fill', 'fill-opacity', 0.8); // make county-fill layer visible
         map.setPaintProperty('county-fill', 'fill-color', getMapStyle(current_dropdown_value, acs_data));
     });
@@ -87,12 +87,13 @@ function getMapStyle(style_code, acs_data) {
     let default_color = "#fff"; // lowest break color
     let null_color = "#fff";
     let zero_color = "#fff";
-    let array = computed_breaks.acs1115[style_code].jenks5;
-    let colorscheme = colortree.mh1_5;
 
-    console.log(expression);
-    console.log(array);
-    console.log(colorscheme);
+
+    let breaks_style = datatree.acs1115[style_code].favstyle[0] + datatree.acs1115[style_code].favstyle[1];
+    let color_style = datatree.acs1115[style_code].favstyle[2] + '_' + datatree.acs1115[style_code].favstyle[1];
+
+    let array = computed_breaks.acs1115[style_code].county[breaks_style];
+    let colorscheme = colortree[color_style];
 
     // set up parser (https://github.com/silentmatt/expr-eval)
     var parser = new exprEval.Parser();
@@ -197,7 +198,7 @@ function createPopup(e, acs_data, style_code, map_reference) {
     var geoname = feature.properties.geoname;
     var state = stateLookup(feature.properties.state);
 
-    var label = computed_breaks[style_code].popup_label;
+    var label = datatree[style_code].popup_label;
     var popup_stat = getPopupStat(feature.properties.geonum, computed_breaks[style_code].expression, acs_data);
 
 

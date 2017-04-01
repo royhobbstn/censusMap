@@ -1,9 +1,4 @@
 
-promisify
-precompute all breaks into own json file (add as npm task)
-
-coordinate data, colors, breaks
-
 
 table-ify legend (line up < + symbols)
 small legend tweaks
@@ -48,7 +43,12 @@ additional vintages of acs
 add census 2010
 last - adapt to own census api
 
-
+Computed Breaks
+ - batch promises on compute-breaks, and use larger sample sizes
+ - add 'sample' to computed breaks
+ - will probably want to break into individual files for dataset / theme
+   (to prevent loading all breaks info upfront)
+ 
 build todos
 --------------
 rollup cache busting 

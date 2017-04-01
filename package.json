@@ -7,9 +7,8 @@
     "build": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap",
     "watch": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-version": "babel --version",
     "convert-datatree": "babel --plugins transform-es2015-modules-commonjs ./src/json/datatree.json --out-file ./breaks/datatree.js",
-    "full-compute": "npm run convert-datatree && node breaks/compute-breaks.js",
+    "full-compute": "npm run convert-datatree && npm run compute",
     "compute": "node breaks/compute-breaks.js"
   },
   "repository": {

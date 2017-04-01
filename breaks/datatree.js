@@ -16,7 +16,7 @@ exports.default = {
             "mininc": "1",
             "usezeroasnull": "yes",
             "favtable": "Median Household Income",
-            "favstyle": ["jenks", "7", "mh1"],
+            "favstyle": ["ckmeans", "7", "mh1"],
             "bg": "yes"
         },
 
@@ -30,7 +30,7 @@ exports.default = {
             "mininc": "1",
             "usezeroasnull": "yes",
             "favtable": "Median Home Value",
-            "favstyle": ["jenks", "7", "mh2"],
+            "favstyle": ["ckmeans", "7", "mh2"],
             "bg": "yes"
         },
 
@@ -44,54 +44,53 @@ exports.default = {
             "mininc": "1",
             "usezeroasnull": "yes",
             "favtable": "Median Family Income",
-            "favstyle": ["jenks", "7", "mh3"],
+            "favstyle": ["ckmeans", "7", "mh3"],
+            "bg": "yes"
+        },
+
+        "pci": {
+            "title": "Per Capita Income",
+            "section": "Income",
+            "table": "b19301",
+            "expression": ["b19301001"],
+            "type": "currency",
+            "minval": "1",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Per Capita Income",
+            "favstyle": ["ckmeans", "7", "mh4"],
+            "bg": "yes"
+        },
+
+        "myb": {
+            "title": "Median Year Housing Unit Built",
+            "section": "Housing",
+            "table": "b25035",
+            "expression": ["b25035001"],
+            "type": "regular",
+            "minval": "1939",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Median Year Built",
+            "favstyle": ["ckmeans", "7", "mh5"],
+            "bg": "yes"
+        },
+
+        "pop": {
+            "title": "Total Population",
+            "section": "Population",
+            "table": "b01001",
+            "expression": ["b01001001"],
+            "type": "number",
+            "minval": "0",
+            "mininc": "1",
+            "usezeroasnull": "no",
+            "favtable": "Basic Population (total)",
+            "favstyle": ["ckmeans", "7", "mh7"],
             "bg": "yes"
         }
         /*,
-
-                "pci": {
-                    "title": "Per Capita Income",
-                    "section": "Income",
-                    "table": "b19301",
-                    "expression": ["b19301001"],
-                    "type": "currency",
-                    "minval": "1",
-                    "mininc": "1",
-                    "usezeroasnull": "yes",
-                    "favtable": "Per Capita Income",
-                    "favstyle": ["jenks", "7", "mh4"],
-                    "bg": "yes"
-                },
-
-                "myb": {
-                    "title": "Median Year Housing Unit Built",
-                    "section": "Housing",
-                    "table": "b25035",
-                    "expression": ["b25035001"],
-                    "type": "regular",
-                    "minval": "1939",
-                    "mininc": "1",
-                    "usezeroasnull": "yes",
-                    "favtable": "Median Year Built",
-                    "favstyle": ["jenks", "7", "mh5"],
-                    "bg": "yes"
-                },
-
-                "pop": {
-                    "title": "Total Population",
-                    "section": "Population",
-                    "table": "b01001",
-                    "expression": ["b01001001"],
-                    "type": "number",
-                    "minval": "0",
-                    "mininc": "1",
-                    "usezeroasnull": "no",
-                    "favtable": "Basic Population (total)",
-                    "favstyle": ["jenks", "7", "mh7"],
-                    "bg": "yes"
-                },
-
-                "pcth": {
+                 "pcth": {
                     "title": "Percent Hispanic",
                     "section": "Race",
                     "table": "b03002",
@@ -101,11 +100,10 @@ exports.default = {
                     "mininc": ".01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "mh6"],
+                    "favstyle": ["ckmeans", "7", "mh6"],
                     "bg": "yes"
                 },
-
-                "pctw": {
+                 "pctw": {
                     "title": "Percent White",
                     "section": "Race",
                     "table": "b03002",
@@ -115,11 +113,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "mh8"],
+                    "favstyle": ["ckmeans", "7", "mh8"],
                     "bg": "yes"
                 },
-
-                "pctb": {
+                 "pctb": {
                     "title": "Percent Black",
                     "section": "Race",
                     "table": "b03002",
@@ -129,11 +126,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "mh9"],
+                    "favstyle": ["ckmeans", "7", "mh9"],
                     "bg": "yes"
                 },
-
-                "pctna": {
+                 "pctna": {
                     "title": "Percent Native American",
                     "section": "Race",
                     "table": "b03002",
@@ -143,11 +139,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "sh1"],
+                    "favstyle": ["ckmeans", "7", "sh1"],
                     "bg": "yes"
                 },
-
-                "pctasian": {
+                 "pctasian": {
                     "title": "Percent Asian",
                     "section": "Race",
                     "table": "b03002",
@@ -157,11 +152,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "sh2"],
+                    "favstyle": ["ckmeans", "7", "sh2"],
                     "bg": "yes"
                 },
-
-                "pcthaw": {
+                 "pcthaw": {
                     "title": "Percent Hawaiian & PacIs",
                     "section": "Race",
                     "table": "b03002",
@@ -171,11 +165,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Race-Ethnicity (percent)",
-                    "favstyle": ["jenks", "7", "sh4"],
+                    "favstyle": ["ckmeans", "7", "sh4"],
                     "bg": "yes"
                 },
-
-                "pctmale": {
+                 "pctmale": {
                     "title": "Percent Male",
                     "section": "Population",
                     "table": "b01001",
@@ -185,11 +178,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Male & Female (percent)",
-                    "favstyle": ["jenks", "7", "sh6"],
+                    "favstyle": ["ckmeans", "7", "sh6"],
                     "bg": "yes"
                 },
-
-                "pctfemale": {
+                 "pctfemale": {
                     "title": "Percent Female",
                     "section": "Population",
                     "table": "b01001",
@@ -199,11 +191,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Male & Female (percent)",
-                    "favstyle": ["jenks", "7", "sh5"],
+                    "favstyle": ["ckmeans", "7", "sh5"],
                     "bg": "yes"
                 },
-
-                "ageless10": {
+                 "ageless10": {
                     "title": "Percent Age Less Than 10",
                     "section": "Age",
                     "table": "b01001",
@@ -213,11 +204,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh1"],
+                    "favstyle": ["ckmeans", "7", "mh1"],
                     "bg": "yes"
                 },
-
-                "ageless18": {
+                 "ageless18": {
                     "title": "Percent Age Less Than 18",
                     "section": "Age",
                     "table": "b01001",
@@ -227,11 +217,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh2"],
+                    "favstyle": ["ckmeans", "7", "mh2"],
                     "bg": "yes"
                 },
-
-                "age18to24": {
+                 "age18to24": {
                     "title": "Percent Age 18 to 24",
                     "section": "Age",
                     "table": "b01001",
@@ -241,11 +230,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh3"],
+                    "favstyle": ["ckmeans", "7", "mh3"],
                     "bg": "yes"
                 },
-
-                "age25to34": {
+                 "age25to34": {
                     "title": "Percent Age 25 to 34",
                     "section": "Age",
                     "table": "b01001",
@@ -255,11 +243,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh4"],
+                    "favstyle": ["ckmeans", "7", "mh4"],
                     "bg": "yes"
                 },
-
-                "age35to44": {
+                 "age35to44": {
                     "title": "Percent Age 35 to 44",
                     "section": "Age",
                     "table": "b01001",
@@ -269,11 +256,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh5"],
+                    "favstyle": ["ckmeans", "7", "mh5"],
                     "bg": "yes"
                 },
-
-                "age45to64": {
+                 "age45to64": {
                     "title": "Percent Age 45 to 64",
                     "section": "Age",
                     "table": "b01001",
@@ -283,11 +269,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh6"],
+                    "favstyle": ["ckmeans", "7", "mh6"],
                     "bg": "yes"
                 },
-
-                "age65plus": {
+                 "age65plus": {
                     "title": "Percent Age 65 Plus",
                     "section": "Age",
                     "table": "b01001",
@@ -297,11 +282,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Age Group (percent)",
-                    "favstyle": ["jenks", "7", "mh7"],
+                    "favstyle": ["ckmeans", "7", "mh7"],
                     "bg": "yes"
                 },
-
-                "medianage": {
+                 "medianage": {
                     "title": "Median Age",
                     "section": "Age",
                     "table": "b01002",
@@ -311,11 +295,10 @@ exports.default = {
                     "mininc": "0.1",
                     "usezeroasnull": "yes",
                     "favtable": "Median Age",
-                    "favstyle": ["jenks", "7", "mh8"],
+                    "favstyle": ["ckmeans", "7", "mh8"],
                     "bg": "yes"
                 },
-
-                "households": {
+                 "households": {
                     "title": "Total Households",
                     "section": "Household",
                     "table": "b11001",
@@ -325,11 +308,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh9"],
+                    "favstyle": ["ckmeans", "7", "mh9"],
                     "bg": "yes"
                 },
-
-                "familyhh": {
+                 "familyhh": {
                     "title": "Percent Family Households",
                     "section": "Household",
                     "table": "b11001",
@@ -338,11 +320,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "yes"
                 },
-
-                "nonfamhh": {
+                 "nonfamhh": {
                     "title": "Percent Non Family Households",
                     "section": "Household",
                     "table": "b11001",
@@ -352,11 +333,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh11"],
+                    "favstyle": ["ckmeans", "7", "mh11"],
                     "bg": "yes"
                 },
-
-                "housingun": {
+                 "housingun": {
                     "title": "Total Housing Units",
                     "section": "Housing",
                     "table": "b25002",
@@ -366,11 +346,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "no",
                     "favtable": "Housing Units (total)",
-                    "favstyle": ["jenks", "7", "mh12"],
+                    "favstyle": ["ckmeans", "7", "mh12"],
                     "bg": "yes"
                 },
-
-                "occhu": {
+                 "occhu": {
                     "title": "Percent Occupied Housing Units",
                     "section": "Housing",
                     "table": "b25002",
@@ -380,11 +359,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Occupancy (percent)",
-                    "favstyle": ["jenks", "7", "sh1"],
+                    "favstyle": ["ckmeans", "7", "sh1"],
                     "bg": "yes"
                 },
-
-                "vachu": {
+                 "vachu": {
                     "title": "Percent Vacant Housing Units",
                     "section": "Housing",
                     "table": "b25002",
@@ -394,11 +372,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Occupancy (percent)",
-                    "favstyle": ["jenks", "7", "sh2"],
+                    "favstyle": ["ckmeans", "7", "sh2"],
                     "bg": "yes"
                 },
-
-                "owned": {
+                 "owned": {
                     "title": "Percent Owner Occupied Housing Units",
                     "section": "Housing",
                     "table": "b25003",
@@ -408,11 +385,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Tenure (percent)",
-                    "favstyle": ["jenks", "7", "sh4"],
+                    "favstyle": ["ckmeans", "7", "sh4"],
                     "bg": "yes"
                 },
-
-                "rented": {
+                 "rented": {
                     "title": "Percent Renter Occupied Housing Units",
                     "section": "Housing",
                     "table": "b25003",
@@ -422,11 +398,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Tenure (percent)",
-                    "favstyle": ["jenks", "7", "sh5"],
+                    "favstyle": ["ckmeans", "7", "sh5"],
                     "bg": "yes"
                 },
-
-                "nohsdipl": {
+                 "nohsdipl": {
                     "title": "Percent No High School Diploma",
                     "section": "Education",
                     "table": "b15003",
@@ -436,11 +411,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Educational Attainment (percent)",
-                    "favstyle": ["jenks", "7", "sh6"],
+                    "favstyle": ["ckmeans", "7", "sh6"],
                     "bg": "yes"
                 },
-
-                "hsgradsc": {
+                 "hsgradsc": {
                     "title": "Percent High School Degree or Some College",
                     "section": "Education",
                     "table": "b15003",
@@ -450,11 +424,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Educational Attainment (percent)",
-                    "favstyle": ["jenks", "7", "mh1"],
+                    "favstyle": ["ckmeans", "7", "mh1"],
                     "bg": "yes"
                 },
-
-                "bachlhghr": {
+                 "bachlhghr": {
                     "title": "Percent Bachelors Degree or Higher",
                     "section": "Education",
                     "table": "b15003",
@@ -464,11 +437,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Educational Attainment (percent)",
-                    "favstyle": ["jenks", "7", "mh2"],
+                    "favstyle": ["ckmeans", "7", "mh2"],
                     "bg": "yes"
                 },
-
-                "medcrent": {
+                 "medcrent": {
                     "title": "Median Contract Rent",
                     "section": "Rent",
                     "table": "b25058",
@@ -478,11 +450,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "yes",
                     "favtable": "Median Contract Rent",
-                    "favstyle": ["jenks", "7", "mh3"],
+                    "favstyle": ["ckmeans", "7", "mh3"],
                     "bg": "yes"
                 },
-
-                "medgrent": {
+                 "medgrent": {
                     "title": "Median Gross Rent",
                     "section": "Rent",
                     "table": "b25064",
@@ -492,11 +463,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "yes",
                     "favtable": "Median Gross Rent",
-                    "favstyle": ["jenks", "7", "mh4"],
+                    "favstyle": ["ckmeans", "7", "mh4"],
                     "bg": "yes"
                 },
-
-                "citzbirth": {
+                 "citzbirth": {
                     "title": "Percent US Citizen by Birth",
                     "section": "Citizenship",
                     "table": "b05001",
@@ -506,11 +476,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Citizenship (percent)",
-                    "favstyle": ["jenks", "7", "mh5"],
+                    "favstyle": ["ckmeans", "7", "mh5"],
                     "bg": "no"
                 },
-
-                "citznat": {
+                 "citznat": {
                     "title": "Percent US Citizen by Naturalization",
                     "section": "Citizenship",
                     "table": "b05001",
@@ -520,11 +489,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Citizenship (percent)",
-                    "favstyle": ["jenks", "7", "mh6"],
+                    "favstyle": ["ckmeans", "7", "mh6"],
                     "bg": "no"
                 },
-
-                "notcitz": {
+                 "notcitz": {
                     "title": "Percent Not a US Citizen",
                     "section": "Citizenship",
                     "table": "b05001",
@@ -534,11 +502,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Citizenship (percent)",
-                    "favstyle": ["jenks", "7", "mh7"],
+                    "favstyle": ["ckmeans", "7", "mh7"],
                     "bg": "no"
                 },
-
-                "borninsor": {
+                 "borninsor": {
                     "title": "Percent US Native, Born in State of Residence",
                     "section": "Birthplace",
                     "table": "b05002",
@@ -548,11 +515,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Birthplace (percent)",
-                    "favstyle": ["jenks", "7", "mh8"],
+                    "favstyle": ["ckmeans", "7", "mh8"],
                     "bg": "no"
                 },
-
-                "bornothst": {
+                 "bornothst": {
                     "title": "Percent US Native, Born in Another State",
                     "section": "Birthplace",
                     "table": "b05002",
@@ -562,11 +528,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Birthplace (percent)",
-                    "favstyle": ["jenks", "7", "mh9"],
+                    "favstyle": ["ckmeans", "7", "mh9"],
                     "bg": "no"
                 },
-
-                "nativeb": {
+                 "nativeb": {
                     "title": "Percent US Native",
                     "section": "Birthplace",
                     "table": "b05002",
@@ -576,11 +541,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Birthplace (percent)",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "no"
                 },
-
-                "foreignb": {
+                 "foreignb": {
                     "title": "Percent Foreign Born",
                     "section": "Birthplace",
                     "table": "b05002",
@@ -590,11 +554,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Birthplace (percent)",
-                    "favstyle": ["jenks", "7", "mh11"],
+                    "favstyle": ["ckmeans", "7", "mh11"],
                     "bg": "no"
                 },
-
-                "samehouse": {
+                 "samehouse": {
                     "title": "Percent Did Not Move",
                     "section": "Migration",
                     "table": "b07003",
@@ -604,11 +567,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Migration (percent)",
-                    "favstyle": ["jenks", "7", "mh12"],
+                    "favstyle": ["ckmeans", "7", "mh12"],
                     "bg": "no"
                 },
-
-                "samecnty": {
+                 "samecnty": {
                     "title": "Percent Moved Within County",
                     "section": "Migration",
                     "table": "b07003",
@@ -618,11 +580,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Migration (percent)",
-                    "favstyle": ["jenks", "7", "sh1"],
+                    "favstyle": ["ckmeans", "7", "sh1"],
                     "bg": "no"
                 },
-
-                "samestate": {
+                 "samestate": {
                     "title": "Percent Moved from Different County Within State",
                     "section": "Migration",
                     "table": "b07003",
@@ -632,11 +593,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Migration (percent)",
-                    "favstyle": ["jenks", "7", "sh2"],
+                    "favstyle": ["ckmeans", "7", "sh2"],
                     "bg": "no"
                 },
-
-                "diffstate": {
+                 "diffstate": {
                     "title": "Percent Moved from Different State",
                     "section": "Migration",
                     "table": "b07003",
@@ -646,11 +606,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Migration (percent)",
-                    "favstyle": ["jenks", "7", "sh4"],
+                    "favstyle": ["ckmeans", "7", "sh4"],
                     "bg": "no"
                 },
-
-                "frmabroad": {
+                 "frmabroad": {
                     "title": "Percent Moved From Abroad",
                     "section": "Migration",
                     "table": "b07003",
@@ -660,11 +619,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Migration (percent)",
-                    "favstyle": ["jenks", "7", "sh5"],
+                    "favstyle": ["ckmeans", "7", "sh5"],
                     "bg": "no"
                 },
-
-                "carall": {
+                 "carall": {
                     "title": "Percent Drove a Car Truck or Van to Work",
                     "section": "Transportation",
                     "table": "b08006",
@@ -674,11 +632,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Transportation to Work (percent)",
-                    "favstyle": ["jenks", "7", "sh6"],
+                    "favstyle": ["ckmeans", "7", "sh6"],
                     "bg": "no"
                 },
-
-                "usedpt": {
+                 "usedpt": {
                     "title": "Percent Used Public Transportation",
                     "section": "Transportation",
                     "table": "b08006",
@@ -688,11 +645,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Transportation to Work (percent)",
-                    "favstyle": ["jenks", "7", "mh1"],
+                    "favstyle": ["ckmeans", "7", "mh1"],
                     "bg": "no"
                 },
-
-                "bike": {
+                 "bike": {
                     "title": "Percent Biked to Work",
                     "section": "Transportation",
                     "table": "b08006",
@@ -702,11 +658,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Transportation to Work (percent)",
-                    "favstyle": ["jenks", "7", "mh2"],
+                    "favstyle": ["ckmeans", "7", "mh2"],
                     "bg": "no"
                 },
-
-                "walked": {
+                 "walked": {
                     "title": "Percent Walked to Work",
                     "section": "Transportation",
                     "table": "b08006",
@@ -716,11 +671,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Transportation to Work (percent)",
-                    "favstyle": ["jenks", "7", "mh3"],
+                    "favstyle": ["ckmeans", "7", "mh3"],
                     "bg": "no"
                 },
-
-                "home": {
+                 "home": {
                     "title": "Percent Worked at Home",
                     "section": "Transportation",
                     "table": "b08006",
@@ -730,11 +684,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Transportation to Work (percent)",
-                    "favstyle": ["jenks", "7", "mh4"],
+                    "favstyle": ["ckmeans", "7", "mh4"],
                     "bg": "no"
                 },
-
-                "avghhsize": {
+                 "avghhsize": {
                     "title": "Average Household Size",
                     "section": "Housing",
                     "table": "b25010",
@@ -744,11 +697,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "yes",
                     "favtable": "Average Household Size",
-                    "favstyle": ["jenks", "7", "mh5"],
+                    "favstyle": ["ckmeans", "7", "mh5"],
                     "bg": "yes"
                 },
-
-                "insured": {
+                 "insured": {
                     "title": "Percent Insured",
                     "section": "Insurance",
                     "table": "b27001",
@@ -758,11 +710,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Insurance (percent)",
-                    "favstyle": ["jenks", "7", "mh7"],
+                    "favstyle": ["ckmeans", "7", "mh7"],
                     "bg": "no"
                 },
-
-                "uninsured": {
+                 "uninsured": {
                     "title": "Percent No Insurance",
                     "section": "Insurance",
                     "table": "b27001",
@@ -772,11 +723,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Insurance (percent)",
-                    "favstyle": ["jenks", "7", "mh8"],
+                    "favstyle": ["ckmeans", "7", "mh8"],
                     "bg": "no"
                 },
-
-                "enrolled": {
+                 "enrolled": {
                     "title": "Percent Enrolled in School",
                     "section": "Education",
                     "table": "b14001",
@@ -786,11 +736,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Enrolled in School (percent)",
-                    "favstyle": ["jenks", "7", "mh9"],
+                    "favstyle": ["ckmeans", "7", "mh9"],
                     "bg": "no"
                 },
-
-                "k8": {
+                 "k8": {
                     "title": "Percent of Enrolled in K-8",
                     "section": "Education",
                     "table": "b14001",
@@ -800,11 +749,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Enrolled in School (percent)",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "no"
                 },
-
-                "enrhs": {
+                 "enrhs": {
                     "title": "Percent of Enrolled in 9-12",
                     "section": "Education",
                     "table": "b14001",
@@ -814,11 +762,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Enrolled in School (percent)",
-                    "favstyle": ["jenks", "7", "mh11"],
+                    "favstyle": ["ckmeans", "7", "mh11"],
                     "bg": "no"
                 },
-
-                "enrcollege": {
+                 "enrcollege": {
                     "title": "Percent of Enrolled in Colleges",
                     "section": "Education",
                     "table": "b14001",
@@ -828,11 +775,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Enrolled in School (percent)",
-                    "favstyle": ["jenks", "7", "mh12"],
+                    "favstyle": ["ckmeans", "7", "mh12"],
                     "bg": "no"
                 },
-
-                "notenrolled": {
+                 "notenrolled": {
                     "title": "Percent Not Enrolled in School",
                     "section": "Education",
                     "table": "b14001",
@@ -842,11 +788,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Enrolled in School (percent)",
-                    "favstyle": ["jenks", "7", "sh1"],
+                    "favstyle": ["ckmeans", "7", "sh1"],
                     "bg": "no"
                 },
-
-                "inpoverty": {
+                 "inpoverty": {
                     "title": "Percent in Poverty",
                     "section": "Poverty",
                     "table": "c17002",
@@ -856,11 +801,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Poverty (percent)",
-                    "favstyle": ["jenks", "7", "sh2"],
+                    "favstyle": ["ckmeans", "7", "sh2"],
                     "bg": "yes"
                 },
-
-                "inpov150": {
+                 "inpov150": {
                     "title": "Percent Below 150% Poverty",
                     "section": "Poverty",
                     "table": "c17002",
@@ -870,11 +814,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Poverty (percent)",
-                    "favstyle": ["jenks", "7", "sh4"],
+                    "favstyle": ["ckmeans", "7", "sh4"],
                     "bg": "yes"
                 },
-
-                "disabled": {
+                 "disabled": {
                     "title": "Percent Disabled",
                     "section": "Disability",
                     "table": "b18101",
@@ -884,11 +827,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Disability (percent)",
-                    "favstyle": ["jenks", "7", "sh5"],
+                    "favstyle": ["ckmeans", "7", "sh5"],
                     "bg": "no"
                 },
-
-                "unemp": {
+                 "unemp": {
                     "title": "Percent Unemployed",
                     "section": "Employment",
                     "table": "b23025",
@@ -898,11 +840,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Unemployment (percent)",
-                    "favstyle": ["jenks", "7", "sh6"],
+                    "favstyle": ["ckmeans", "7", "sh6"],
                     "bg": "yes"
                 },
-
-                "armedforces": {
+                 "armedforces": {
                     "title": "Percent of Labor Force in Armed Forces",
                     "section": "Employment",
                     "table": "b23025",
@@ -912,11 +853,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Unemployment (percent)",
-                    "favstyle": ["jenks", "7", "mh1"],
+                    "favstyle": ["ckmeans", "7", "mh1"],
                     "bg": "yes"
                 },
-
-                "realtaxes": {
+                 "realtaxes": {
                     "title": "Median Real Estate Taxes Paid",
                     "section": "Housing",
                     "table": "b25103",
@@ -926,11 +866,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "yes",
                     "favtable": "",
-                    "favstyle": ["jenks", "7", "mh2"],
+                    "favstyle": ["ckmeans", "7", "mh2"],
                     "bg": "no"
                 },
-
-                "moc_wmc": {
+                 "moc_wmc": {
                     "title": "Median Monthly Owner Costs (w Mortgage)",
                     "section": "Housing",
                     "table": "b25088",
@@ -940,11 +879,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "yes",
                     "favtable": "",
-                    "favstyle": ["jenks", "7", "mh3"],
+                    "favstyle": ["ckmeans", "7", "mh3"],
                     "bg": "yes"
                 },
-
-                "moc_nmc": {
+                 "moc_nmc": {
                     "title": "Median Monthly Owner Costs (no Mortgage)",
                     "section": "Housing",
                     "table": "b25088",
@@ -954,11 +892,10 @@ exports.default = {
                     "mininc": "1",
                     "usezeroasnull": "yes",
                     "favtable": "",
-                    "favstyle": ["jenks", "7", "mh4"],
+                    "favstyle": ["ckmeans", "7", "mh4"],
                     "bg": "yes"
                 },
-
-                "hhalone": {
+                 "hhalone": {
                     "title": "Pct of Households w Householder Living Alone",
                     "section": "Household",
                     "table": "b11001",
@@ -968,11 +905,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "",
-                    "favstyle": ["jenks", "7", "mh5"],
+                    "favstyle": ["ckmeans", "7", "mh5"],
                     "bg": "yes"
                 },
-
-                "hhnalone": {
+                 "hhnalone": {
                     "title": "Pct of Households w Householder Not Living Alone",
                     "section": "Household",
                     "table": "b11001",
@@ -982,11 +918,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh6"],
+                    "favstyle": ["ckmeans", "7", "mh6"],
                     "bg": "yes"
                 },
-
-                "mcfhh": {
+                 "mcfhh": {
                     "title": "Percent Married Couple Family Households",
                     "section": "Household",
                     "table": "b11001",
@@ -996,11 +931,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh7"],
+                    "favstyle": ["ckmeans", "7", "mh7"],
                     "bg": "yes"
                 },
-
-                "mhhnwphh": {
+                 "mhhnwphh": {
                     "title": "Percent Male Householder, No Wife Present Households",
                     "section": "Household",
                     "table": "b11001",
@@ -1010,11 +944,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh8"],
+                    "favstyle": ["ckmeans", "7", "mh8"],
                     "bg": "yes"
                 },
-
-                "fhhnhphh": {
+                 "fhhnhphh": {
                     "title": "Percent Female Householder, No Husband Present Households",
                     "section": "Household",
                     "table": "b11001",
@@ -1024,11 +957,10 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "Household Type (total)",
-                    "favstyle": ["jenks", "7", "mh9"],
+                    "favstyle": ["ckmeans", "7", "mh9"],
                     "bg": "yes"
                 },
-
-                "hhwchild": {
+                 "hhwchild": {
                     "title": "Percent Households w Children Under 18 Present",
                     "section": "Household",
                     "table": "b11005",
@@ -1038,7 +970,7 @@ exports.default = {
                     "mininc": "0.01",
                     "usezeroasnull": "no",
                     "favtable": "",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "yes"
                 },
                 "cbhm": {
@@ -1051,7 +983,7 @@ exports.default = {
                     "mininc": ".01",
                     "usezeroasnull": "no",
                     "favtable": "Cost Burdened Households (with a Mortgage)",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "yes"
                 },
                 "elvw": {
@@ -1064,7 +996,7 @@ exports.default = {
                     "mininc": ".01",
                     "usezeroasnull": "no",
                     "favtable": "Place of Birth by Language Spoken at Home and Ability to Speak English",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "no"
                 },
                 "p5ss": {
@@ -1077,9 +1009,10 @@ exports.default = {
                     "mininc": ".01",
                     "usezeroasnull": "no",
                     "favtable": "Place of Birth by Language Spoken at Home and Ability to Speak English",
-                    "favstyle": ["jenks", "7", "mh10"],
+                    "favstyle": ["ckmeans", "7", "mh10"],
                     "bg": "no"
-                }*/
+                }
+        */
 
     }
 };

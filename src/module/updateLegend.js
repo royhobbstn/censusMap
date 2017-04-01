@@ -5,8 +5,12 @@ import datatree from './../json/datatree.json';
 
 export default function updateLegend(current_dropdown_value) {
 
-    let legend_breaks = computed_breaks.acs1115[current_dropdown_value].jenks5;
-    let colorscheme = colortree.mh1_5;
+    let breaks_style = datatree.acs1115[current_dropdown_value].favstyle[0] + datatree.acs1115[current_dropdown_value].favstyle[1];
+    let legend_breaks = computed_breaks.acs1115[current_dropdown_value].county[breaks_style];
+
+    let color_style = datatree.acs1115[current_dropdown_value].favstyle[2] + '_' + datatree.acs1115[current_dropdown_value].favstyle[1];
+    let colorscheme = colortree[color_style];
+
     let type = datatree.acs1115[current_dropdown_value].type;
     let default_color = '#fff';
     let title = datatree.acs1115[current_dropdown_value].title;
