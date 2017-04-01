@@ -1,8 +1,9 @@
 
-see compute_breaks.js middle of work
+promisify
+precompute all breaks into own json file (add as npm task)
+
 coordinate data, colors, breaks
 
-precompute all breaks into own json file (add as npm task)
 
 table-ify legend (line up < + symbols)
 small legend tweaks
