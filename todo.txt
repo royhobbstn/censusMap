@@ -15,12 +15,18 @@ subject picker
  read attributes from json rather than hardcode to menu
 geography picker
  expanded geographies
+ pick a geo hierarchy 
+ - county - tract - bg
+ - state - county - countysubdivision
+ - msa - cbsa - place
+ - state - zcta
+ - state - puma
 colorscheme picker / classification picker
 
 
 interesting ideas
 ------------
-streaming
+streaming OBOE.js - any advantage over gzip?
 PREACT?
 REDUX
 api data returned as hash map where key is geonum - much faster

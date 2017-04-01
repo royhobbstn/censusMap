@@ -38,6 +38,7 @@
   "dependencies": {
     "expr-eval": "^1.0.0",
     "request": "^2.81.0",
+    "request-promise": "^4.2.0",
     "simple-statistics": "^2.5.0",
     "source-map-support": "^0.4.14"
   }

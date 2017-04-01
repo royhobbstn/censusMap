@@ -1,11 +1,12 @@
 'use strict';
 
-var request = require('request');
 var Parser = require('expr-eval').Parser;
 var ss = require('simple-statistics');
+var rp = require('request-promise');
 
 var datatree = require('./datatree.js').default;
 
+var all_promises = [];
 var main_object = {};
 
 
@@ -17,7 +18,6 @@ Object.keys(datatree).forEach(function (dataset) {
     Object.keys(datatree[dataset]).forEach(function (theme) {
         var query_dataset = '&db=acs1115';
         var query_table = '&table=' + datatree[dataset][theme].table;
-        console.log(query_table);
         var query_sumlev = '&sumlev=50';
         var query_url_base = 'https://gis.dola.colorado.gov/capi/demog?';
         var query_url = query_url_base + query_dataset + query_table + query_sumlev + '&limit=50';
@@ -27,8 +27,9 @@ Object.keys(datatree).forEach(function (dataset) {
         var parser = new Parser();
         var exp = parser.parse(expression.join(""));
 
+        // put them in promise array, but only to find when all are done
 
-        request(query_url, function (error, response, body) {
+        all_promises.push(rp(query_url).then(function (body) {
 
             var data = JSON.parse(body).data;
 
@@ -59,14 +60,19 @@ Object.keys(datatree).forEach(function (dataset) {
 
             main_object[dataset][theme] = calcBreaks(dataset_values);
 
-        });
-
+        }).catch(function (error) {
+            console.log(error);
+        }));
 
     });
 
-
 });
 
+
+Promise.all(all_promises).then(function () {
+    console.log('all done');
+    console.log(main_object);
+});
 
 
 function calcBreaks(data) { //after successfull ajax call, data is sent here
