@@ -1,8 +1,7 @@
 /* global mapboxgl */
 /* global fetch */
 /* global exprEval */
-
-import stateLookup from './lookups/stateLookup.js';
+/* global $ */
 
 import DropdownCtrl from './widgets/DropdownCtrl.js';
 import LegendCtrl from './widgets/LegendCtrl.js';
@@ -14,7 +13,7 @@ import datatree from './json/datatree.json';
 import colortree from './json/colortree.json';
 
 import updateLegend from './module/updateLegend.js';
-
+import populateThemes from './module/populateThemes.js';
 
 // set up map
 var map = new mapboxgl.Map({
@@ -31,44 +30,42 @@ map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new DropdownCtrl(), 'top-left');
 map.addControl(new LegendCtrl(), 'bottom-right');
 
-map.addControl(new EasyButton('choose_statistic', 'fa-bars', 'Select a Statistic'), 'top-left');
-map.addControl(new EasyButton('choose_geography', 'fa-compass', 'Change the Geography Layer'), 'top-left');
+map.addControl(new EasyButton('choose_theme', 'fa-bars', 'Select a Theme'), 'top-left');
 map.addControl(new EasyButton('view_table', 'fa-table', 'View a Data Table'), 'top-left');
 map.addControl(new EasyButton('view_chart', 'fa-line-chart', 'View a Chart'), 'top-left');
 map.addControl(new EasyButton('save_map', 'fa-floppy-o', 'Save a Map Image'), 'top-left');
 map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection'), 'top-left');
 
-// add map event listeners
-// map.on('click', createPopup);
+var default_theme = 'pop';
 
-document.getElementById('acs_stat').addEventListener('change', updateMap, false);
-document.getElementById('choose_statistic').addEventListener('click', clickChooseStatistic, false);
+populateThemes(default_theme);
 
 
 
+$('#myModal').modal({
+    show: false
+});
 
-function clickChooseStatistic() {
-    console.log('choose_statistic clicked');
+document.getElementById('choose_theme').addEventListener('click', clickChooseTheme, false);
+
+function clickChooseTheme() {
+    $('#myModal').modal('show');
 }
 
-function updateMap() {
-
-    if (map.popup) {
-        map.popup.remove();
-    }
-
-    var current_dropdown_value = getSelectValues(document.getElementById('acs_stat'))[0];
-
-    updateLegend(current_dropdown_value);
+$('input[name=optionsRadios]:radio').change(function () {
+    updateMap(this.value);
+});
 
 
-    fetchCensusData(current_dropdown_value).then((acs_data) => {
-        // map.on('click', function (e) {
-        //    var map_reference = this;
-        //    createPopup(e, acs_data, current_dropdown_value, map_reference);
-        //});
+
+
+
+function updateMap(theme) {
+    updateLegend(theme);
+
+    fetchCensusData(theme).then((acs_data) => {
         map.setPaintProperty('county-fill', 'fill-opacity', 0.8); // make county-fill layer visible
-        map.setPaintProperty('county-fill', 'fill-color', getMapStyle(current_dropdown_value, acs_data));
+        map.setPaintProperty('county-fill', 'fill-color', getMapStyle(theme, acs_data));
     });
 }
 
@@ -80,6 +77,16 @@ function fetchCensusData(style_code) {
         return census_response.data;
     });
 }
+
+
+
+init();
+
+function init() {
+    updateMap(default_theme);
+}
+
+
 
 function getMapStyle(style_code, acs_data) {
 
@@ -152,88 +159,6 @@ function getMapStyle(style_code, acs_data) {
     };
 
 }
-
-function getSelectValues(select) {
-    var result = [];
-    var options = select && select.options;
-    var opt;
-
-    for (var i = 0, iLen = options.length; i < iLen; i++) {
-        opt = options[i];
-
-        if (opt.selected) {
-            result.push(opt.value || opt.text);
-        }
-    }
-    return result;
-}
-
-init();
-
-function init() {
-    updateMap();
-}
-
-
-
-function createPopup(e, acs_data, style_code, map_reference) {
-
-    // 'this' here represents the map. ??!
-
-    // a popup property is conveniently tacked on to the map
-    if (map_reference.popup) {
-        map_reference.popup.remove();
-    }
-
-    var features = map_reference.queryRenderedFeatures(e.point, {
-        layers: ['county-fill']
-    });
-
-    if (!features.length) {
-        return;
-    }
-
-    var feature = features[0];
-
-    var geoname = feature.properties.geoname;
-    var state = stateLookup(feature.properties.state);
-
-    var label = datatree[style_code].popup_label;
-    var popup_stat = getPopupStat(feature.properties.geonum, computed_breaks[style_code].expression, acs_data);
-
-
-    map_reference.popup = new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
-        .setHTML(geoname + " County, " + state + "<br />" + label + " " + popup_stat)
-        .addTo(map_reference);
-}
-
-
-function getPopupStat(geonum, expression, acs_data) {
-
-    var stat = null;
-
-    // set up parser (https://github.com/silentmatt/expr-eval)
-    var parser = new exprEval.Parser();
-    var exp = parser.parse(expression.join(""));
-
-    let replacers_object = {};
-
-    for (var i = 0; i < acs_data.length; i++) {
-        if (acs_data[i].geonum === geonum.toString()) {
-
-            getUniqueExpressionKeys(expression).forEach(function (key) {
-                replacers_object[key] = acs_data[i][key];
-            })
-
-            stat = exp.evaluate(replacers_object);
-            break;
-        }
-    }
-
-    return parseInt(stat, 10).toLocaleString() || 'Unknown';
-}
-
 
 
 function getUniqueExpressionKeys(expression) {

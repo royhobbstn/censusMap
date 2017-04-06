@@ -17,6 +17,7 @@ export default class EasyButton {
         this._span = document.createElement('span');
         this._span.className = 'easy-btn fa fa-lg ' + this.icon;
         this._container.appendChild(this._span);
+
         return this._container;
     }
 

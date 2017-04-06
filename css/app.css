@@ -55,3 +55,16 @@
         font-weight: 800;
     }
     
+    #accordion {
+        padding: 10px;
+        width: 300px;
+    }
+    
+    #accordion .panel-heading {
+        padding: 5px;
+    }
+    
+    #accordion .panel-default {
+        margin-bottom: 3px;
+    }
+    

@@ -1,4 +1,7 @@
 
+median year built legend error
+
+tab control
 
 table-ify legend (line up < + symbols)
 small legend tweaks
