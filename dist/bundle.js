@@ -2,39 +2,6 @@
 'use strict';
 
 // Control implemented as ES6 class
-class DropdownCtrl {
-    onAdd(map) {
-        this._map = map;
-        this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl';
-        this._select = document.createElement('select');
-        this._select.id = 'acs_stat';
-
-        this._option1 = document.createElement('option');
-        this._option1.text = 'Median Household Income';
-        this._option1.value = 'mhi';
-        this._option2 = document.createElement('option');
-        this._option2.text = 'Median Home Value';
-        this._option2.value = 'mhv';
-        this._option3 = document.createElement('option');
-        this._option3.text = 'Population';
-        this._option3.value = 'pop';
-        this._select.appendChild(this._option1);
-        this._select.appendChild(this._option2);
-        this._select.appendChild(this._option3);
-
-
-        this._container.appendChild(this._select);
-        return this._container;
-    }
-
-    onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
-    }
-}
-
-// Control implemented as ES6 class
 class LegendCtrl {
 
     onAdd(map) {
@@ -3284,16 +3251,16 @@ function updateLegend(current_dropdown_value) {
     let default_color = '#fff';
     let title = datatree.acs1115[current_dropdown_value].title;
 
-    let html_string = "<div class='legend-title-text'>" + title + "</div>"; // inner HTML to be inserted into legend
+    let html_string = "<div class='legend-title-text'>" + title + "</div><table>"; // inner HTML to be inserted into legend
 
     for (let i = legend_breaks.length - 1; i > -1; i--) {
-        html_string += '<div><span class="legend-box" style="background-color:' + colorscheme[i] +
-            ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + formatValue(legend_breaks[i], type) + '</div>';
+        html_string += '<tr><td class="t-pad-sides"><div class="legend-box" style="background-color:' + colorscheme[i] +
+            ';"></div></td><td class="t-pad-sides"></td><td class="t-align-right">' + formatValue(legend_breaks[i], type) + '</td><td class="t-pad-sides">' + ((i === legend_breaks.length - 1) ? '+' : '') + '</td></tr>';
     }
 
     // default color
-    html_string += '<div><span class="legend-box" style="background-color:' + default_color +
-        ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;' + formatValue(legend_breaks[0], type) + '</div>';
+    html_string += '<tr><td class="t-pad-sides"><div class="legend-box" style="background-color:' + default_color +
+        ';"></div></td><td class="t-pad-sides">&lt;</td><td class="t-align-right">' + formatValue(legend_breaks[0], type) + '</td><td class="t-pad-sides"></td></tr></table>';
 
     document.getElementById('legend-ctrl').innerHTML = html_string;
 
@@ -3303,10 +3270,13 @@ function updateLegend(current_dropdown_value) {
 function formatValue(val, type) {
 
     if (type === 'currency') {
-        return ' $' + val.toLocaleString();
+        return ' $' + val.toLocaleString(); // add currency and thousands comma
     }
     if (type === 'number') {
-        return val.toLocaleString();
+        return val.toLocaleString(); // add thousands comma
+    }
+    if (type === 'regular') {
+        return val; // no formatting
     }
 }
 
@@ -3326,16 +3296,96 @@ var populateThemes = function (default_theme) {
     unique_sections.sort();
 
     unique_sections.forEach(function (section, i) {
-        $('#accordion').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading1' + i + '"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion1" href="#collapse' + i + '" aria-expanded="false" aria-controls="collapse1">' + section + '</a></h4></div><div id="collapse' + i + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + i + '"><div id="id' + section + '" class="panel-body"></div></div></div>');
+        $('#accordion').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading' + i +
+            '"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse' + i +
+            '" aria-expanded="false" aria-controls="collapse">' + section + '</a></h4></div><div id="collapse' + i +
+            '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + i + '"><div id="id' + section +
+            '" class="panel-body"></div></div></div>');
     });
 
     theme_keys.forEach(function (key) {
         let vchecked = (default_theme === key) ? 'checked' : '';
-        console.log(default_theme);
-        console.log(vchecked);
-        $('#id' + datatree.acs1115[key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' + key + '" ' + vchecked + '> ' + datatree.acs1115[key].title + '</label></div>'); //to accordion
+        $('#id' + datatree.acs1115[key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
+            key + '" ' + vchecked + '> ' + datatree.acs1115[key].title + '</label></div>'); //to accordion
+    });
+
+
+};
+
+var dataset = {
+
+    "acs1115": {
+        "source": "",
+        "title": "ACS 11-15",
+        "type": "ACS"
+    },
+    "acs1014": {
+        "source": "",
+        "title": "ACS 10-14",
+        "type": "ACS"
+    },
+    "c2010": {
+        "source": "",
+        "title": "Census 2010",
+        "type": "Census"
+    },
+    "c2000": {
+        "source": "",
+        "title": "Census 2000",
+        "type": "Census"
+    }
+
+};
+
+/* global $ */
+
+var populateDatasets = function () {
+
+    var acs_html = '';
+    var census_html = '';
+
+    var dataset_keys = Object.keys(dataset);
+
+    dataset_keys.forEach(function (key) {
+        if (dataset[key].type === "ACS") {
+            console.log(key);
+            acs_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '"></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
+        }
+        else if (dataset[key].type === "Census") {
+            census_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '"></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
+        }
+        else {
+            console.error('Unknown Dataset Type');
+        }
+
 
     });
+
+
+    $("#acsgroup").append(acs_html);
+    $("#censusgroup").append(census_html);
+
+
+
+    // let unique_sections = Array.from(new Set(sections_array));
+
+    // unique_sections.sort();
+
+    // unique_sections.forEach(function (section, i) {
+    //     $('#accordion').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading' + i +
+    //         '"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse' + i +
+    //         '" aria-expanded="false" aria-controls="collapse">' + section + '</a></h4></div><div id="collapse' + i +
+    //         '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + i + '"><div id="id' + section +
+    //         '" class="panel-body"></div></div></div>');
+    // });
+
+    // theme_keys.forEach(function (key) {
+    //     let vchecked = (default_theme === key) ? 'checked' : '';
+    //     $('#id' + datatree.acs1115[key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
+    //         key + '" ' + vchecked + '> ' + datatree.acs1115[key].title + '</label></div>'); //to accordion
+    // });
+
+
 
 
 };
@@ -3345,7 +3395,6 @@ var populateThemes = function (default_theme) {
 /* global exprEval */
 /* global $ */
 
-// set up map
 var map = new mapboxgl.Map({
     container: 'map',
     style: style,
@@ -3357,7 +3406,6 @@ map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-righ
 
 map.addControl(new mapboxgl.NavigationControl());
 
-map.addControl(new DropdownCtrl(), 'top-left');
 map.addControl(new LegendCtrl(), 'bottom-right');
 
 map.addControl(new EasyButton('choose_theme', 'fa-bars', 'Select a Theme'), 'top-left');
@@ -3369,6 +3417,7 @@ map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection')
 var default_theme = 'pop';
 
 populateThemes(default_theme);
+populateDatasets();
 
 
 

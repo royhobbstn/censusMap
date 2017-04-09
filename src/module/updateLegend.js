@@ -15,16 +15,16 @@ export default function updateLegend(current_dropdown_value) {
     let default_color = '#fff';
     let title = datatree.acs1115[current_dropdown_value].title;
 
-    let html_string = "<div class='legend-title-text'>" + title + "</div>"; // inner HTML to be inserted into legend
+    let html_string = "<div class='legend-title-text'>" + title + "</div><table>"; // inner HTML to be inserted into legend
 
     for (let i = legend_breaks.length - 1; i > -1; i--) {
-        html_string += '<div><span class="legend-box" style="background-color:' + colorscheme[i] +
-            ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + formatValue(legend_breaks[i], type) + '</div>';
+        html_string += '<tr><td class="t-pad-sides"><div class="legend-box" style="background-color:' + colorscheme[i] +
+            ';"></div></td><td class="t-pad-sides"></td><td class="t-align-right">' + formatValue(legend_breaks[i], type) + '</td><td class="t-pad-sides">' + ((i === legend_breaks.length - 1) ? '+' : '') + '</td></tr>';
     }
 
     // default color
-    html_string += '<div><span class="legend-box" style="background-color:' + default_color +
-        ';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&nbsp;' + formatValue(legend_breaks[0], type) + '</div>';
+    html_string += '<tr><td class="t-pad-sides"><div class="legend-box" style="background-color:' + default_color +
+        ';"></div></td><td class="t-pad-sides">&lt;</td><td class="t-align-right">' + formatValue(legend_breaks[0], type) + '</td><td class="t-pad-sides"></td></tr></table>';
 
     document.getElementById('legend-ctrl').innerHTML = html_string;
 
@@ -34,9 +34,12 @@ export default function updateLegend(current_dropdown_value) {
 function formatValue(val, type) {
 
     if (type === 'currency') {
-        return ' $' + val.toLocaleString();
+        return ' $' + val.toLocaleString(); // add currency and thousands comma
     }
     if (type === 'number') {
-        return val.toLocaleString();
+        return val.toLocaleString(); // add thousands comma
+    }
+    if (type === 'regular') {
+        return val; // no formatting
     }
 }

@@ -3,7 +3,6 @@
 /* global exprEval */
 /* global $ */
 
-import DropdownCtrl from './widgets/DropdownCtrl.js';
 import LegendCtrl from './widgets/LegendCtrl.js';
 import EasyButton from './widgets/EasyButtonCtrl.js';
 
@@ -14,6 +13,7 @@ import colortree from './json/colortree.json';
 
 import updateLegend from './module/updateLegend.js';
 import populateThemes from './module/populateThemes.js';
+import populateDatasets from './module/populateDatasets.js';
 
 // set up map
 var map = new mapboxgl.Map({
@@ -27,7 +27,6 @@ map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-righ
 
 map.addControl(new mapboxgl.NavigationControl());
 
-map.addControl(new DropdownCtrl(), 'top-left');
 map.addControl(new LegendCtrl(), 'bottom-right');
 
 map.addControl(new EasyButton('choose_theme', 'fa-bars', 'Select a Theme'), 'top-left');
@@ -39,6 +38,7 @@ map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection')
 var default_theme = 'pop';
 
 populateThemes(default_theme);
+populateDatasets();
 
 
 

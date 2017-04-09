@@ -13,11 +13,10 @@
     #legend-ctrl {
         width: 150px;
         height: auto;
+        border: 1px solid grey;
     }
     
     .legend-box {
-        position: absolute;
-        display: block;
         height: 15px;
         width: 15px;
         opacity: 0.8;
@@ -55,6 +54,14 @@
         font-weight: 800;
     }
     
+    .t-align-right {
+        text-align: right;
+    }
+    
+    .t-pad-sides {
+        padding: 0 5px;
+    }
+    
     #accordion {
         padding: 10px;
         width: 300px;
@@ -66,5 +73,9 @@
     
     #accordion .panel-default {
         margin-bottom: 3px;
+    }
+    
+    .panel-body {
+        padding: 0 15px;
     }
     

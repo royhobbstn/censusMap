@@ -21,16 +21,47 @@
     <div class="modal-dialog">
 
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">Control Center</h3>
-        </div>
+
         <div class="modal-body">
-          <div id="accordion"></div>
+
+
+          <ul class="nav nav-tabs" id="tabContent">
+            <li class="active"><a href="#theme" data-toggle="tab">Theme</a></li>
+            <li><a href="#geography" data-toggle="tab">Geography</a></li>
+            <li><a href="#dataset" data-toggle="tab">Dataset</a></li>
+            <li><a href="#symbology" data-toggle="tab">Symbology</a></li>
+          </ul>
+
+          <div class="tab-content">
+
+            <div class="tab-pane active" id="theme">
+              <div id="accordion"></div>
+            </div>
+
+            <div class="tab-pane" id="geography">
+              content 0
+            </div>
+
+            <div class="tab-pane" id="dataset">
+              <div class="row">
+                <div class="col-lg-6" id="acsgroup">
+                  <h4>ACS</h4>
+                </div>
+                <div class="col-lg-6" id="censusgroup">
+                  <h4>Census</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="symbology">
+              content 2
+            </div>
+
+          </div>
+
+
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+
       </div>
 
     </div>

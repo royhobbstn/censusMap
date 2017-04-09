@@ -1,0 +1,24 @@
+export default {
+
+    "acs1115": {
+        "source": "",
+        "title": "ACS 11-15",
+        "type": "ACS"
+    },
+    "acs1014": {
+        "source": "",
+        "title": "ACS 10-14",
+        "type": "ACS"
+    },
+    "c2010": {
+        "source": "",
+        "title": "Census 2010",
+        "type": "Census"
+    },
+    "c2000": {
+        "source": "",
+        "title": "Census 2000",
+        "type": "Census"
+    }
+
+}

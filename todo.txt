@@ -1,27 +1,40 @@
 
-median year built legend error
+add close X for modal
 
-tab control
+mouseover for value on map
 
-table-ify legend (line up < + symbols)
-small legend tweaks
-
-controls
--hamburger
 dataset picker
-subject picker
- read attributes from json rather than hardcode to menu
+- set default value
+- be able to figure value of current selection
+
+colorscheme picker / classification picker
+
+update tile server to eliminate 404s
+
 geography picker
  expanded geographies
  pick a geo hierarchy 
  - county - tract - bg
  - state - county - countysubdivision
+ ---------------------------------------
  - msa - cbsa - place
  - state - zcta
  - state - puma
-colorscheme picker / classification picker
 
 
+
+
+roadmap
+----------
+add search
+additional vector tile layers for differing census geographies
+additional vintages of acs
+add census 2010
+last - adapt to own census api
+webshot service
+ 
+ 
+ 
 interesting ideas
 ------------
 streaming OBOE.js - any advantage over gzip?
@@ -32,26 +45,6 @@ mouseover on legend to highlight those values on map
 cache data from ajax calls
 
 
-supplemental service
-------------
-update tile server to eliminate 404s
-webshot service
-
-
-roadmap
-----------
-add search
-additional vector tile layers for differing census geographies
-additional vintages of acs
-add census 2010
-last - adapt to own census api
-
-Computed Breaks
- - batch promises on compute-breaks, and use larger sample sizes
- - add 'sample' to computed breaks
- - will probably want to break into individual files for dataset / theme
-   (to prevent loading all breaks info upfront)
- 
 build todos
 --------------
 rollup cache busting 
