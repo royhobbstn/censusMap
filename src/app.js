@@ -3,6 +3,8 @@
 /* global exprEval */
 /* global $ */
 
+import Store from './module/reduxSetup.js';
+
 import LegendCtrl from './widgets/LegendCtrl.js';
 import EasyButton from './widgets/EasyButtonCtrl.js';
 
@@ -36,10 +38,23 @@ map.addControl(new EasyButton('save_map', 'fa-floppy-o', 'Save a Map Image'), 't
 map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection'), 'top-left');
 
 var default_theme = 'pop';
+var default_dataset = 'acs1115';
 
 populateThemes(default_theme);
-populateDatasets();
+populateDatasets(default_dataset);
 
+Store.dispatch({
+    type: 'INCREMENT'
+});
+// 1
+Store.dispatch({
+    type: 'INCREMENT'
+});
+// 2
+Store.dispatch({
+    type: 'DECREMENT'
+});
+// 1
 
 
 $('#myModal').modal({

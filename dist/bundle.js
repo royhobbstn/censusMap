@@ -1,6 +1,45 @@
 (function () {
 'use strict';
 
+/* global Redux */
+
+var initialState = {
+    theme: 'pop',
+    dataset: 'acs1115'
+};
+
+function app(state, action) {
+    if (typeof state === 'undefined') {
+        return initialState;
+    }
+
+    switch (action.type) {
+    case 'INCREMENT':
+        return Object.assign({}, state, {
+            theme: 'something'
+        });
+    case 'DECREMENT':
+        return Object.assign({}, state, {
+            dataset: 'other'
+        });
+    default:
+        return state;
+    }
+
+}
+
+// Create a Redux store holding the state of your app.
+// Its API is { subscribe, dispatch, getState }.
+let Store = Redux.createStore(app);
+
+// You can use subscribe() to update the UI in response to state changes.
+// Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
+// However it can also be handy to persist the current state in the localStorage.
+
+Store.subscribe(function () {
+    console.log(Store.getState());
+});
+
 // Control implemented as ES6 class
 class LegendCtrl {
 
@@ -3339,7 +3378,7 @@ var dataset = {
 
 /* global $ */
 
-var populateDatasets = function () {
+var populateDatasets = function (default_dataset) {
 
     var acs_html = '';
     var census_html = '';
@@ -3347,12 +3386,14 @@ var populateDatasets = function () {
     var dataset_keys = Object.keys(dataset);
 
     dataset_keys.forEach(function (key) {
+
+        var ifchecked = (key === default_dataset) ? 'checked' : '';
+
         if (dataset[key].type === "ACS") {
-            console.log(key);
-            acs_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '"></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
+            acs_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
         }
         else if (dataset[key].type === "Census") {
-            census_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '"></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
+            census_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
         }
         else {
             console.error('Unknown Dataset Type');
@@ -3365,27 +3406,9 @@ var populateDatasets = function () {
     $("#acsgroup").append(acs_html);
     $("#censusgroup").append(census_html);
 
-
-
-    // let unique_sections = Array.from(new Set(sections_array));
-
-    // unique_sections.sort();
-
-    // unique_sections.forEach(function (section, i) {
-    //     $('#accordion').append('<div class="panel panel-default"><div class="panel-heading" role="tab" id="heading' + i +
-    //         '"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse' + i +
-    //         '" aria-expanded="false" aria-controls="collapse">' + section + '</a></h4></div><div id="collapse' + i +
-    //         '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + i + '"><div id="id' + section +
-    //         '" class="panel-body"></div></div></div>');
-    // });
-
-    // theme_keys.forEach(function (key) {
-    //     let vchecked = (default_theme === key) ? 'checked' : '';
-    //     $('#id' + datatree.acs1115[key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
-    //         key + '" ' + vchecked + '> ' + datatree.acs1115[key].title + '</label></div>'); //to accordion
-    // });
-
-
+    $("input:radio[name=datasetgroup]").change(function () {
+        console.log($('input:radio[name=datasetgroup]:checked').val());
+    });
 
 
 };
@@ -3415,10 +3438,23 @@ map.addControl(new EasyButton('save_map', 'fa-floppy-o', 'Save a Map Image'), 't
 map.addControl(new EasyButton('clear_selection', 'fa-eraser', 'Clear Selection'), 'top-left');
 
 var default_theme = 'pop';
+var default_dataset = 'acs1115';
 
 populateThemes(default_theme);
-populateDatasets();
+populateDatasets(default_dataset);
 
+Store.dispatch({
+    type: 'INCREMENT'
+});
+// 1
+Store.dispatch({
+    type: 'INCREMENT'
+});
+// 2
+Store.dispatch({
+    type: 'DECREMENT'
+});
+// 1
 
 
 $('#myModal').modal({
