@@ -16,7 +16,6 @@ geography picker
  - state - zcta
  - state - puma
 
-mouseover for value on map
 
 
 
@@ -26,6 +25,7 @@ add search
 additional vector tile layers for differing census geographies
 additional vintages of acs
 add census 2010
+mouseover for value on map
 last - adapt to own census api
 webshot service
  
@@ -34,7 +34,6 @@ webshot service
 interesting ideas
 ------------
 streaming OBOE.js - any advantage over gzip?
-REDUX
 PREACT?
 api data returned as hash map where key is geonum - much faster
 mouseover on legend to highlight those values on map

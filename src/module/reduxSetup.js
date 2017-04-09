@@ -11,13 +11,13 @@ function app(state, action) {
     }
 
     switch (action.type) {
-    case 'INCREMENT':
+    case 'CHANGE THEME':
         return Object.assign({}, state, {
-            theme: 'something'
+            theme: action.value
         });
-    case 'DECREMENT':
+    case 'CHANGE DATASET':
         return Object.assign({}, state, {
-            dataset: 'other'
+            dataset: action.value
         });
     default:
         return state;
@@ -27,7 +27,7 @@ function app(state, action) {
 
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
-let Store = Redux.createStore(app)
+var Store = Redux.createStore(app);
 
 // You can use subscribe() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
@@ -37,4 +37,24 @@ Store.subscribe(function () {
     console.log(Store.getState());
 });
 
-export default Store;
+
+function observeStore(property, onChange) {
+    let currentState;
+
+    function handleChange() {
+        let nextState = Store.getState()[property];
+        if (nextState !== currentState) {
+            currentState = nextState;
+            onChange(currentState);
+        }
+    }
+
+    let unsubscribe = Store.subscribe(handleChange);
+
+    return unsubscribe;
+}
+
+export {
+    Store,
+    observeStore
+};

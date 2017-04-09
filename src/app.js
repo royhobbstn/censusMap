@@ -3,7 +3,11 @@
 /* global exprEval */
 /* global $ */
 
-import Store from './module/reduxSetup.js';
+import {
+    Store,
+    observeStore
+}
+from './module/reduxSetup.js';
 
 import LegendCtrl from './widgets/LegendCtrl.js';
 import EasyButton from './widgets/EasyButtonCtrl.js';
@@ -26,11 +30,8 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
-
 map.addControl(new mapboxgl.NavigationControl());
-
 map.addControl(new LegendCtrl(), 'bottom-right');
-
 map.addControl(new EasyButton('choose_theme', 'fa-bars', 'Select a Theme'), 'top-left');
 map.addControl(new EasyButton('view_table', 'fa-table', 'View a Data Table'), 'top-left');
 map.addControl(new EasyButton('view_chart', 'fa-line-chart', 'View a Chart'), 'top-left');
@@ -43,18 +44,16 @@ var default_dataset = 'acs1115';
 populateThemes(default_theme);
 populateDatasets(default_dataset);
 
-Store.dispatch({
-    type: 'INCREMENT'
+
+observeStore('theme', function (theme) {
+    console.log('theme changed to ' + theme);
+    updateMap(theme);
 });
-// 1
-Store.dispatch({
-    type: 'INCREMENT'
+
+observeStore('dataset', function (dataset) {
+    console.log('dataset changed to ' + dataset);
 });
-// 2
-Store.dispatch({
-    type: 'DECREMENT'
-});
-// 1
+
 
 
 $('#myModal').modal({
@@ -68,7 +67,10 @@ function clickChooseTheme() {
 }
 
 $('input[name=optionsRadios]:radio').change(function () {
-    updateMap(this.value);
+    Store.dispatch({
+        type: 'CHANGE THEME',
+        value: this.value
+    });
 });
 
 

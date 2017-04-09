@@ -14,13 +14,13 @@ function app(state, action) {
     }
 
     switch (action.type) {
-    case 'INCREMENT':
+    case 'CHANGE THEME':
         return Object.assign({}, state, {
-            theme: 'something'
+            theme: action.value
         });
-    case 'DECREMENT':
+    case 'CHANGE DATASET':
         return Object.assign({}, state, {
-            dataset: 'other'
+            dataset: action.value
         });
     default:
         return state;
@@ -30,7 +30,7 @@ function app(state, action) {
 
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
-let Store = Redux.createStore(app);
+var Store = Redux.createStore(app);
 
 // You can use subscribe() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
@@ -39,6 +39,23 @@ let Store = Redux.createStore(app);
 Store.subscribe(function () {
     console.log(Store.getState());
 });
+
+
+function observeStore(property, onChange) {
+    let currentState;
+
+    function handleChange() {
+        let nextState = Store.getState()[property];
+        if (nextState !== currentState) {
+            currentState = nextState;
+            onChange(currentState);
+        }
+    }
+
+    let unsubscribe = Store.subscribe(handleChange);
+
+    return unsubscribe;
+}
 
 // Control implemented as ES6 class
 class LegendCtrl {
@@ -3418,6 +3435,7 @@ var populateDatasets = function (default_dataset) {
 /* global exprEval */
 /* global $ */
 
+// set up map
 var map = new mapboxgl.Map({
     container: 'map',
     style: style,
@@ -3426,11 +3444,8 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
-
 map.addControl(new mapboxgl.NavigationControl());
-
 map.addControl(new LegendCtrl(), 'bottom-right');
-
 map.addControl(new EasyButton('choose_theme', 'fa-bars', 'Select a Theme'), 'top-left');
 map.addControl(new EasyButton('view_table', 'fa-table', 'View a Data Table'), 'top-left');
 map.addControl(new EasyButton('view_chart', 'fa-line-chart', 'View a Chart'), 'top-left');
@@ -3443,18 +3458,16 @@ var default_dataset = 'acs1115';
 populateThemes(default_theme);
 populateDatasets(default_dataset);
 
-Store.dispatch({
-    type: 'INCREMENT'
+
+observeStore('theme', function (theme) {
+    console.log('theme changed to ' + theme);
+    updateMap(theme);
 });
-// 1
-Store.dispatch({
-    type: 'INCREMENT'
+
+observeStore('dataset', function (dataset) {
+    console.log('dataset changed to ' + dataset);
 });
-// 2
-Store.dispatch({
-    type: 'DECREMENT'
-});
-// 1
+
 
 
 $('#myModal').modal({
@@ -3468,7 +3481,10 @@ function clickChooseTheme() {
 }
 
 $('input[name=optionsRadios]:radio').change(function () {
-    updateMap(this.value);
+    Store.dispatch({
+        type: 'CHANGE THEME',
+        value: this.value
+    });
 });
 
 
