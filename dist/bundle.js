@@ -130,18 +130,8 @@ var style = {
       "tiles": [
         "https://red-meteor.com/mbtiles/united_states_of_america/{z}/{x}/{y}.pbf"
       ],
-      "minZoom": 0,
-      "maxZoom": 13,
-      "maxzoom": 13
-    },
-    "county": {
-      "type": "vector",
-      "tiles": [
-        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-      "minZoom": 0,
-      "maxZoom": 13,
-      "maxzoom": 13
+      "minzoom": 0,
+      "maxzoom": 13,
     }
   },
   "glyphs": "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=igsf1AR2UOc8hfBlRsM2",
@@ -240,52 +230,6 @@ var style = {
           ],
       "paint": {
         "fill-color": "hsl(205, 56%, 73%)"
-      }
-    }, {
-      "id": "landcover-ice-shelf",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "filter": [
-            "==",
-            "subclass",
-            "ice_shelf"
-          ],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "hsl(47, 26%, 88%)",
-        "fill-opacity": 0.8
-      }
-    }, {
-      "id": "landcover-glacier",
-      "type": "fill",
-      "source": "openmaptiles",
-      "source-layer": "landcover",
-      "filter": [
-            "==",
-            "subclass",
-            "glacier"
-          ],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "hsl(47, 22%, 94%)",
-        "fill-opacity": {
-          "base": 1,
-          "stops": [
-                [
-                  0,
-                  1
-                ],
-                [
-                  8,
-                  0.5
-                ]
-              ]
-        }
       }
     }, {
       "id": "landuse",
@@ -392,30 +336,6 @@ var style = {
         }
       }
     }, {
-      "id": "housenumber",
-      "type": "symbol",
-      "source": "openmaptiles",
-      "source-layer": "housenumber",
-      "minzoom": 17,
-      "filter": [
-            "==",
-            "$type",
-            "Point"
-          ],
-      "layout": {
-        "text-field": "{housenumber}",
-        "text-size": 10,
-        "text-font": [
-              "Klokantech Noto Sans Regular",
-              "Klokantech Noto Sans CJK Regular"
-            ]
-      },
-      "paint": {
-        "text-color": "hsla(0, 14%, 57%, 0.51)",
-        "text-halo-color": "hsl(39, 41%, 86%)",
-        "text-halo-width": 0.5
-      }
-    }, {
       "id": "road_path",
       "type": "line",
       "source": "openmaptiles",
@@ -496,103 +416,6 @@ var style = {
                 ]
               ]
         }
-      }
-    }, {
-      "id": "tunnel_minor",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "tunnel"
-            ],
-            [
-              "==",
-              "class",
-              "minor_road"
-            ]
-          ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
-      "paint": {
-        "line-color": "#efefef",
-        "line-width": {
-          "base": 1.55,
-          "stops": [
-                [
-                  4,
-                  0.25
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        },
-        "line-dasharray": [
-              0.36,
-              0.18
-            ]
-      }
-    }, {
-      "id": "tunnel_major",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "tunnel"
-            ],
-            [
-              "in",
-              "class",
-              "primary",
-              "secondary",
-              "tertiary",
-              "trunk"
-            ]
-          ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
-      "paint": {
-        "line-color": "#fff",
-        "line-width": {
-          "base": 1.4,
-          "stops": [
-                [
-                  6,
-                  0.5
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        },
-        "line-dasharray": [
-              0.28,
-              0.14
-            ]
       }
     }, {
       "id": "road_trunk_primary",
@@ -710,276 +533,6 @@ var style = {
               ]
         },
         "line-offset": 0
-      }
-    }, {
-      "id": "railway",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "==",
-            "class",
-            "rail"
-          ],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "hsl(34, 12%, 66%)",
-        "line-opacity": {
-          "base": 1,
-          "stops": [
-                [
-                  11,
-                  0
-                ],
-                [
-                  16,
-                  1
-                ]
-              ]
-        }
-      }
-    }, {
-      "id": "bridge_minor case",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "bridge"
-            ],
-            [
-              "==",
-              "class",
-              "minor_road"
-            ]
-          ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
-      "paint": {
-        "line-color": "#dedede",
-        "line-width": {
-          "base": 1.6,
-          "stops": [
-                [
-                  12,
-                  0.5
-                ],
-                [
-                  20,
-                  10
-                ]
-              ]
-        },
-        "line-gap-width": {
-          "base": 1.55,
-          "stops": [
-                [
-                  4,
-                  0.25
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        }
-      }
-    }, {
-      "id": "bridge_major case",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "bridge"
-            ],
-            [
-              "in",
-              "class",
-              "primary",
-              "secondary",
-              "tertiary",
-              "trunk"
-            ]
-          ],
-      "layout": {
-        "line-cap": "butt",
-        "line-join": "miter"
-      },
-      "paint": {
-        "line-color": "#dedede",
-        "line-width": {
-          "base": 1.6,
-          "stops": [
-                [
-                  12,
-                  0.5
-                ],
-                [
-                  20,
-                  10
-                ]
-              ]
-        },
-        "line-gap-width": {
-          "base": 1.55,
-          "stops": [
-                [
-                  4,
-                  0.25
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        }
-      }
-    }, {
-      "id": "bridge_minor",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "bridge"
-            ],
-            [
-              "==",
-              "class",
-              "minor_road"
-            ]
-          ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#efefef",
-        "line-width": {
-          "base": 1.55,
-          "stops": [
-                [
-                  4,
-                  0.25
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        }
-      }
-    }, {
-      "id": "bridge_major",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "transportation",
-      "filter": [
-            "all",
-            [
-              "==",
-              "$type",
-              "LineString"
-            ],
-            [
-              "==",
-              "brunnel",
-              "bridge"
-            ],
-            [
-              "in",
-              "class",
-              "primary",
-              "secondary",
-              "tertiary",
-              "trunk"
-            ]
-          ],
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
-      },
-      "paint": {
-        "line-color": "#fff",
-        "line-width": {
-          "base": 1.4,
-          "stops": [
-                [
-                  6,
-                  0.5
-                ],
-                [
-                  20,
-                  30
-                ]
-              ]
-        }
-      }
-    }
-, {
-      "id": "county-fill",
-      "type": "fill",
-      "source": "county",
-      "source-layer": "county",
-      "maxzoom": 24,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": {
-          "property": "county",
-          "type": "interval",
-          "stops": [
-            [1, "rgb(255, 255, 255)"],
-            [10, "rgb(255, 255, 255)"],
-            [100, "rgb(255, 255, 255)"]
-        ]
-        },
-        "fill-opacity": 0
-      }
-    },
-
-    {
-      "id": "county-lines",
-      "type": "line",
-      "source": "county",
-      "source-layer": "county",
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgb(100, 100, 100)",
-        "line-opacity": 0.6,
-        "line-width": 0.3
       }
     }, {
       "id": "admin_sub",
@@ -3443,6 +2996,16 @@ var map = new mapboxgl.Map({
     center: [-104, 39]
 });
 
+map.on('zoom', function () {
+    console.log(map.getZoom());
+    if (map.getZoom() > 10) {
+        // console.log('zoom exceeding 10');
+    }
+    else {
+        // console.log('zoom less than 10');
+    }
+});
+
 map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
 map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new LegendCtrl(), 'bottom-right');
@@ -3487,6 +3050,58 @@ $('input[name=optionsRadios]:radio').change(function () {
     });
 });
 
+map.on('load', function () {
+
+    map.addSource('county', {
+        "type": "vector",
+        "tiles": [
+        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
+      ],
+        "minzoom": 0,
+        "maxzoom": 13
+    });
+
+    map.addLayer({
+        "id": "county-fill",
+        "type": "fill",
+        "source": "county",
+        "source-layer": "county",
+        "maxzoom": 24,
+        "layout": {
+            "visibility": "visible"
+        },
+        "paint": {
+            "fill-color": {
+                "property": "county",
+                "type": "interval",
+                "stops": [
+            [1, "rgb(255, 255, 255)"],
+            [10, "rgb(255, 255, 255)"],
+            [100, "rgb(255, 255, 255)"]
+        ]
+            },
+            "fill-opacity": 0
+        }
+    }, 'road_major_motorway');
+
+
+    map.addLayer({
+        "id": "county-lines",
+        "type": "line",
+        "source": "county",
+        "source-layer": "county",
+        "layout": {
+            "visibility": "visible"
+        },
+        "paint": {
+            "line-color": "rgb(100, 100, 100)",
+            "line-opacity": 0.6,
+            "line-width": 0.3
+        }
+    }, 'county-fill');
+
+
+});
 
 
 

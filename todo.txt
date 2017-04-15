@@ -1,5 +1,11 @@
 
+load base style - just open map tiles?
 
+zoom based
+ -remove source (existing)
+ -add source
+ (as opposed to setStyle)
+ -then paint
 
 colorscheme picker / classification picker
 

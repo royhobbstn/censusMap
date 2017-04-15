@@ -29,6 +29,16 @@ var map = new mapboxgl.Map({
     center: [-104, 39]
 });
 
+map.on('zoom', function () {
+    console.log(map.getZoom());
+    if (map.getZoom() > 10) {
+        // console.log('zoom exceeding 10');
+    }
+    else {
+        // console.log('zoom less than 10');
+    }
+});
+
 map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
 map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new LegendCtrl(), 'bottom-right');
@@ -73,6 +83,58 @@ $('input[name=optionsRadios]:radio').change(function () {
     });
 });
 
+map.on('load', function () {
+
+    map.addSource('county', {
+        "type": "vector",
+        "tiles": [
+        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
+      ],
+        "minzoom": 0,
+        "maxzoom": 13
+    });
+
+    map.addLayer({
+        "id": "county-fill",
+        "type": "fill",
+        "source": "county",
+        "source-layer": "county",
+        "maxzoom": 24,
+        "layout": {
+            "visibility": "visible"
+        },
+        "paint": {
+            "fill-color": {
+                "property": "county",
+                "type": "interval",
+                "stops": [
+            [1, "rgb(255, 255, 255)"],
+            [10, "rgb(255, 255, 255)"],
+            [100, "rgb(255, 255, 255)"]
+        ]
+            },
+            "fill-opacity": 0
+        }
+    }, 'road_major_motorway');
+
+
+    map.addLayer({
+        "id": "county-lines",
+        "type": "line",
+        "source": "county",
+        "source-layer": "county",
+        "layout": {
+            "visibility": "visible"
+        },
+        "paint": {
+            "line-color": "rgb(100, 100, 100)",
+            "line-opacity": 0.6,
+            "line-width": 0.3
+        }
+    }, 'county-fill');
+
+
+});
 
 
 
