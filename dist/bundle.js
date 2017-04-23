@@ -2992,19 +2992,29 @@ var populateDatasets = function (default_dataset) {
 var map = new mapboxgl.Map({
     container: 'map',
     style: style,
+    minZoom: 3,
+    maxZoom: 13.99,
     zoom: 3,
     center: [-104, 39]
 });
 
-map.on('zoom', function () {
-    console.log(map.getZoom());
-    if (map.getZoom() > 10) {
-        // console.log('zoom exceeding 10');
-    }
-    else {
-        // console.log('zoom less than 10');
-    }
-});
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this,
+            args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        }, wait);
+        if (immediate && !timeout) func.apply(context, args);
+    };
+}
 
 map.addControl(new EasyButton('custom_search', 'fa-search', 'Search'), 'top-right');
 map.addControl(new mapboxgl.NavigationControl());
@@ -3050,39 +3060,100 @@ $('input[name=optionsRadios]:radio').change(function () {
     });
 });
 
+
+
 map.on('load', function () {
+
+
+    map.addSource('state', {
+        "type": "vector",
+        "tiles": [
+        "https://red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"
+      ],
+        "minzoom": 3,
+        "maxzoom": 5
+    });
 
     map.addSource('county', {
         "type": "vector",
         "tiles": [
         "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
       ],
-        "minzoom": 0,
-        "maxzoom": 13
+        "minzoom": 5,
+        "maxzoom": 9
     });
+
+    map.addSource('tract', {
+        "type": "vector",
+        "tiles": [
+        "https://red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"
+      ],
+        "minzoom": 9,
+        "maxzoom": 12
+    });
+
+    map.addSource('bg', {
+        "type": "vector",
+        "tiles": [
+        "https://red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"
+      ],
+        "minzoom": 12,
+        "maxzoom": 14
+    });
+
+    map.addLayer({
+        "id": "state-fill",
+        "type": "fill",
+        "source": "state",
+        "source-layer": "stategeojson",
+        "minzoom": 3,
+        "maxzoom": 5,
+        "layout": {
+            "visibility": "visible"
+        }
+    }, 'road_major_motorway');
 
     map.addLayer({
         "id": "county-fill",
         "type": "fill",
         "source": "county",
         "source-layer": "county",
-        "maxzoom": 24,
+        "minzoom": 5,
+        "maxzoom": 9,
         "layout": {
             "visibility": "visible"
-        },
-        "paint": {
-            "fill-color": {
-                "property": "county",
-                "type": "interval",
-                "stops": [
-            [1, "rgb(255, 255, 255)"],
-            [10, "rgb(255, 255, 255)"],
-            [100, "rgb(255, 255, 255)"]
-        ]
-            },
-            "fill-opacity": 0
         }
     }, 'road_major_motorway');
+
+    map.addLayer({
+        "id": "tract-fill",
+        "type": "fill",
+        "source": "tract",
+        "source-layer": "tractgeojson",
+        "minzoom": 9,
+        "maxzoom": 12,
+        "layout": {
+            "visibility": "visible"
+        }
+    }, 'road_major_motorway');
+
+    map.addLayer({
+        "id": "bg-fill",
+        "type": "fill",
+        "source": "bg",
+        "source-layer": "bggeojson",
+        "minzoom": 12,
+        "maxzoom": 14,
+        "layout": {
+            "visibility": "visible"
+        }
+    }, 'road_major_motorway');
+
+
+
+
+
+
 
 
     map.addLayer({
@@ -3100,8 +3171,28 @@ map.on('load', function () {
         }
     }, 'county-fill');
 
+    updateMap(default_theme);
 
 });
+
+var myEfficientFn = debounce(function () {
+
+    var features = map.queryRenderedFeatures({
+        layers: ['county-fill']
+    });
+
+    var all_geonums = features.map(function (feature) {
+        return feature.properties.geonum;
+    });
+    console.log('-------');
+    console.log(map.getZoom());
+
+    console.log('moveend');
+    console.log(all_geonums);
+}, 250);
+
+map.on('moveend', myEfficientFn);
+
 
 
 
@@ -3124,13 +3215,6 @@ function fetchCensusData(style_code) {
     });
 }
 
-
-
-init();
-
-function init() {
-    updateMap(default_theme);
-}
 
 
 
