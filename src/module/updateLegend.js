@@ -1,12 +1,13 @@
 import computed_breaks from './../json/computed_breaks.json';
 import colortree from './../json/colortree.json';
 import datatree from './../json/datatree.json';
+import geo from './../json/geoscheme.json';
 
 
-export default function updateLegend(current_dropdown_value) {
+export default function updateLegend(current_dropdown_value, geography_name) {
 
     let breaks_style = datatree.acs1115[current_dropdown_value].favstyle[0] + datatree.acs1115[current_dropdown_value].favstyle[1];
-    let legend_breaks = computed_breaks.acs1115[current_dropdown_value].county[breaks_style];
+    let legend_breaks = computed_breaks.acs1115[current_dropdown_value][geography_name][breaks_style];
 
     let color_style = datatree.acs1115[current_dropdown_value].favstyle[2] + '_' + datatree.acs1115[current_dropdown_value].favstyle[1];
     let colorscheme = colortree[color_style];

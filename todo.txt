@@ -1,49 +1,33 @@
 
 
-geo that we need already encoded in pbf
-geojson - ids of where we are
+break out logic for loading sources and layers
+
+implement previous ACS years
+
+geography tab different based on selected dataset
+
+continous loop that compares rendered geonums to previous rendered geonums and redraws map if different
+ -- only redraws changed geonums
+
+  query store for data
+  then query db for remaining data
+  combine data
+    or, for performance, render from localstorage and remote async
+  
 
 
 
-moveend event
-
-if its a zoom-in and within current range,
-  do nothing
-    record extent
-else
-  get center of map and top of zoom range?
-  record extent
-
-if its a pan
-  record extent
-  compare to previous extent
-  get delta between last extent and current extent (using ..that js library)
-  Query Postgres Database
-    get IDs from postgres query of above (minus id's 
-    return data from IDs
-    
+SERVER
+------
+api post request instead of get
+update tile server to eliminate 404s
 
 
-query store for data
-then query db for remaining data
 
-load all sources up front for chosen dataset
-load all layers up front for given geography scheme
-don't need to capture zooms, layer detail should do everything
-
-
-load base style - just open map tiles?
-
-zoom based
- -remove source (existing)
- -add source
- (as opposed to setStyle)
- -then paint
 
 colorscheme picker / classification picker
+delay - on purpose: default unrendered tiles as transparent or white
 
-update tile server to eliminate 404s
-update lets encrypt
 
 geography picker
  expanded geographies

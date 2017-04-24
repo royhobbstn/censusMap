@@ -2,7 +2,8 @@
 
 var initialState = {
     theme: 'pop',
-    dataset: 'acs1115'
+    dataset: 'acs1115',
+    geoscheme: 'standard'
 };
 
 function app(state, action) {
@@ -18,6 +19,10 @@ function app(state, action) {
     case 'CHANGE DATASET':
         return Object.assign({}, state, {
             dataset: action.value
+        });
+    case 'CHANGE GEOSCHEME':
+        return Object.assign({}, state, {
+            geoscheme: action.value
         });
     default:
         return state;
