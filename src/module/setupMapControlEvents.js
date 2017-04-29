@@ -20,11 +20,6 @@ export default function () {
         $('#myModal').modal('show');
     }
 
-    $('input[name=optionsRadios]:radio').change(function () {
-        Store.dispatch({
-            type: 'CHANGE THEME',
-            value: this.value
-        });
-    });
+
 
 }

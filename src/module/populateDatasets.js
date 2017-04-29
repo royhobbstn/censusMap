@@ -1,9 +1,19 @@
 /* global $ */
 
 import dataset from './../json/dataset.json';
+import populateThemes from './populateThemes.js';
+
+import {
+    Store
+}
+from './reduxSetup.js';
 
 
-export default function (default_dataset) {
+function populateDatasets() {
+
+    var current_store_values = Store.getState();
+
+    var default_dataset = current_store_values.dataset;
 
     var acs_html = '';
     var census_html = '';
@@ -31,9 +41,20 @@ export default function (default_dataset) {
     $("#acsgroup").append(acs_html);
     $("#censusgroup").append(census_html);
 
+
     $("input:radio[name=datasetgroup]").change(function () {
-        console.log($('input:radio[name=datasetgroup]:checked').val());
+
+        var new_dataset = $('input:radio[name=datasetgroup]:checked').val();
+        console.log(new_dataset);
+
+        Store.dispatch({
+            type: 'CHANGE DATASET',
+            value: new_dataset
+        });
+
+        populateThemes();
     });
 
-
 }
+
+export default populateDatasets;

@@ -1,32 +1,22 @@
 
 
-break out logic for loading sources and layers
 
-implement previous ACS years
+more geography types
 
 geography tab different based on selected dataset
 
-continous loop that compares rendered geonums to previous rendered geonums and redraws map if different
- -- only redraws changed geonums
+colorscheme picker / classification picker
+delay - on purpose: default unrendered tiles as transparent or white
 
-  query store for data
-  then query db for remaining data
-  combine data
-    or, for performance, render from localstorage and remote async
-  
+implement previous ACS years using load sources and layers
+
 
 
 
 SERVER
 ------
 api post request instead of get
-update tile server to eliminate 404s
-
-
-
-
-colorscheme picker / classification picker
-delay - on purpose: default unrendered tiles as transparent or white
+compute breaks is fragile
 
 
 geography picker
@@ -38,8 +28,6 @@ geography picker
  - msa - cbsa - place
  - state - zcta
  - state - puma
-
-
 
 
 roadmap
@@ -56,15 +44,14 @@ webshot service
  
 interesting ideas
 ------------
-streaming OBOE.js - any advantage over gzip?
 PREACT?
-api data returned as hash map where key is geonum - much faster
 mouseover on legend to highlight those values on map
 cache data from ajax calls
 
 
 build todos
 --------------
+webpack
 rollup cache busting 
 rollup uglify
 

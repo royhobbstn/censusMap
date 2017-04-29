@@ -3,18 +3,25 @@ import colortree from './../json/colortree.json';
 import datatree from './../json/datatree.json';
 import geo from './../json/geoscheme.json';
 
+import {
+    Store
+}
+from './reduxSetup.js';
 
 export default function updateLegend(current_dropdown_value, geography_name) {
 
-    let breaks_style = datatree.acs1115[current_dropdown_value].favstyle[0] + datatree.acs1115[current_dropdown_value].favstyle[1];
-    let legend_breaks = computed_breaks.acs1115[current_dropdown_value][geography_name][breaks_style];
+    var current_store_values = Store.getState();
+    var dataset = current_store_values.dataset;
 
-    let color_style = datatree.acs1115[current_dropdown_value].favstyle[2] + '_' + datatree.acs1115[current_dropdown_value].favstyle[1];
+    let breaks_style = datatree[dataset][current_dropdown_value].favstyle[0] + datatree[dataset][current_dropdown_value].favstyle[1];
+    let legend_breaks = computed_breaks[dataset][current_dropdown_value][geography_name][breaks_style];
+
+    let color_style = datatree[dataset][current_dropdown_value].favstyle[2] + '_' + datatree[dataset][current_dropdown_value].favstyle[1];
     let colorscheme = colortree[color_style];
 
-    let type = datatree.acs1115[current_dropdown_value].type;
+    let type = datatree[dataset][current_dropdown_value].type;
     let default_color = '#fff';
-    let title = datatree.acs1115[current_dropdown_value].title;
+    let title = datatree[dataset][current_dropdown_value].title;
 
     let html_string = "<div class='legend-title-text'>" + title + "</div><table>"; // inner HTML to be inserted into legend
 

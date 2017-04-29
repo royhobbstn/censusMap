@@ -6,10 +6,21 @@ export default {
             "county": [5, 9],
             "tract": [9, 12],
             "bg": [12, 14]
+        },
+        "region": {
+            "state": [3, 5],
+            "msa": [5, 8],
+            "cbsa": [8, 10],
+            "place": [10, 14]
         }
     },
     "acs1014": {
-
+        "standard": {
+            "state": [3, 5],
+            "county": [5, 9],
+            "tract": [9, 12],
+            "bg": [12, 14]
+        }
     },
     "c2010": {
 

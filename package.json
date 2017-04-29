@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "expr-eval": "^1.0.0",
+    "localforage": "^1.5.0",
     "redux-subscriber": "^1.1.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",

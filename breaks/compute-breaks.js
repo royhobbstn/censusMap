@@ -9,33 +9,35 @@ var rp = require('request-promise');
 var datatree = require('./datatree.js').default;
 
 var geo = [{
-    name: 'bg',
-    sumlev: 150
+        name: 'bg',
+        sumlev: 150
 }, {
-    name: 'tract',
-    sumlev: 140
+        name: 'tract',
+        sumlev: 140
 }, {
-    name: 'place',
-    sumlev: 160
+        name: 'place',
+        sumlev: 160
 }, {
-    name: 'county',
-    sumlev: 50
+        name: 'county',
+        sumlev: 50
 }, {
-    name: 'state',
-    sumlev: 40
-}, {
-    name: 'countysub',
-    sumlev: 60
-}, {
-    name: 'msa',
-    sumlev: 310
-}, {
-    name: 'cbsa',
-    sumlev: 330
-}, {
-    name: 'zcta',
-    sumlev: 860
-}];
+        name: 'state',
+        sumlev: 40
+}
+    /*, {
+        name: 'countysub',
+        sumlev: 60
+    }, {
+        name: 'msa',
+        sumlev: 310
+    }, {
+        name: 'cbsa',
+        sumlev: 330
+    }, {
+        name: 'zcta',
+        sumlev: 860
+    }*/
+    ];
 
 var all_promises = [];
 var main_object = {};
@@ -53,7 +55,7 @@ Object.keys(datatree).forEach(function (dataset) {
 
         geo.forEach(function (geog) {
 
-            var query_dataset = '&db=acs1115';
+            var query_dataset = '&db=' + dataset;
             var query_table = '&table=' + datatree[dataset][theme].table;
             var query_sumlev = '&sumlev=' + geog.sumlev;
             var query_url_base = 'https://gis.dola.colorado.gov/capi/demog?';

@@ -32,7 +32,7 @@ var map = new mapboxgl.Map({
 
 
 addMapControls(map);
-setupMapControls();
+setupMapControls(map);
 setupMapControlEvents(map);
 
 

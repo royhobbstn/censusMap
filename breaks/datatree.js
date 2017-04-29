@@ -4,6 +4,92 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    "acs1014": {
+
+        "mhi": {
+            "title": "Median Household Income",
+            "table": "b19013",
+            "section": "Income",
+            "expression": ["b19013001"],
+            "type": "currency",
+            "minval": "1",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Median Household Income",
+            "favstyle": ["ckmeans", "7", "mh1"],
+            "bg": "yes"
+        },
+
+        "mhv": {
+            "title": "Median Home Value",
+            "section": "Housing",
+            "table": "b25077",
+            "expression": ["b25077001"],
+            "type": "currency",
+            "minval": "1",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Median Home Value",
+            "favstyle": ["ckmeans", "7", "mh2"],
+            "bg": "yes"
+        },
+
+        "mfi": {
+            "title": "Median Family Income",
+            "section": "Income",
+            "table": "b19113",
+            "expression": ["b19113001"],
+            "type": "currency",
+            "minval": "1",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Median Family Income",
+            "favstyle": ["ckmeans", "7", "mh3"],
+            "bg": "yes"
+        },
+
+        "pci": {
+            "title": "Per Capita Income",
+            "section": "Income",
+            "table": "b19301",
+            "expression": ["b19301001"],
+            "type": "currency",
+            "minval": "1",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Per Capita Income",
+            "favstyle": ["ckmeans", "7", "mh4"],
+            "bg": "yes"
+        },
+
+        "myb": {
+            "title": "Median Year Housing Unit Built",
+            "section": "Housing",
+            "table": "b25035",
+            "expression": ["b25035001"],
+            "type": "regular",
+            "minval": "1939",
+            "mininc": "1",
+            "usezeroasnull": "yes",
+            "favtable": "Median Year Built",
+            "favstyle": ["ckmeans", "7", "mh5"],
+            "bg": "yes"
+        },
+
+        "pop": {
+            "title": "Total Population",
+            "section": "Population",
+            "table": "b01001",
+            "expression": ["b01001001"],
+            "type": "number",
+            "minval": "0",
+            "mininc": "1",
+            "usezeroasnull": "no",
+            "favtable": "Basic Population (total)",
+            "favstyle": ["ckmeans", "7", "mh7"],
+            "bg": "yes"
+        }
+    },
     "acs1115": {
 
         "mhi": {

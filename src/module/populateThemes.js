@@ -2,13 +2,26 @@
 
 import datatree from './../json/datatree.json';
 
-export default function (default_theme) {
+import {
+    Store
+}
+from './reduxSetup.js';
 
 
-    var theme_keys = Object.keys(datatree.acs1115);
+export default function () {
+
+    $('#accordion').html('');
+
+    var current_store_values = Store.getState();
+    var dataset = current_store_values.dataset;
+    console.log('dataset');
+    console.log(dataset);
+    var theme = current_store_values.theme;
+
+    var theme_keys = Object.keys(datatree[dataset]);
 
     var sections_array = theme_keys.map(function (key) {
-        return datatree.acs1115[key].section;
+        return datatree[dataset][key].section;
     });
 
     let unique_sections = Array.from(new Set(sections_array));
@@ -24,10 +37,16 @@ export default function (default_theme) {
     });
 
     theme_keys.forEach(function (key) {
-        let vchecked = (default_theme === key) ? 'checked' : '';
-        $('#id' + datatree.acs1115[key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
-            key + '" ' + vchecked + '> ' + datatree.acs1115[key].title + '</label></div>'); //to accordion
+        let vchecked = (theme === key) ? 'checked' : '';
+        $('#id' + datatree[dataset][key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
+            key + '" ' + vchecked + '> ' + datatree[dataset][key].title + '</label></div>'); //to accordion
     });
 
+    $('input[name=optionsRadios]:radio').change(function () {
+        Store.dispatch({
+            type: 'CHANGE THEME',
+            value: this.value
+        });
+    });
 
 }
