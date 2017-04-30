@@ -50,31 +50,23 @@ export default function (map) {
         return feature.properties.geonum;
     })));
 
-    console.log(all_geonums);
-
     var comma_delimited_geonums = all_geonums.join(",");
-    console.log(comma_delimited_geonums);
 
     updateLegend(theme, geography_name);
 
     var previously_gathered_data = getPreviousData(datatree[dataset][theme].table, comma_delimited_geonums, dataset);
 
     previously_gathered_data.then(function (data) {
-        console.log(data);
 
         var succesful_records = getSuccessfulRecords(data);
-        console.log(succesful_records);
 
         var succesful_geonums = getSuccessfulGeonums(succesful_records);
-        console.log(succesful_geonums);
 
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
-        console.log(unfound_geonums);
 
         if (unfound_geonums.length > 0) {
             fetchCensusData(theme, unfound_geonums.join(","), dataset).then((acs_data) => {
                 var combined_data = succesful_records.concat(acs_data);
-                console.log(combined_data);
                 paintMap(theme, combined_data, geography_name, dataset);
             });
         }

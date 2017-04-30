@@ -1,8 +1,9 @@
 /* global $ */
 
 import dataset from './../json/dataset.json';
+import geoscheme from './../json/geoscheme.json';
 import populateThemes from './populateThemes.js';
-
+import populateGeography from './populateGeography.js';
 import {
     Store
 }
@@ -52,8 +53,8 @@ function populateDatasets() {
             value: new_dataset
         });
 
-        populateThemes();
     });
+
 
 }
 

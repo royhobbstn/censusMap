@@ -3,7 +3,7 @@
 var initialState = {
     theme: 'pop',
     dataset: 'acs1115',
-    geoscheme: 'standard'
+    geoscheme: 'State-County-Tract-BlockGroup'
 };
 
 function app(state, action) {
@@ -44,7 +44,7 @@ Store.subscribe(function () {
 
 
 function observeStore(property, onChange) {
-    let currentState;
+    let currentState = Store.getState()[property];
 
     function handleChange() {
         let nextState = Store.getState()[property];

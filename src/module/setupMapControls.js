@@ -12,9 +12,6 @@ import populateGeography from './populateGeography.js';
 
 export default function (map) {
 
-    populateThemes();
-    populateDatasets();
-    populateGeography();
 
     observeStore('theme', function (theme) {
         console.log('theme changed to ' + theme);
@@ -23,12 +20,17 @@ export default function (map) {
 
     observeStore('dataset', function (dataset) {
         console.log('dataset changed to ' + dataset);
-        updateMap(map);
+        populateGeography();
     });
 
     observeStore('geoscheme', function (geoscheme) {
         console.log('geoscheme changed to ' + geoscheme);
-        updateMap(map);
+        populateThemes();
     });
 
+
+    // will only be called once
+    populateDatasets();
+    populateGeography();
+    populateThemes();
 }

@@ -1,9 +1,7 @@
 
 
 
-more geography types
-
-geography tab different based on selected dataset
+change in dataset -> change geography -> change theme -> change symbology -> updateMap
 
 colorscheme picker / classification picker
 delay - on purpose: default unrendered tiles as transparent or white
@@ -33,9 +31,6 @@ geography picker
 roadmap
 ----------
 add search
-additional vector tile layers for differing census geographies
-additional vintages of acs
-add census 2010
 mouseover for value on map
 last - adapt to own census api
 webshot service
@@ -46,7 +41,7 @@ interesting ideas
 ------------
 PREACT?
 mouseover on legend to highlight those values on map
-cache data from ajax calls
+
 
 
 build todos

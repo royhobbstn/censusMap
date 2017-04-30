@@ -115,7 +115,7 @@ function getTileLayers(map) {
 var initialState = {
     theme: 'pop',
     dataset: 'acs1115',
-    geoscheme: 'standard'
+    geoscheme: 'State-County-Tract-BlockGroup'
 };
 
 function app(state, action) {
@@ -156,7 +156,7 @@ Store.subscribe(function () {
 
 
 function observeStore(property, onChange) {
-    let currentState;
+    let currentState = Store.getState()[property];
 
     function handleChange() {
         let nextState = Store.getState()[property];
@@ -3340,13 +3340,13 @@ var datatree = {
 var geo = {
 
     "acs1115": {
-        "standard": {
+        "State-County-Tract-BlockGroup": {
             "state": [3, 5],
             "county": [5, 9],
             "tract": [9, 12],
             "bg": [12, 14]
         },
-        "region": {
+        "State-MSA-CBSA-Place": {
             "state": [3, 5],
             "msa": [5, 8],
             "cbsa": [8, 10],
@@ -3451,31 +3451,23 @@ var updateMap = function (map) {
         return feature.properties.geonum;
     })));
 
-    console.log(all_geonums);
-
     var comma_delimited_geonums = all_geonums.join(",");
-    console.log(comma_delimited_geonums);
 
     updateLegend(theme, geography_name);
 
     var previously_gathered_data = getPreviousData(datatree[dataset][theme].table, comma_delimited_geonums, dataset);
 
     previously_gathered_data.then(function (data) {
-        console.log(data);
 
         var succesful_records = getSuccessfulRecords(data);
-        console.log(succesful_records);
 
         var succesful_geonums = getSuccessfulGeonums(succesful_records);
-        console.log(succesful_geonums);
 
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
-        console.log(unfound_geonums);
 
         if (unfound_geonums.length > 0) {
             fetchCensusData(theme, unfound_geonums.join(","), dataset).then((acs_data) => {
                 var combined_data = succesful_records.concat(acs_data);
-                console.log(combined_data);
                 paintMap(theme, combined_data, geography_name, dataset);
             });
         }
@@ -4492,6 +4484,56 @@ var dataset = {
 
 /* global $ */
 
+function populateGeography() {
+
+    var current_store_values = Store.getState();
+
+    var geoscheme = current_store_values.geoscheme;
+    var dataset = current_store_values.dataset;
+
+
+    var html = '<br />';
+
+    var keys = Object.keys(geo[dataset]);
+
+    if (!keys.includes(geoscheme)) {
+        console.log('does not include geoscheme');
+
+        geoscheme = Object.keys(geo[dataset])[0];
+        console.log(geoscheme);
+
+        Store.dispatch({
+            type: 'CHANGE GEOSCHEME',
+            value: geoscheme
+        });
+
+    }
+
+    keys.forEach(function (key) {
+        var ifchecked = (key === geoscheme) ? 'checked' : '';
+        html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="geoschemegroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + key + '" class="form-control"></div>';
+    });
+
+
+    $("#geogroup").html(html);
+
+
+    $("input:radio[name=geoschemegroup]").change(function () {
+
+        var new_geoscheme = $('input:radio[name=geoschemegroup]:checked').val();
+        console.log(new_geoscheme);
+
+        Store.dispatch({
+            type: 'CHANGE GEOSCHEME',
+            value: new_geoscheme
+        });
+
+    });
+
+}
+
+/* global $ */
+
 function populateDatasets() {
 
     var current_store_values = Store.getState();
@@ -4535,57 +4577,13 @@ function populateDatasets() {
             value: new_dataset
         });
 
-        populateThemes();
     });
 
-}
-
-/* global $ */
-
-function populateGeography() {
-
-    var current_store_values = Store.getState();
-
-    var geoscheme = current_store_values.geoscheme;
-    var dataset = current_store_values.dataset;
-
-
-    var html = '';
-
-    var keys = Object.keys(geo[dataset]);
-
-    keys.forEach(function (key) {
-
-        var ifchecked = (key === geoscheme) ? 'checked' : '';
-
-        html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="geoschemegroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + key + '" class="form-control"></div>';
-
-
-    });
-
-
-    $("#geogroup").append(html);
-
-
-    $("input:radio[name=geoschemegroup]").change(function () {
-
-        var new_geoscheme = $('input:radio[name=geoschemegroup]:checked').val();
-        console.log(new_geoscheme);
-
-        Store.dispatch({
-            type: 'CHANGE GEOSCHEME',
-            value: new_geoscheme
-        });
-
-    });
 
 }
 
 var setupMapControls = function (map) {
 
-    populateThemes();
-    populateDatasets();
-    populateGeography();
 
     observeStore('theme', function (theme) {
         console.log('theme changed to ' + theme);
@@ -4594,14 +4592,19 @@ var setupMapControls = function (map) {
 
     observeStore('dataset', function (dataset) {
         console.log('dataset changed to ' + dataset);
-        updateMap(map);
+        populateGeography();
     });
 
     observeStore('geoscheme', function (geoscheme) {
         console.log('geoscheme changed to ' + geoscheme);
-        updateMap(map);
+        populateThemes();
     });
 
+
+    // will only be called once
+    populateDatasets();
+    populateGeography();
+    populateThemes();
 };
 
 /* global $ */
