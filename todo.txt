@@ -1,12 +1,10 @@
 
+name on county geojson layer 2015
+implement previous ACS years using load sources and layers
 
-
-change in dataset -> change geography -> change theme -> change symbology -> updateMap
+lots of stats
 
 colorscheme picker / classification picker
-delay - on purpose: default unrendered tiles as transparent or white
-
-implement previous ACS years using load sources and layers
 
 
 
@@ -14,24 +12,17 @@ implement previous ACS years using load sources and layers
 SERVER
 ------
 api post request instead of get
-compute breaks is fragile
+compute breaks is fragile - maybe a breaks api && save to localstorage
 
-
-geography picker
- expanded geographies
- pick a geo hierarchy 
- - county - tract - bg
- - state - county - countysubdivision
- ---------------------------------------
- - msa - cbsa - place
- - state - zcta
- - state - puma
 
 
 roadmap
 ----------
 add search
 mouseover for value on map
+chart
+table
+right-click individual table
 last - adapt to own census api
 webshot service
  
@@ -50,3 +41,19 @@ webpack
 rollup cache busting 
 rollup uglify
 
+
+
+notes
+--------
+change in dataset -> change geography -> change theme -> change symbology -> updateMap
+
+
+geography picker
+ expanded geographies
+ pick a geo hierarchy
+ - county - tract - bg
+ - state - county - countysubdivision
+ ---------------------------------------
+ - msa - cbsa - place
+ - state - zcta
+ - state - puma

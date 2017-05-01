@@ -19,97 +19,6 @@ function debounce(func, wait, immediate) {
     };
 }
 
-function getTileSources(map) {
-    map.addSource('state', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 3,
-        "maxzoom": 5
-    });
-
-    map.addSource('county', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 5,
-        "maxzoom": 9
-    });
-
-    map.addSource('tract', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 9,
-        "maxzoom": 12
-    });
-
-    map.addSource('bg', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 12,
-        "maxzoom": 14
-    });
-
-}
-
-
-function getTileLayers(map) {
-    map.addLayer({
-        "id": "state-fill",
-        "type": "fill",
-        "source": "state",
-        "source-layer": "stategeojson",
-        "minzoom": 3,
-        "maxzoom": 5,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
-
-    map.addLayer({
-        "id": "county-fill",
-        "type": "fill",
-        "source": "county",
-        "source-layer": "county",
-        "minzoom": 5,
-        "maxzoom": 9,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
-
-    map.addLayer({
-        "id": "tract-fill",
-        "type": "fill",
-        "source": "tract",
-        "source-layer": "tractgeojson",
-        "minzoom": 9,
-        "maxzoom": 12,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
-
-    map.addLayer({
-        "id": "bg-fill",
-        "type": "fill",
-        "source": "bg",
-        "source-layer": "bggeojson",
-        "minzoom": 12,
-        "maxzoom": 14,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
-
-}
-
 /* global Redux */
 
 var initialState = {
@@ -169,6 +78,152 @@ function observeStore(property, onChange) {
     let unsubscribe = Store.subscribe(handleChange);
 
     return unsubscribe;
+}
+
+var dataset = {
+
+    "acs1115": {
+        "source": "",
+        "title": "ACS 11-15",
+        "type": "ACS",
+        "sources": {
+            "state": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "county": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "tract": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "bg": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "place": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/place_carto_2015/{z}/{x}/{y}.pbf"]
+            }
+        }
+    },
+    "acs1014": {
+        "source": "",
+        "title": "ACS 10-14",
+        "type": "ACS"
+    },
+    "c2010": {
+        "source": "",
+        "title": "Census 2010",
+        "type": "Census"
+    },
+    "c2000": {
+        "source": "",
+        "title": "Census 2000",
+        "type": "Census"
+    }
+
+};
+
+var geo = {
+
+    "acs1115": {
+        "State-County-Tract-BlockGroup": {
+            "state": [3, 5],
+            "county": [5, 9],
+            "tract": [9, 12],
+            "bg": [12, 14]
+        },
+        "State-Place": {
+            "state": [3, 9],
+            "place": [9, 14]
+        },
+        "State-County": {
+            "state": [3, 9],
+            "county": [9, 14]
+        },
+        "County-Tract": {
+            "county": [3, 9],
+            "tract": [9, 14]
+        }
+    },
+    "acs1014": {
+        "State-County-Tract-BlockGroup": {
+            "state": [3, 5],
+            "county": [5, 9],
+            "tract": [9, 12],
+            "bg": [12, 14]
+        },
+        "County-Tract-BlockGroup": {
+            "county": [3, 9],
+            "tract": [9, 12],
+            "bg": [12, 14]
+        }
+    },
+    "c2010": {
+
+    },
+    "c2000": {
+
+    },
+    "c1990": {
+
+    },
+    "c1980": {
+
+    }
+
+};
+
+function setTileSources(map) {
+
+    // remove old sources
+    // TODO
+
+    var sources_obj = dataset[Store.getState().dataset].sources;
+
+    console.log(sources_obj);
+
+    Object.keys(sources_obj).forEach(function (key) {
+        map.addSource(key, sources_obj[key]);
+    });
+
+}
+
+
+function setTileLayers(map) {
+
+    // remove old layers
+    // TODO
+
+    var current_store_values = Store.getState();
+    var current_dataset = current_store_values.dataset;
+    var geoscheme = current_store_values.geoscheme;
+
+    Object.keys(geo[current_dataset][geoscheme]).forEach(function (key) {
+
+        var obj = {
+            "id": key + "-fill",
+            "type": "fill",
+            "source": key,
+            "source-layer": key + "geojson",
+            "minzoom": geo[current_dataset][geoscheme][key][0],
+            "maxzoom": geo[current_dataset][geoscheme][key][1],
+            "paint": {
+                "fill-color": {
+                    "property": "geonum",
+                    "type": "categorical",
+                    "default": "transparent",
+                    "stops": [["0", "blue"]]
+                }
+            }
+        };
+
+        map.addLayer(obj, 'road_major_motorway');
+    });
+
 }
 
 var computed_breaks = {
@@ -3337,39 +3392,6 @@ var datatree = {
     }
 };
 
-var geo = {
-
-    "acs1115": {
-        "State-County-Tract-BlockGroup": {
-            "state": [3, 5],
-            "county": [5, 9],
-            "tract": [9, 12],
-            "bg": [12, 14]
-        },
-        "State-MSA-CBSA-Place": {
-            "state": [3, 5],
-            "msa": [5, 8],
-            "cbsa": [8, 10],
-            "place": [10, 14]
-        }
-    },
-    "acs1014": {
-        "standard": {
-            "state": [3, 5],
-            "county": [5, 9],
-            "tract": [9, 12],
-            "bg": [12, 14]
-        }
-    },
-    "c2010": {
-
-    },
-    "c2000": {
-
-    }
-
-};
-
 function updateLegend(current_dropdown_value, geography_name) {
 
     var current_store_values = Store.getState();
@@ -3460,9 +3482,7 @@ var updateMap = function (map) {
     previously_gathered_data.then(function (data) {
 
         var succesful_records = getSuccessfulRecords(data);
-
         var succesful_geonums = getSuccessfulGeonums(succesful_records);
-
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
 
         if (unfound_geonums.length > 0) {
@@ -3618,6 +3638,7 @@ function getMapStyle(style_code, acs_data, geography_name, dataset) {
     return {
         "property": "geonum",
         "type": "categorical",
+        "default": "transparent",
         "stops": stops
     };
 
@@ -4457,31 +4478,6 @@ var populateThemes = function () {
 
 };
 
-var dataset = {
-
-    "acs1115": {
-        "source": "",
-        "title": "ACS 11-15",
-        "type": "ACS"
-    },
-    "acs1014": {
-        "source": "",
-        "title": "ACS 10-14",
-        "type": "ACS"
-    },
-    "c2010": {
-        "source": "",
-        "title": "Census 2010",
-        "type": "Census"
-    },
-    "c2000": {
-        "source": "",
-        "title": "Census 2000",
-        "type": "Census"
-    }
-
-};
-
 /* global $ */
 
 function populateGeography() {
@@ -4647,12 +4643,24 @@ setupMapControlEvents(map);
 
 map.on('load', function () {
 
-    getTileSources(map);
-    getTileLayers(map);
+    setTileSources(map);
+    setTileLayers(map);
 
-    updateMap(map);
+    // startup hack, remove when mapbox gl js implements dataend
+    var interval = setInterval(function () {
+        var features = map.queryRenderedFeatures({
+            layers: ['state-fill']
+        }) || [];
+
+        if (features.length > 0) {
+            updateMap(map);
+            clearInterval(interval);
+        }
+    }, 250);
 
 });
+
+
 
 
 map.on('moveend', debounce(function () {

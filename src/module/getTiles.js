@@ -1,96 +1,64 @@
-function getTileSources(map) {
-    map.addSource('state', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 3,
-        "maxzoom": 5
-    });
+import {
+    Store
+}
+from './reduxSetup.js';
 
-    map.addSource('county', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 5,
-        "maxzoom": 9
-    });
+import dataset from '../json/dataset.json';
+import geo from '../json/geoscheme.json';
 
-    map.addSource('tract', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 9,
-        "maxzoom": 12
-    });
 
-    map.addSource('bg', {
-        "type": "vector",
-        "tiles": [
-        "https://red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"
-      ],
-        "minzoom": 12,
-        "maxzoom": 14
+
+function setTileSources(map) {
+
+    // remove old sources
+    // TODO
+
+    var sources_obj = dataset[Store.getState().dataset].sources;
+
+    console.log(sources_obj);
+
+    Object.keys(sources_obj).forEach(function (key) {
+        map.addSource(key, sources_obj[key]);
     });
 
 }
 
 
-function getTileLayers(map) {
-    map.addLayer({
-        "id": "state-fill",
-        "type": "fill",
-        "source": "state",
-        "source-layer": "stategeojson",
-        "minzoom": 3,
-        "maxzoom": 5,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
+function setTileLayers(map) {
 
-    map.addLayer({
-        "id": "county-fill",
-        "type": "fill",
-        "source": "county",
-        "source-layer": "county",
-        "minzoom": 5,
-        "maxzoom": 9,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
+    // remove old layers
+    // TODO
 
-    map.addLayer({
-        "id": "tract-fill",
-        "type": "fill",
-        "source": "tract",
-        "source-layer": "tractgeojson",
-        "minzoom": 9,
-        "maxzoom": 12,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
+    var current_store_values = Store.getState();
+    var current_dataset = current_store_values.dataset;
+    var geoscheme = current_store_values.geoscheme;
 
-    map.addLayer({
-        "id": "bg-fill",
-        "type": "fill",
-        "source": "bg",
-        "source-layer": "bggeojson",
-        "minzoom": 12,
-        "maxzoom": 14,
-        "layout": {
-            "visibility": "visible"
-        }
-    }, 'road_major_motorway');
+    Object.keys(geo[current_dataset][geoscheme]).forEach(function (key) {
+
+        var obj = {
+            "id": key + "-fill",
+            "type": "fill",
+            "source": key,
+            "source-layer": key + "geojson",
+            "minzoom": geo[current_dataset][geoscheme][key][0],
+            "maxzoom": geo[current_dataset][geoscheme][key][1],
+            "paint": {
+                "fill-color": {
+                    "property": "geonum",
+                    "type": "categorical",
+                    "default": "transparent",
+                    "stops": [["0", "blue"]]
+                }
+            }
+        };
+
+        map.addLayer(obj, 'road_major_motorway');
+    });
 
 }
 
 
 export {
-    getTileSources,
-    getTileLayers
+    setTileSources,
+    setTileLayers
 };

@@ -7,8 +7,8 @@ import {
 from './module/utilityFunctions.js';
 
 import {
-    getTileSources,
-    getTileLayers
+    setTileSources,
+    setTileLayers
 }
 from './module/getTiles.js';
 
@@ -39,12 +39,24 @@ setupMapControlEvents(map);
 
 map.on('load', function () {
 
-    getTileSources(map);
-    getTileLayers(map);
+    setTileSources(map);
+    setTileLayers(map);
 
-    updateMap(map);
+    // startup hack, remove when mapbox gl js implements dataend
+    var interval = setInterval(function () {
+        var features = map.queryRenderedFeatures({
+            layers: ['state-fill']
+        }) || [];
+
+        if (features.length > 0) {
+            updateMap(map);
+            clearInterval(interval);
+        }
+    }, 250);
 
 });
+
+
 
 
 map.on('moveend', debounce(function () {

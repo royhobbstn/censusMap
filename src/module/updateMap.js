@@ -59,9 +59,7 @@ export default function (map) {
     previously_gathered_data.then(function (data) {
 
         var succesful_records = getSuccessfulRecords(data);
-
         var succesful_geonums = getSuccessfulGeonums(succesful_records);
-
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
 
         if (unfound_geonums.length > 0) {
@@ -217,6 +215,7 @@ function getMapStyle(style_code, acs_data, geography_name, dataset) {
     return {
         "property": "geonum",
         "type": "categorical",
+        "default": "transparent",
         "stops": stops
     };
 

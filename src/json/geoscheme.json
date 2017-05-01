@@ -7,17 +7,28 @@ export default {
             "tract": [9, 12],
             "bg": [12, 14]
         },
-        "State-MSA-CBSA-Place": {
-            "state": [3, 5],
-            "msa": [5, 8],
-            "cbsa": [8, 10],
-            "place": [10, 14]
+        "State-Place": {
+            "state": [3, 9],
+            "place": [9, 14]
+        },
+        "State-County": {
+            "state": [3, 9],
+            "county": [9, 14]
+        },
+        "County-Tract": {
+            "county": [3, 9],
+            "tract": [9, 14]
         }
     },
     "acs1014": {
-        "standard": {
+        "State-County-Tract-BlockGroup": {
             "state": [3, 5],
             "county": [5, 9],
+            "tract": [9, 12],
+            "bg": [12, 14]
+        },
+        "County-Tract-BlockGroup": {
+            "county": [3, 9],
             "tract": [9, 12],
             "bg": [12, 14]
         }
@@ -26,6 +37,12 @@ export default {
 
     },
     "c2000": {
+
+    },
+    "c1990": {
+
+    },
+    "c1980": {
 
     }
 

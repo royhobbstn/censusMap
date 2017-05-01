@@ -3,7 +3,29 @@ export default {
     "acs1115": {
         "source": "",
         "title": "ACS 11-15",
-        "type": "ACS"
+        "type": "ACS",
+        "sources": {
+            "state": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "county": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "tract": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "bg": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"]
+            },
+            "place": {
+                "type": "vector",
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/place_carto_2015/{z}/{x}/{y}.pbf"]
+            }
+        }
     },
     "acs1014": {
         "source": "",
