@@ -18,7 +18,7 @@ export default {
       "attribution": "<a href='http://openmaptiles.org/'>©OpenMapTiles</a> <a href='www.openstreetmap.org/copyright' >©OpenStreetMap contributors</a>",
       "type": "vector",
       "tiles": [
-        "https://red-meteor.com/mbtiles/united_states_of_america/{z}/{x}/{y}.pbf"
+        "https://tiles.red-meteor.com/mbtiles/united_states_of_america/{z}/{x}/{y}.pbf"
       ],
       "minzoom": 0,
       "maxzoom": 13,

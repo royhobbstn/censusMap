@@ -1,6 +1,9 @@
 /* global fetch */
-/* global exprEval */
-/* global localforage */
+
+import localforage from 'localforage';
+var Parser = require('expr-eval').Parser;
+
+
 
 import {
     Store
@@ -9,10 +12,10 @@ from './reduxSetup.js';
 
 
 import updateLegend from './updateLegend.js';
-import computed_breaks from '../json/computed_breaks.json';
-import datatree from '../json/datatree.json';
-import colortree from '../json/colortree.json';
-import geo from '../json/geoscheme.json';
+import computed_breaks from '../json/computed_breaks.js';
+import datatree from '../json/datatree.js';
+import colortree from '../json/colortree.js';
+import geo from '../json/geoscheme.js';
 
 
 
@@ -162,8 +165,10 @@ function getMapStyle(style_code, acs_data, geography_name, dataset) {
     let array = computed_breaks[dataset][style_code][geography_name][breaks_style];
     let colorscheme = colortree[color_style];
 
+
     // set up parser (https://github.com/silentmatt/expr-eval)
-    var parser = new exprEval.Parser();
+    var parser = new Parser();
+
     var exp = parser.parse(expression.join(""));
 
     // iterate through acs data

@@ -3,8 +3,8 @@ import {
 }
 from './reduxSetup.js';
 
-import dataset from '../json/dataset.json';
-import geo from '../json/geoscheme.json';
+import dataset from '../json/dataset.js';
+import geo from '../json/geoscheme.js';
 
 
 

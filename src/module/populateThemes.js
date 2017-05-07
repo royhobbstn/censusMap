@@ -1,6 +1,6 @@
 /* global $ */
 
-import datatree from './../json/datatree.json';
+import datatree from './../json/datatree.js';
 
 import {
     Store
@@ -17,7 +17,7 @@ export default function () {
     console.log('dataset');
     console.log(dataset);
     var theme = current_store_values.theme;
-
+    console.log(datatree[dataset]);
     var theme_keys = Object.keys(datatree[dataset]);
 
     var sections_array = theme_keys.map(function (key) {

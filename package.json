@@ -4,12 +4,14 @@
   "description": "census map example",
   "main": "index.html",
   "scripts": {
-    "build": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap",
-    "watch": "rollup src/app.js --format iife --output dist/bundle.js --sourcemap --watch",
+    "clean": "rimraf dist",
+    "build": "npm run clean && ./node_modules/.bin/webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
     "convert-datatree": "babel --plugins transform-es2015-modules-commonjs ./src/json/datatree.json --out-file ./breaks/datatree.js",
     "full-compute": "npm run convert-datatree && npm run compute",
-    "compute": "node breaks/compute-breaks.js"
+    "compute": "node breaks/compute-breaks.js",
+    "webpack": "npm run clean && ./node_modules/.bin/webpack",
+    "dev": "./node_modules/.bin/webpack-dev-server --host $IP --port $PORT --inline"
   },
   "repository": {
     "type": "git",
@@ -30,17 +32,28 @@
   "homepage": "https://github.com/royhobbstn/censusVectorTiles#readme",
   "devDependencies": {
     "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
-    "rollup": "^0.41.5",
-    "rollup-watch": "^3.2.2"
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "style-loader": "^0.17.0",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "expr-eval": "^1.0.0",
+    "jquery": "^3.2.1",
     "localforage": "^1.5.0",
-    "redux-subscriber": "^1.1.0",
+    "mapbox-gl": "^0.37.0",
+    "redux": "^3.6.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "simple-statistics": "^2.5.0",
-    "source-map-support": "^0.4.14"
+    "rimraf": "^2.6.1",
+    "simple-statistics": "^2.5.0"
   }
 }

@@ -1,5 +1,11 @@
-/* global mapboxgl */
+import '../node_modules/mapbox-gl/dist/mapbox-gl.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
+import './css/app.css';
+
+import mapboxgl from 'mapbox-gl';
+import 'jquery';
+import 'bootstrap';
 
 import {
     debounce
@@ -14,7 +20,7 @@ from './module/getTiles.js';
 
 
 import updateMap from './module/updateMap.js';
-import style from './json/maputnik_style.json';
+import style from './json/maputnik_style.js';
 import addMapControls from './module/addMapControls.js';
 import setupMapControls from './module/setupMapControls.js';
 import setupMapControlEvents from './module/setupMapControlEvents.js';

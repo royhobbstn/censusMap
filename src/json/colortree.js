@@ -1,4 +1,4 @@
-export default {
+export default{
 
     "mh1_5": [
             "#edf8fb",

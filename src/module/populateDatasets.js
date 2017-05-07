@@ -1,7 +1,7 @@
 /* global $ */
 
-import dataset from './../json/dataset.json';
-import geoscheme from './../json/geoscheme.json';
+import dataset from './../json/dataset.js';
+import geoscheme from './../json/geoscheme.js';
 import populateThemes from './populateThemes.js';
 import populateGeography from './populateGeography.js';
 import {

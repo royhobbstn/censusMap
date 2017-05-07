@@ -1,6 +1,6 @@
 /* global $ */
 
-import geo from './../json/geoscheme.json';
+import geo from './../json/geoscheme.js';
 
 import {
     Store
