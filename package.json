@@ -11,7 +11,7 @@
     "full-compute": "npm run convert-datatree && npm run compute",
     "compute": "node breaks/compute-breaks.js",
     "webpack": "npm run clean && ./node_modules/.bin/webpack",
-    "dev": "./node_modules/.bin/webpack-dev-server --host $IP --port $PORT --inline"
+    "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --host $IP --port $PORT --inline --public $C9_HOSTNAME:8080 --progress"
   },
   "repository": {
     "type": "git",

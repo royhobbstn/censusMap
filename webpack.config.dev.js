@@ -2,11 +2,14 @@ const webpack = require('webpack');
 const resolve = require('path').resolve;
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = {
-
-    devtool: 'source-map',
+    devServer: {
+        publicPath: "/dev/"
+    },
+    devtool: 'cheap-module-eval-source-map',
     entry: {
         main: './src/app.js',
         jq: ['jquery', 'bootstrap'],
@@ -14,8 +17,9 @@ module.exports = {
         util: ['expr-eval']
     },
     output: {
-        path: resolve(__dirname, 'dist'),
-        filename: 'js/[name]-[hash].js'
+        path: resolve(__dirname, 'dev'),
+        filename: 'js/[name].js',
+        publicPath: '/dev/'
     },
     module: {
         noParse: /(mapbox-gl)\.js$/,
@@ -41,20 +45,20 @@ module.exports = {
                 test: /\.(ttf|eot|woff|woff2|svg)$/,
                 loader: 'file-loader',
                 options: {
-                    name: 'fonts/[name]-[hash].[ext]',
+                    name: 'fonts/[name].[ext]',
                 },
 },
             {
                 test: /\.(jpg|gif|png)$/,
                 loader: 'file-loader',
                 options: {
-                    name: 'img/[name]-[hash].[ext]',
+                    name: 'img/[name].[ext]',
                 },
 }
     ],
     },
     plugins: [
-        new ExtractTextPlugin('css/[name]-[contenthash].css'),
+        new ExtractTextPlugin('css/[name].css'),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
@@ -66,15 +70,10 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './src/index.ejs',
-            filename: '../index.html'
+            filename: 'index.html'
         }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production'),
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        })
+        // new BundleAnalyzerPlugin({
+        //     analyzerMode: 'static'
+        // })
 ]
 };
