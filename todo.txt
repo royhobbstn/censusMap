@@ -1,4 +1,4 @@
-
+convert datatree necessary with webpack?
 
 implement previous ACS years using load sources and layers
 
@@ -25,7 +25,8 @@ table
 right-click individual table
 last - adapt to own census api
 webshot service
- 
+ - query parameter as minified redux string
+ - if valid, parse it and load it.
  
  
 interesting ideas
@@ -38,7 +39,12 @@ mouseover on legend to highlight those values on map
 
 build todos
 --------------
-webpack
+webpack better minify (uglify options.. mangle?)
+where are the images?
+tree shaking?
+get rid of font awesome in favor of bootstrap glyphicons?
+purify css to remove extra
+
 
 
 
