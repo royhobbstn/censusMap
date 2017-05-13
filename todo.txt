@@ -1,4 +1,4 @@
-convert datatree necessary with webpack?
+throttle promises on compute breaks
 
 implement previous ACS years using load sources and layers
 
@@ -34,13 +34,9 @@ interesting ideas
 PREACT?
 Deck GL?
 mouseover on legend to highlight those values on map
-
-
-
-build todos
---------------
 get rid of font awesome in favor of bootstrap glyphicons?
-purify css to remove extra
+
+
 
 
 

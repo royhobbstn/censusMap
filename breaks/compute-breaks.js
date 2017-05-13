@@ -6,21 +6,23 @@ var Parser = require('expr-eval').Parser;
 var ss = require('simple-statistics');
 var rp = require('request-promise');
 
-var datatree = require('./datatree.js').default;
 
-var geo = [{
+var datatree = require('./../src/json/datatree.js');
+
+var geo = [
+    {
         name: 'bg',
         sumlev: 150
-}, {
+    }, {
         name: 'tract',
         sumlev: 140
-}, {
+    }, {
         name: 'place',
         sumlev: 160
-}, {
+    }, {
         name: 'county',
         sumlev: 50
-}, {
+    }, {
         name: 'state',
         sumlev: 40
 }
@@ -56,16 +58,19 @@ Object.keys(datatree).forEach(function (dataset) {
         geo.forEach(function (geog) {
 
             var query_dataset = '&db=' + dataset;
+            var query_schema = '&schema=' + (datatree[dataset][theme].schema || 'data');
             var query_table = '&table=' + datatree[dataset][theme].table;
             var query_sumlev = '&sumlev=' + geog.sumlev;
             var query_url_base = 'https://gis.dola.colorado.gov/capi/demog?';
-            var query_url = query_url_base + query_dataset + query_table + query_sumlev + '&limit=1000';
+            var query_url = query_url_base + query_dataset + query_schema + query_table + query_sumlev + '&limit=100';
 
             var expression = datatree[dataset][theme].expression;
             var parser = new Parser();
             var exp = parser.parse(expression.join(""));
 
             // put them in promise array, but only to find when all are done
+
+            console.log(query_url);
 
             all_promises.push(rp(query_url).then(function (body) {
 
@@ -104,6 +109,7 @@ Object.keys(datatree).forEach(function (dataset) {
 
         });
 
+
     });
 
 });
@@ -118,7 +124,7 @@ Promise.all(all_promises)
 
         var output = 'export default ' + JSON.stringify(main_object);
 
-        fs.writeFile('./src/json/computed_breaks.json', output, function (err) {
+        fs.writeFile('./src/json/computed_breaks.js', output, function (err) {
             if (err) {
                 throw err;
             }

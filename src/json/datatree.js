@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 
     "acs1115": {
         "mhi": {
@@ -1077,16 +1077,17 @@ export default {
         */
     },
     "c2010": {
-        "mhi": {
-            "title": "Median Household Income",
-            "table": "b19013",
-            "section": "Income",
-            "expression": ["b19013001"],
-            "type": "currency",
-            "minval": "1",
+        "pop": {
+            "title": "Total Population",
+            "table": "p1",
+            "schema": "data",
+            "section": "Population",
+            "expression": ["p1001"],
+            "type": "number",
+            "minval": "0",
             "mininc": "1",
-            "usezeroasnull": "yes",
-            "favtable": "Median Household Income",
+            "usezeroasnull": "no",
+            "favtable": "Total Population",
             "favstyle": ["ckmeans", "7", "mh1"],
             "bg": "yes"
         }
@@ -1094,9 +1095,10 @@ export default {
     "c2000": {
         "mhi": {
             "title": "Median Household Income",
-            "table": "b19013",
+            "table": "p53",
+            "schema": "sf3",
             "section": "Income",
-            "expression": ["b19013001"],
+            "expression": ["p53001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
@@ -1109,9 +1111,10 @@ export default {
     "c1990": {
         "mhi": {
             "title": "Median Household Income",
-            "table": "b19013",
+            "table": "p80a",
+            "schema": "sf3",
             "section": "Income",
-            "expression": ["b19013001"],
+            "expression": ["p80a001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
@@ -1124,16 +1127,17 @@ export default {
     "c1980": {
         "mhi": {
             "title": "Median Household Income",
-            "table": "b19013",
+            "table": "t069",
+            "schema": "sf3",
             "section": "Income",
-            "expression": ["b19013001"],
+            "expression": ["t069001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
             "usezeroasnull": "yes",
             "favtable": "Median Household Income",
             "favstyle": ["ckmeans", "7", "mh1"],
-            "bg": "yes"
+            "bg": "no"
         }
     }
 }
