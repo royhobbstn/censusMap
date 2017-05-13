@@ -4,6 +4,7 @@ var fs = require('fs');
 
 var Parser = require('expr-eval').Parser;
 var ss = require('simple-statistics');
+var Promise = require('bluebird');
 var rp = require('request-promise');
 
 
@@ -22,10 +23,11 @@ var geo = [
     }, {
         name: 'county',
         sumlev: 50
-    }, {
+    },
+    {
         name: 'state',
         sumlev: 40
-}
+    }
     /*, {
         name: 'countysub',
         sumlev: 60
@@ -62,50 +64,21 @@ Object.keys(datatree).forEach(function (dataset) {
             var query_table = '&table=' + datatree[dataset][theme].table;
             var query_sumlev = '&sumlev=' + geog.sumlev;
             var query_url_base = 'https://gis.dola.colorado.gov/capi/demog?';
-            var query_url = query_url_base + query_dataset + query_schema + query_table + query_sumlev + '&limit=100';
+            var query_url = query_url_base + query_dataset + query_schema + query_table + query_sumlev + '&limit=1000';
 
             var expression = datatree[dataset][theme].expression;
             var parser = new Parser();
             var exp = parser.parse(expression.join(""));
 
             // put them in promise array, but only to find when all are done
-
-            console.log(query_url);
-
-            all_promises.push(rp(query_url).then(function (body) {
-
-                var data = JSON.parse(body).data;
-
-                var dataset_values = [];
-
-                data.forEach(function (row) {
-
-                    let evaluated_value;
-
-                    // don't attempt to use expression parser if array is only 1 element
-                    // which means single variable
-                    if (expression.length > 1) {
-
-                        let replacers_object = {};
-
-                        getUniqueExpressionKeys(expression).forEach(function (key) {
-                            replacers_object[key] = row[key];
-                        });
-
-                        evaluated_value = exp.evaluate(replacers_object);
-                    }
-                    else {
-                        evaluated_value = row[expression[0]];
-                    }
-
-                    dataset_values.push(evaluated_value);
-                });
-
-                main_object[dataset][theme][geog.name] = calcBreaks(dataset_values);
-
-            }).catch(function (error) {
-                console.log(error);
-            }));
+            all_promises.push({
+                query_url: query_url,
+                expression: expression,
+                exp: exp,
+                dataset: dataset,
+                theme: theme,
+                geogname: geog.name
+            });
 
         });
 
@@ -115,26 +88,67 @@ Object.keys(datatree).forEach(function (dataset) {
 });
 
 
-// all promise resolution has already been taken care of.  this just checks to make sure 
-// that all promises are complete.
-Promise.all(all_promises)
-    .then(function () {
-        console.log('all done');
-        console.log();
 
-        var output = 'export default ' + JSON.stringify(main_object);
+Promise.reduce(all_promises, function (total, obj) {
+    return rp(obj.query_url).then(function (body) {
 
-        fs.writeFile('./src/json/computed_breaks.js', output, function (err) {
-            if (err) {
-                throw err;
+        var data = JSON.parse(body).data;
+
+        var dataset_values = [];
+
+        data.forEach(function (row) {
+
+            let evaluated_value;
+
+            // don't attempt to use expression parser if array is only 1 element
+            // which means single variable
+            if (obj.expression.length > 1) {
+
+                let replacers_object = {};
+
+                getUniqueExpressionKeys(obj.expression).forEach(function (key) {
+                    replacers_object[key] = row[key];
+                });
+
+                evaluated_value = obj.exp.evaluate(replacers_object);
             }
-            console.log('The file has been saved!');
+            else {
+                evaluated_value = row[obj.expression[0]];
+            }
+
+            dataset_values.push(evaluated_value);
         });
-    })
-    .catch(function (bummer) {
-        console.log(bummer);
-        console.log('File NOT saved!');
+
+        main_object[obj.dataset][obj.theme][obj.geogname] = calcBreaks(dataset_values);
+        console.log(total);
+        return total + 1;
     });
+
+}, 0).then(function (total) {
+    console.log(total);
+
+    // all promise resolution has already been taken care of.  this just checks to make sure 
+    // that all promises are complete.
+    console.log('all done');
+    console.log();
+
+    var output = 'export default ' + JSON.stringify(main_object);
+
+    fs.writeFile('./src/json/computed_breaks.js', output, function (err) {
+        if (err) {
+            throw err;
+        }
+        console.log('The file has been saved!');
+    });
+
+
+});
+
+
+
+
+
+
 
 
 function calcBreaks(data) { //after successfull ajax call, data is sent here
