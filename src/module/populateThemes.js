@@ -9,20 +9,36 @@ from './reduxSetup.js';
 
 
 export default function () {
+    console.log('populateThemes');
 
     $('#accordion').html('');
 
     var current_store_values = Store.getState();
     var dataset = current_store_values.dataset;
-    console.log('dataset');
-    console.log(dataset);
     var theme = current_store_values.theme;
-    console.log(datatree[dataset]);
+
+    console.log('dataset: ' + dataset);
+    console.log('theme: ' + theme);
+
     var theme_keys = Object.keys(datatree[dataset]);
 
     var sections_array = theme_keys.map(function (key) {
         return datatree[dataset][key].section;
     });
+
+
+    if (!theme_keys.includes(theme)) {
+        console.log('current theme not included among new themes.');
+
+        theme = theme_keys[0];
+        console.log('new theme assigned from first in list: ' + theme);
+
+        Store.dispatch({
+            type: 'CHANGE THEME',
+            value: theme
+        });
+
+    }
 
     let unique_sections = Array.from(new Set(sections_array));
 
@@ -35,14 +51,17 @@ export default function () {
             '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading' + i + '"><div id="id' + section +
             '" class="panel-body"></div></div></div>');
     });
+    console.log('sections added');
 
     theme_keys.forEach(function (key) {
         let vchecked = (theme === key) ? 'checked' : '';
         $('#id' + datatree[dataset][key].section).append('<div class="radio"><label><input type="radio" name="optionsRadios" value="' +
             key + '" ' + vchecked + '> ' + datatree[dataset][key].title + '</label></div>'); //to accordion
     });
+    console.log('themes added');
 
     $('input[name=optionsRadios]:radio').change(function () {
+        console.log('theme control clicked.  new theme: ' + this.value);
         Store.dispatch({
             type: 'CHANGE THEME',
             value: this.value

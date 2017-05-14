@@ -11,10 +11,12 @@ from './reduxSetup.js';
 
 
 function populateDatasets() {
+    console.log('populateDatasets');
 
     var current_store_values = Store.getState();
 
     var default_dataset = current_store_values.dataset;
+    console.log('dataset: ' + default_dataset);
 
     var acs_html = '';
     var census_html = '';
@@ -35,6 +37,7 @@ function populateDatasets() {
             console.error('Unknown Dataset Type');
         }
 
+        console.log('finished populating dataset');
 
     });
 
@@ -46,7 +49,7 @@ function populateDatasets() {
     $("input:radio[name=datasetgroup]").change(function () {
 
         var new_dataset = $('input:radio[name=datasetgroup]:checked').val();
-        console.log(new_dataset);
+        console.log('dataset changed to: ' + new_dataset);
 
         Store.dispatch({
             type: 'CHANGE DATASET',

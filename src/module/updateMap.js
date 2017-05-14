@@ -21,6 +21,7 @@ import geo from '../json/geoscheme.js';
 
 
 function getGeographyName(geoscheme, zoom) {
+    console.log('getGeographyName');
 
     var geography_name = "";
 
@@ -30,19 +31,30 @@ function getGeographyName(geoscheme, zoom) {
         }
     });
 
+    console.log('geography name is: ' + geography_name);
     return geography_name;
 
 }
 
 
 export default function (map) {
+    console.log('updateMap');
 
     var current_store_values = Store.getState();
     var theme = current_store_values.theme;
+    console.log('theme: ' + theme);
+
     var geoscheme = current_store_values.geoscheme;
+    console.log('geoscheme: ' + geoscheme);
+
     var dataset = current_store_values.dataset;
+    console.log('dataset: ' + dataset);
+
     var zoom = map.getZoom();
+    console.log('map zoom: ' + zoom);
+
     var zoom_breaks = geo[dataset][geoscheme];
+    console.log('zoom breaks: ' + zoom_breaks);
 
     var geography_name = getGeographyName(zoom_breaks, zoom);
     var features = map.queryRenderedFeatures({
@@ -53,6 +65,9 @@ export default function (map) {
         return feature.properties.geonum;
     })));
 
+    console.log('number of unique features queried: ' + all_geonums.length);
+
+
     var comma_delimited_geonums = all_geonums.join(",");
 
     updateLegend(theme, geography_name);
@@ -62,20 +77,29 @@ export default function (map) {
     previously_gathered_data.then(function (data) {
 
         var succesful_records = getSuccessfulRecords(data);
+        console.log('succesful_records: ' + succesful_records.length);
+
         var succesful_geonums = getSuccessfulGeonums(succesful_records);
+        console.log('succesful_geonums: ' + succesful_geonums.length);
+
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
+        console.log('unfound_geonums: ' + unfound_geonums.length);
 
         if (unfound_geonums.length > 0) {
+            console.log('not all data in localstorage. fetching from api');
             fetchCensusData(theme, unfound_geonums.join(","), dataset).then((acs_data) => {
+                console.log('returned from api call with ' + acs_data.length + ' records.');
                 var combined_data = succesful_records.concat(acs_data);
                 paintMap(theme, combined_data, geography_name, dataset);
             });
         }
         else {
+            console.log('all data needed was found in local storage.')
             paintMap(theme, succesful_records, geography_name, dataset);
         }
 
         function paintMap(theme, map_data, geography_name, dataset) {
+            console.log('painting map');
             map.setPaintProperty(geography_name + '-fill', 'fill-opacity', 0.8); // make layer visible
             map.setPaintProperty(geography_name + '-fill', 'fill-color', getMapStyle(theme, map_data, geography_name, dataset));
         }
@@ -87,6 +111,7 @@ export default function (map) {
 
 
 function getUnfoundGeonums(succesful_geonums, all_geonums) {
+    console.log('getUnfoundGeonums');
     return all_geonums.filter(function (geonum) {
         return !succesful_geonums.includes(geonum);
     });
@@ -95,7 +120,7 @@ function getUnfoundGeonums(succesful_geonums, all_geonums) {
 
 
 function getSuccessfulRecords(data) {
-
+    console.log('getSuccessfulRecords');
     if (!data) {
         return [];
     }
@@ -109,6 +134,7 @@ function getSuccessfulRecords(data) {
 
 
 function getSuccessfulGeonums(data) {
+    console.log('getSuccessfulGeonums');
     return data.map(function (record) {
         return record.geonum;
     });
@@ -116,8 +142,9 @@ function getSuccessfulGeonums(data) {
 
 
 function fetchCensusData(theme, comma_delimited_geonums, dataset) {
+    console.log('fetchCensusData');
     // load census data
-    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=' + dataset + '&table=' + datatree[dataset][theme].table + '&geonum=' + comma_delimited_geonums).then(function (fetch_response) {
+    return fetch('https://gis.dola.colorado.gov/capi/demog?limit=99999&db=' + dataset + '&schema=' + datatree[dataset][theme].schema + '&table=' + datatree[dataset][theme].table + '&geonum=' + comma_delimited_geonums).then(function (fetch_response) {
         return fetch_response.json();
     }).then(function (census_response) {
 
@@ -135,6 +162,7 @@ function fetchCensusData(theme, comma_delimited_geonums, dataset) {
 }
 
 function getPreviousData(table, comma_delimited_geonums, dataset) {
+    console.log('getPreviousData');
 
     if (!comma_delimited_geonums) {
         return Promise.all([]);
@@ -152,6 +180,7 @@ function getPreviousData(table, comma_delimited_geonums, dataset) {
 
 
 function getMapStyle(style_code, acs_data, geography_name, dataset) {
+    console.log('getMapStyle');
 
     let expression = datatree[dataset][style_code].expression;
     let default_color = "#fff"; // lowest break color

@@ -37,6 +37,7 @@ var map = new mapboxgl.Map({
 });
 
 
+console.log('calling addMapControls, setupMapControls, setupMapControlEvents from app.js');
 addMapControls(map);
 setupMapControls(map);
 setupMapControlEvents(map);
@@ -44,7 +45,7 @@ setupMapControlEvents(map);
 
 
 map.on('load', function () {
-
+    console.log('calling setTileSources, setTileLayers from app.js onLoad');
     setTileSources(map);
     setTileLayers(map);
 
@@ -55,6 +56,8 @@ map.on('load', function () {
         }) || [];
 
         if (features.length > 0) {
+            console.log('map loaded');
+            console.log('calling updateMap from app.js onLoad');
             updateMap(map);
             clearInterval(interval);
         }
@@ -66,5 +69,11 @@ map.on('load', function () {
 
 
 map.on('moveend', debounce(function () {
+    console.log('moveend update');
+    updateMap(map);
+}, 250));
+
+map.on('zoomend', debounce(function () {
+    console.log('zoomend update');
     updateMap(map);
 }, 250));

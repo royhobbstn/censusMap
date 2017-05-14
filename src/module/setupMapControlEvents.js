@@ -1,12 +1,5 @@
 /* global $ */
 
-import {
-    Store
-}
-from './reduxSetup.js';
-
-
-
 export default function () {
 
 

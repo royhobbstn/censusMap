@@ -8,20 +8,32 @@ import {
 }
 from './reduxSetup.js';
 
-export default function updateLegend(current_dropdown_value, geography_name) {
+export default function updateLegend(theme, geography_name) {
+    console.log('updateLegend');
 
     var current_store_values = Store.getState();
     var dataset = current_store_values.dataset;
+    console.log('dataset: ' + dataset);
+    console.log('theme: ' + theme);
 
-    let breaks_style = datatree[dataset][current_dropdown_value].favstyle[0] + datatree[dataset][current_dropdown_value].favstyle[1];
-    let legend_breaks = computed_breaks[dataset][current_dropdown_value][geography_name][breaks_style];
+    let breaks_style = datatree[dataset][theme].favstyle[0] + datatree[dataset][theme].favstyle[1];
+    console.log('breaks style: ' + breaks_style);
 
-    let color_style = datatree[dataset][current_dropdown_value].favstyle[2] + '_' + datatree[dataset][current_dropdown_value].favstyle[1];
+    let legend_breaks = computed_breaks[dataset][theme][geography_name][breaks_style];
+    console.log('legend breaks: ' + legend_breaks);
+
+    let color_style = datatree[dataset][theme].favstyle[2] + '_' + datatree[dataset][theme].favstyle[1];
+    console.log('color_style: ' + color_style);
+
     let colorscheme = colortree[color_style];
+    console.log('colorscheme: ' + colorscheme);
 
-    let type = datatree[dataset][current_dropdown_value].type;
+    let type = datatree[dataset][theme].type;
+    console.log('type: ' + type);
+
     let default_color = '#fff';
-    let title = datatree[dataset][current_dropdown_value].title;
+    let title = datatree[dataset][theme].title;
+    console.log('title: ' + title);
 
     let html_string = "<div class='legend-title-text'>" + title + "</div><table>"; // inner HTML to be inserted into legend
 
@@ -35,6 +47,7 @@ export default function updateLegend(current_dropdown_value, geography_name) {
         ';"></div></td><td class="t-pad-sides">&lt;</td><td class="t-align-right">' + formatValue(legend_breaks[0], type) + '</td><td class="t-pad-sides"></td></tr></table>';
 
     document.getElementById('legend-ctrl').innerHTML = html_string;
+    console.log('legend modified');
 
 }
 

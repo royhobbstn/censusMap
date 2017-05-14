@@ -1,6 +1,10 @@
-throttle promises on compute breaks
 
-implement previous ACS years using load sources and layers
+
+
+errors likely because checking for source when no style loaded
+
+smooth out implementation and clean up errors
+ - initial render needs to be clean always
 
 lots of stats
 
@@ -12,8 +16,6 @@ colorscheme picker / classification picker
 SERVER
 ------
 api post request instead of get
-compute breaks is fragile - maybe a breaks api && save to localstorage
-
 
 
 roadmap

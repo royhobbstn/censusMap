@@ -1,9 +1,11 @@
 /* global Redux */
 
+console.log('start redux setup');
+
 var initialState = {
-    theme: 'pop',
+    theme: 'pop_acs1115',
     dataset: 'acs1115',
-    geoscheme: 'State-County-Tract-BlockGroup'
+    geoscheme: 'State-County-Tract-BlockGroup_acs1115'
 };
 
 function app(state, action) {
@@ -39,11 +41,13 @@ var Store = Redux.createStore(app);
 // However it can also be handy to persist the current state in the localStorage.
 
 Store.subscribe(function () {
+    console.log('redux store change.');
     console.log(Store.getState());
 });
 
 
 function observeStore(property, onChange) {
+    console.log('observeStore subscription');
     let currentState = Store.getState()[property];
 
     function handleChange() {
@@ -58,6 +62,9 @@ function observeStore(property, onChange) {
 
     return unsubscribe;
 }
+
+console.log('end redux setup');
+
 
 export {
     Store,
