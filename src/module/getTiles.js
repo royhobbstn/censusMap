@@ -69,9 +69,12 @@ function _removeAllSources(map) {
     const possible_sources = ['state', 'county', 'place', 'tract', 'bg'];
 
     possible_sources.forEach(function (source) {
-        if (map.isSourceLoaded(source)) {
+        if (map.getSource(source)) {
             console.log('removed source: ' + source);
             map.removeSource(source);
+        }
+        else {
+            console.log('source does not exist: ' + source);
         }
     });
 
@@ -82,9 +85,12 @@ function _removeAllLayers(map) {
     const possible_layers = ['state-fill', 'county-fill', 'place-fill', 'tract-fill', 'bg-fill'];
 
     possible_layers.forEach(function (layer) {
-        if (!map.getLayer(layer)) {
+        if (map.getLayer(layer)) {
             console.log('removed layer: ' + layer);
             map.removeLayer(layer);
+        }
+        else {
+            console.log('layer does not exist: ' + layer);
         }
     });
 

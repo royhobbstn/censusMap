@@ -1,10 +1,12 @@
 
+toggle timer function when zoom or mouse move.  turns off when map is loaded.
+
+only load from localstorage once
+in memory stops for quick paints, so not rebuilding from scratch
 
 
-errors likely because checking for source when no style loaded
 
-smooth out implementation and clean up errors
- - initial render needs to be clean always
+
 
 lots of stats
 
@@ -15,6 +17,7 @@ colorscheme picker / classification picker
 
 SERVER
 ------
+adapt to own census api
 api post request instead of get
 
 
@@ -25,7 +28,6 @@ mouseover for value on map
 chart
 table
 right-click individual table
-last - adapt to own census api
 webshot service
  - query parameter as minified redux string
  - if valid, parse it and load it.

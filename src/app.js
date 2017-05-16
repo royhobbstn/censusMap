@@ -49,31 +49,11 @@ map.on('load', function () {
     setTileSources(map);
     setTileLayers(map);
 
-    // startup hack, remove when mapbox gl js implements dataend
-    var interval = setInterval(function () {
-        var features = map.queryRenderedFeatures({
-            layers: ['state-fill']
-        }) || [];
-
-        if (features.length > 0) {
-            console.log('map loaded');
-            console.log('calling updateMap from app.js onLoad');
+    map.on("render", function () {
+        if (map.loaded()) {
+            console.log('rendered and loaded');
             updateMap(map);
-            clearInterval(interval);
         }
-    }, 250);
+    });
 
 });
-
-
-
-
-map.on('moveend', debounce(function () {
-    console.log('moveend update');
-    updateMap(map);
-}, 250));
-
-map.on('zoomend', debounce(function () {
-    console.log('zoomend update');
-    updateMap(map);
-}, 250));

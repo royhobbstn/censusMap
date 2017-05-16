@@ -83,9 +83,14 @@ export default function (map) {
         console.log('succesful_geonums: ' + succesful_geonums.length);
 
         var unfound_geonums = getUnfoundGeonums(succesful_geonums, comma_delimited_geonums.split(",") || []);
-        console.log('unfound_geonums: ' + unfound_geonums.length);
+        console.log('unfound_geonums: ' + unfound_geonums.length + ' :detail:');
+        console.log(unfound_geonums);
 
-        if (unfound_geonums.length > 0) {
+        var unfound_geonums_filtered = unfound_geonums.filter(function (geonum) {
+            return (geonum !== '178' && geonum !== ''); // not blank or puerto rico
+        });
+
+        if (unfound_geonums_filtered.length > 0) {
             console.log('not all data in localstorage. fetching from api');
             fetchCensusData(theme, unfound_geonums.join(","), dataset).then((acs_data) => {
                 console.log('returned from api call with ' + acs_data.length + ' records.');
@@ -94,7 +99,7 @@ export default function (map) {
             });
         }
         else {
-            console.log('all data needed was found in local storage.')
+            console.log('all data needed was found in local storage.');
             paintMap(theme, succesful_records, geography_name, dataset);
         }
 

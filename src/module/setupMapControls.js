@@ -19,12 +19,8 @@ export default function (map) {
 
     observeStore('theme', function (theme) {
         console.log('theme changed to ' + theme);
-        console.log('calling setTileSources from observeStore THEME');
-        setTileSources(map);
-        console.log('calling setTileLayers from observeStore THEME');
-        setTileLayers(map);
         console.log('calling updateMap from observeStore THEME');
-        updateMap(map);
+        // updateMap(map);
     });
 
     observeStore('dataset', function (dataset) {
@@ -35,8 +31,13 @@ export default function (map) {
 
     observeStore('geoscheme', function (geoscheme) {
         console.log('geoscheme changed to ' + geoscheme);
+        console.log('calling setTileSources from observeStore GEOSCHEME');
+        setTileSources(map);
+        console.log('calling setTileLayers from observeStore GEOSCHEME');
+        setTileLayers(map);
         console.log('calling populateThemes from observeStore GEOSCHEME');
         populateThemes();
+
     });
 
 
