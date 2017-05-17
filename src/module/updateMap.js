@@ -95,7 +95,13 @@ export default function (map) {
             fetchCensusData(theme, unfound_geonums.join(","), dataset).then((acs_data) => {
                 console.log('returned from api call with ' + acs_data.length + ' records.');
                 var combined_data = succesful_records.concat(acs_data);
-                paintMap(theme, combined_data, geography_name, dataset);
+                // TODO when working with persistent stops array, will not need to combine data
+
+                // TODO new function: appendStops.  Calc new stops and add them to redux
+                // paintMap will pull from Redux
+
+
+                paintMap(theme, /*combined_data*/ acs_data, geography_name, dataset);
             });
         }
         else {
@@ -106,6 +112,8 @@ export default function (map) {
         function paintMap(theme, map_data, geography_name, dataset) {
             console.log('painting map');
             map.setPaintProperty(geography_name + '-fill', 'fill-opacity', 0.8); // make layer visible
+            // TODO, take this out of the loop... should be this opacity by default??
+
             map.setPaintProperty(geography_name + '-fill', 'fill-color', getMapStyle(theme, map_data, geography_name, dataset));
         }
 
@@ -187,6 +195,8 @@ function getPreviousData(table, comma_delimited_geonums, dataset) {
 function getMapStyle(style_code, acs_data, geography_name, dataset) {
     console.log('getMapStyle');
 
+    // TODO dynamic variable evaluation is expensive.  take this out of the main loop.
+
     let expression = datatree[dataset][style_code].expression;
     let default_color = "#fff"; // lowest break color
     let null_color = "#fff";
@@ -250,6 +260,8 @@ function getMapStyle(style_code, acs_data, geography_name, dataset) {
         return [row.geonum, color];
 
     });
+
+    // TODO:  will return just stops
 
     return {
         "property": "geonum",

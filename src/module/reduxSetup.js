@@ -5,7 +5,8 @@ console.log('start redux setup');
 var initialState = {
     theme: 'pop_acs1115',
     dataset: 'acs1115',
-    geoscheme: 'State-County-Tract-BlockGroup_acs1115'
+    geoscheme: 'State-County-Tract-BlockGroup_acs1115',
+    stops: []
 };
 
 function app(state, action) {
@@ -25,6 +26,14 @@ function app(state, action) {
     case 'CHANGE GEOSCHEME':
         return Object.assign({}, state, {
             geoscheme: action.value
+        });
+    case 'LOAD STOPS':
+        return Object.assign({}, state, {
+            stops: action.value
+        });
+    case 'APPEND STOPS':
+        return Object.assign({}, state, {
+            stops: [].concat(state.stops, action.value)
         });
     default:
         return state;

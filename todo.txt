@@ -6,6 +6,24 @@ in memory stops for quick paints, so not rebuilding from scratch
 
 
 
+save stops persistent in localstorage
+load stops from localstorage on theme change
+
+painting map should not be connected to redux events or ui updates
+but rather indirectly.  actions will trigger not-idle state
+main loop (paint checking) continuously runs, but only acts if in un-idle state
+
+should we query out stops only for visible elements? (for speed)?
+
+
+
+keep track of idle:  session storage.
+call to reset idle time to 500ms
+ - when:
+    ajax returned
+    new stops calculated
+    query features
+    (examples)
 
 
 lots of stats
