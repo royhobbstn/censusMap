@@ -1,5 +1,5 @@
 
-toggle timer function when zoom or mouse move.  turns off when map is loaded.
+debounce on.render
 
 only load from localstorage once
 in memory stops for quick paints, so not rebuilding from scratch
@@ -13,7 +13,7 @@ painting map should not be connected to redux events or ui updates
 but rather indirectly.  actions will trigger not-idle state
 main loop (paint checking) continuously runs, but only acts if in un-idle state
 
-should we query out stops only for visible elements? (for speed)?
+should we query out stops only for visible elements? (for speed)? yes
 
 
 

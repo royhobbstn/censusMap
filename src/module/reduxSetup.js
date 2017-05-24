@@ -6,7 +6,8 @@ var initialState = {
     theme: 'pop_acs1115',
     dataset: 'acs1115',
     geoscheme: 'State-County-Tract-BlockGroup_acs1115',
-    stops: []
+    stops: [],
+    draw: true
 };
 
 function app(state, action) {
@@ -34,6 +35,14 @@ function app(state, action) {
     case 'APPEND STOPS':
         return Object.assign({}, state, {
             stops: [].concat(state.stops, action.value)
+        });
+    case 'DISABLE DRAWING':
+        return Object.assign({}, state, {
+            draw: false
+        });
+    case 'ENABLE DRAWING':
+        return Object.assign({}, state, {
+            draw: true
         });
     default:
         return state;

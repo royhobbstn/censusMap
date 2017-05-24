@@ -8,7 +8,8 @@ import 'jquery';
 import 'bootstrap';
 
 import {
-    debounce
+    debounce,
+    inactivityTime
 }
 from './module/utilityFunctions.js';
 
@@ -17,6 +18,11 @@ import {
     setTileLayers
 }
 from './module/getTiles.js';
+
+import {
+    Store
+}
+from './module/reduxSetup.js';
 
 
 import updateMap from './module/updateMap.js';
@@ -41,7 +47,7 @@ console.log('calling addMapControls, setupMapControls, setupMapControlEvents fro
 addMapControls(map);
 setupMapControls(map);
 setupMapControlEvents(map);
-
+inactivityTime();
 
 
 map.on('load', function () {
@@ -50,7 +56,11 @@ map.on('load', function () {
     setTileLayers(map);
 
     map.on("render", function () {
-        if (map.loaded()) {
+
+        var current_store_values = Store.getState();
+        var is_drawing_enabled = current_store_values.draw;
+
+        if (map.loaded() && is_drawing_enabled) {
             console.log('rendered and loaded');
             updateMap(map);
         }
