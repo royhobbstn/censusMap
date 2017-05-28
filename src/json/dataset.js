@@ -48,7 +48,7 @@ export default {
             },
             "place": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/place_carto_c2010/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://s3-us-west-2.amazonaws.com/serve-vector-tiles/place_carto_c2010/{z}/{x}/{y}.pbf"]
             }
         }
     },

@@ -55,7 +55,7 @@ map.on('load', function () {
     setTileSources(map);
     setTileLayers(map);
 
-    map.on("render", function () {
+    map.on("render", debounce(function () {
 
         var current_store_values = Store.getState();
         var is_drawing_enabled = current_store_values.draw;
@@ -64,6 +64,6 @@ map.on('load', function () {
             console.log('rendered and loaded');
             updateMap(map);
         }
-    });
+    }, 500));
 
 });
