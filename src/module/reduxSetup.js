@@ -5,9 +5,7 @@ console.log('start redux setup');
 var initialState = {
     theme: 'pop_acs1115',
     dataset: 'acs1115',
-    geoscheme: 'state',
-    stops: [],
-    draw: true
+    geoscheme: 'state'
 };
 
 function app(state, action) {
@@ -28,22 +26,7 @@ function app(state, action) {
         return Object.assign({}, state, {
             geoscheme: action.value
         });
-    case 'LOAD STOPS':
-        return Object.assign({}, state, {
-            stops: action.value
-        });
-    case 'APPEND STOPS':
-        return Object.assign({}, state, {
-            stops: [].concat(state.stops, action.value)
-        });
-    case 'DISABLE DRAWING':
-        return Object.assign({}, state, {
-            draw: false
-        });
-    case 'ENABLE DRAWING':
-        return Object.assign({}, state, {
-            draw: true
-        });
+
     default:
         return state;
     }
@@ -52,7 +35,8 @@ function app(state, action) {
 
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
-var Store = Redux.createStore(app);
+var Store = Redux.createStore(app,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 // You can use subscribe() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.

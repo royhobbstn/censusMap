@@ -3,41 +3,25 @@ import {
 }
 from './reduxSetup.js';
 
-import updateMap from './updateMap.js';
 import populateThemes from './populateThemes.js';
 import populateDatasets from './populateDatasets.js';
 import populateGeography from './populateGeography.js';
-import {
-    setTileSources,
-    setTileLayers
-}
-from './getTiles.js';
 
 
-export default function (map) {
+export default function () {
     console.log('setupMapControl');
 
-    observeStore('theme', function (theme) {
-        console.log('theme changed to ' + theme);
-        console.log('calling updateMap from observeStore THEME');
-        // updateMap(map);
+    observeStore('theme', function () {
+        //update Tileset
     });
 
-    observeStore('dataset', function (dataset) {
-        console.log('dataset changed to ' + dataset);
-        console.log('calling populateGeography from observeStore DATASET');
+    observeStore('dataset', function () {
         populateGeography();
+        //update Tileset
     });
 
-    observeStore('geoscheme', function (geoscheme) {
-        console.log('geoscheme changed to ' + geoscheme);
-        console.log('calling setTileSources from observeStore GEOSCHEME');
-        setTileSources(map);
-        console.log('calling setTileLayers from observeStore GEOSCHEME');
-        setTileLayers(map);
-        console.log('calling populateThemes from observeStore GEOSCHEME');
+    observeStore('geoscheme', function () {
         populateThemes();
-
     });
 
 

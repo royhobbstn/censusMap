@@ -8,14 +8,6 @@ import 'jquery';
 import 'bootstrap';
 
 
-import {
-    setTileSources,
-    setTileLayers
-}
-from './module/getTiles.js';
-
-
-import updateMap from './module/updateMap.js';
 import style from './json/maputnik_style.js';
 import addMapControls from './module/addMapControls.js';
 import setupMapControls from './module/setupMapControls.js';
@@ -41,14 +33,5 @@ setupMapControlEvents(map);
 
 
 map.on('load', function () {
-    console.log('calling setTileSources, setTileLayers from app.js onLoad');
-    setTileSources(map);
-    setTileLayers(map);
-
-    map.on('moveend', function () {
-        console.log('moveend update');
-        updateMap(map);
-    });
-
-
+    //setTiles
 });

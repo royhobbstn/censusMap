@@ -6,23 +6,23 @@ export default {
         "sources": {
             "state": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/state_carto_2015/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_state.mbtiles/{z}/{x}/{y}.pbf"]
             },
             "county": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/county_carto_2015/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_county.mbtiles/{z}/{x}/{y}.pbf"]
             },
             "tract": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/tract_carto_2015/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_tract.mbtiles/{z}/{x}/{y}.pbf"]
             },
             "bg": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/bg_carto_2015/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_bg.mbtiles/{z}/{x}/{y}.pbf"]
             },
             "place": {
                 "type": "vector",
-                "tiles": ["https://tiles.red-meteor.com/mbtiles/place_carto_2015/{z}/{x}/{y}.pbf"]
+                "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_place.mbtiles/{z}/{x}/{y}.pbf"]
             }
         }
     },
