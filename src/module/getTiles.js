@@ -4,7 +4,7 @@ import {
 from './reduxSetup.js';
 
 import dataset from '../json/dataset.js';
-import geo from '../json/geoscheme.js';
+import geo from '../json/geo.js';
 
 
 
@@ -30,7 +30,6 @@ function setTileLayers(map) {
     console.log('setTileLayers');
     var current_store_values = Store.getState();
     var current_dataset = current_store_values.dataset;
-    var geoscheme = current_store_values.geoscheme;
 
     // remove old layers
     // TODO better way
@@ -39,15 +38,13 @@ function setTileLayers(map) {
     _removeAllLayers(map);
 
 
-    Object.keys(geo[current_dataset][geoscheme]).forEach(function (key) {
+    geo[current_dataset].forEach(function (key) {
 
         var obj = {
-            "id": key + "-fill",
+            "id": "state-fill",
             "type": "fill",
-            "source": key,
-            "source-layer": key + "geojson",
-            "minzoom": geo[current_dataset][geoscheme][key][0],
-            "maxzoom": geo[current_dataset][geoscheme][key][1],
+            "source": "state",
+            "source-layer": "stategeojson",
             "paint": {
                 "fill-color": {
                     "property": "geonum",

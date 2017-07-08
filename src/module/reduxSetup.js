@@ -5,7 +5,7 @@ console.log('start redux setup');
 var initialState = {
     theme: 'pop_acs1115',
     dataset: 'acs1115',
-    geoscheme: 'State-County-Tract-BlockGroup_acs1115',
+    geoscheme: 'state',
     stops: [],
     draw: true
 };

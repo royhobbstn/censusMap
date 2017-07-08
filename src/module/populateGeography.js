@@ -1,6 +1,6 @@
 /* global $ */
 
-import geo from './../json/geoscheme.js';
+import geo from './../json/geo.js';
 
 import {
     Store
@@ -20,9 +20,9 @@ function populateGeography() {
 
     var html = '<br />';
 
-    var keys = Object.keys(geo[dataset]);
+    var items = geo[dataset];
 
-    if (!keys.includes(geoscheme)) {
+    if (!items.includes(geoscheme)) {
         console.log('current geoscheme not in list.  defaulting to first new.');
 
         geoscheme = Object.keys(geo[dataset])[0];
@@ -35,9 +35,9 @@ function populateGeography() {
 
     }
 
-    keys.forEach(function (key) {
-        var ifchecked = (key === geoscheme) ? 'checked' : '';
-        html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="geoschemegroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + key + '" class="form-control"></div>';
+    items.forEach(function (item) {
+        var ifchecked = (item === geoscheme) ? 'checked' : '';
+        html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="geoschemegroup"  value="' + item + '" ' + ifchecked + '></span><input type="text" value="' + item + '" class="form-control"></div>';
     });
 
     console.log('geography choices populated');
@@ -47,12 +47,12 @@ function populateGeography() {
 
     $("input:radio[name=geoschemegroup]").change(function () {
         console.log('geography value changed');
-        var new_geoscheme = $('input:radio[name=geoschemegroup]:checked').val();
-        console.log('new geoscheme: ' + new_geoscheme);
+        var new_geo = $('input:radio[name=geoschemegroup]:checked').val();
+        console.log('new geo: ' + new_geo);
 
         Store.dispatch({
             type: 'CHANGE GEOSCHEME',
-            value: new_geoscheme
+            value: new_geo
         });
 
     });

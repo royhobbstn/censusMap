@@ -1,33 +1,8 @@
 
-debounce on.render
-
-only load from localstorage once
-in memory stops for quick paints, so not rebuilding from scratch
 
 
 
-save stops persistent in localstorage
-load stops from localstorage on theme change
-
-painting map should not be connected to redux events or ui updates
-but rather indirectly.  actions will trigger not-idle state
-main loop (paint checking) continuously runs, but only acts if in un-idle state
-
-should we query out stops only for visible elements? (for speed)? yes
-
-
-
-keep track of idle:  session storage.
-call to reset idle time to 500ms
- - when:
-    ajax returned
-    new stops calculated
-    query features
-    (examples)
-
-
-lots of stats
-
+research if mapbox has support for ranges in colorschemes rather than discrete values
 colorscheme picker / classification picker
 
 
@@ -35,8 +10,8 @@ colorscheme picker / classification picker
 
 SERVER
 ------
-adapt to own census api
-api post request instead of get
+ssl red meteor
+go static
 
 
 roadmap
@@ -53,26 +28,11 @@ webshot service
  
 interesting ideas
 ------------
-PREACT?
-Deck GL?
 mouseover on legend to highlight those values on map
 get rid of font awesome in favor of bootstrap glyphicons?
-
-
-
 
 
 notes
 --------
 change in dataset -> change geography -> change theme -> change symbology -> updateMap
 
-
-geography picker
- expanded geographies
- pick a geo hierarchy
- - county - tract - bg
- - state - county - countysubdivision
- ---------------------------------------
- - msa - cbsa - place
- - state - zcta
- - state - puma

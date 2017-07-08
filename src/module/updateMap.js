@@ -15,24 +15,14 @@ import updateLegend from './updateLegend.js';
 import computed_breaks from '../json/computed_breaks.js';
 import datatree from '../json/datatree.js';
 import colortree from '../json/colortree.js';
-import geo from '../json/geoscheme.js';
+import geo from '../json/geo.js';
 
 
 
 
 function getGeographyName(geoscheme, zoom) {
-    console.log('getGeographyName');
 
-    var geography_name = "";
-
-    Object.keys(geoscheme).forEach(function (key) {
-        if (zoom >= geoscheme[key][0] && zoom < geoscheme[key][1]) {
-            geography_name = key;
-        }
-    });
-
-    console.log('geography name is: ' + geography_name);
-    return geography_name;
+    return 'state';
 
 }
 

@@ -1,7 +1,6 @@
 import computed_breaks from './../json/computed_breaks.js';
 import colortree from './../json/colortree.js';
 import datatree from './../json/datatree.js';
-import geo from './../json/geoscheme.js';
 
 import {
     Store
