@@ -1,6 +1,6 @@
 /* global $ */
 
-import dataset from './../json/dataset.js';
+
 import geoscheme from './../json/geo.js';
 import populateThemes from './populateThemes.js';
 import populateGeography from './populateGeography.js';
@@ -21,21 +21,12 @@ function populateDatasets() {
     var acs_html = '';
     var census_html = '';
 
-    var dataset_keys = Object.keys(dataset);
-
-    dataset_keys.forEach(function (key) {
+    ['state', 'county', 'place', 'tract', 'bg'].forEach(function (key) {
 
         var ifchecked = (key === default_dataset) ? 'checked' : '';
 
-        if (dataset[key].type === "ACS") {
-            acs_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
-        }
-        else if (dataset[key].type === "Census") {
-            census_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + dataset[key].title + '" class="form-control"></div>';
-        }
-        else {
-            console.error('Unknown Dataset Type');
-        }
+        census_html += '<div class="input-group"><span class="input-group-addon"><input type="radio" name="datasetgroup"  value="' + key + '" ' + ifchecked + '></span><input type="text" value="' + key + '" class="form-control"></div>';
+
 
         console.log('finished populating dataset');
 

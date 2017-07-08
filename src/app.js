@@ -34,4 +34,30 @@ setupMapControlEvents(map);
 
 map.on('load', function () {
     //setTiles
+    // https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_state.mbtiles/{z}/{x}/{y}.pbf
+
+    let tiles = {
+        "type": "vector",
+        "tiles": ["https://tiles.red-meteor.com/mbtiles/eB19013_acs1115_state/{z}/{x}/{y}.pbf"]
+    };
+
+    map.addSource('state', tiles);
+
+    var obj = {
+        "id": "state-fill",
+        "type": "fill",
+        "source": "state",
+        "source-layer": "state",
+        "paint": {
+            "fill-color": {
+                "property": "AFFGEOID",
+                "type": "categorical",
+                //"default": "transparent",
+                "stops": [["04000US41", "blue"]]
+            }
+        }
+    };
+
+    map.addLayer(obj, 'road_major_motorway');
+
 });
