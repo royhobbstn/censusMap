@@ -5,7 +5,8 @@ console.log('start redux setup');
 var initialState = {
     theme: 'pop_acs1115',
     dataset: 'acs1115',
-    geoscheme: 'state'
+    geoscheme: 'state',
+    uniques: {}
 };
 
 function app(state, action) {
@@ -25,6 +26,10 @@ function app(state, action) {
     case 'CHANGE GEOSCHEME':
         return Object.assign({}, state, {
             geoscheme: action.value
+        });
+    case 'UPDATE UNIQUES':
+        return Object.assign({}, state, {
+            uniques: action.value
         });
 
     default:

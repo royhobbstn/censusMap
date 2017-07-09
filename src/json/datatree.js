@@ -3,7 +3,7 @@ module.exports = {
     "acs1115": {
         "mhi_acs1115": {
             "title": "Median Household Income",
-            "table": "b19013",
+            "table": "B19013",
             "schema": "data",
             "section": "Income",
             "expression": ["B19013_001"],
@@ -19,9 +19,9 @@ module.exports = {
         "mhv_acs1115": {
             "title": "Median Home Value",
             "section": "Housing",
-            "table": "b25077",
+            "table": "B25077",
             "schema": "data",
-            "expression": ["b25077_001"],
+            "expression": ["B25077_001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
@@ -34,9 +34,9 @@ module.exports = {
         "mfi_acs1115": {
             "title": "Median Family Income",
             "section": "Income",
-            "table": "b19113",
+            "table": "B19113",
             "schema": "data",
-            "expression": ["b19113_001"],
+            "expression": ["B19113_001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
@@ -49,9 +49,9 @@ module.exports = {
         "pci_acs1115": {
             "title": "Per Capita Income",
             "section": "Income",
-            "table": "b19301",
+            "table": "B19301",
             "schema": "data",
-            "expression": ["b19301_001"],
+            "expression": ["B19301_001"],
             "type": "currency",
             "minval": "1",
             "mininc": "1",
@@ -64,9 +64,9 @@ module.exports = {
         "myb_acs1115": {
             "title": "Median Year Housing Unit Built",
             "section": "Housing",
-            "table": "b25035",
+            "table": "B25035",
             "schema": "data",
-            "expression": ["b25035_001"],
+            "expression": ["B25035_001"],
             "type": "regular",
             "minval": "1939",
             "mininc": "1",
@@ -79,7 +79,7 @@ module.exports = {
         "pop_acs1115": {
             "title": "Total Population",
             "section": "Population",
-            "table": "b01001",
+            "table": "B01001",
             "schema": "data",
             "expression": ["B01001_001"],
             "type": "number",
