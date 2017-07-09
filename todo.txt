@@ -1,16 +1,15 @@
 
 
-change geography
-
 new datasets
-
 colorscheme picker / classification picker
-
-
 
 
 SERVER
 ------
+remove extra attributes
+enforce tile size limit
+only store relevant info in redux
+
 ssl red meteor
 go static
 

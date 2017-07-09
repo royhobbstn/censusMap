@@ -70,7 +70,8 @@ observeStore('dataset', function () {
 });
 
 observeStore('geoscheme', function () {
-    populateThemes();
+    removeCurrentLayer();
+    addNewLayer();
 });
 
 
