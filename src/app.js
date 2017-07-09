@@ -18,6 +18,7 @@ import populateGeography from './module/populateGeography.js';
 
 import updateMap from './module/updateMap.js';
 import datatree from './json/datatree.js';
+import updateLegend from './module/updateLegend';
 
 import {
     Store,
@@ -51,6 +52,7 @@ populateThemes();
 map.on('load', function () {
 
     addNewLayer();
+    updateLegend();
 
     window.setInterval(function () {
         updateMap(map);
@@ -58,11 +60,12 @@ map.on('load', function () {
 
 });
 
-
+// TODO maybe a better way
 
 observeStore('theme', function () {
     removeCurrentLayer();
     addNewLayer();
+    updateLegend();
 });
 
 observeStore('dataset', function () {
@@ -72,6 +75,7 @@ observeStore('dataset', function () {
 observeStore('geoscheme', function () {
     removeCurrentLayer();
     addNewLayer();
+    updateLegend();
 });
 
 

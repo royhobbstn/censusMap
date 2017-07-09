@@ -7,7 +7,7 @@ var Parser = require('expr-eval').Parser;
 import computed_breaks from '../json/computed_breaks.js';
 import datatree from '../json/datatree.js';
 import colortree from '../json/colortree.js';
-import updateLegend from './updateLegend';
+
 
 export default function (map) {
 
@@ -49,9 +49,6 @@ export default function (map) {
 
     map.setPaintProperty('tilelayer', 'fill-opacity', 0.8);
     map.setPaintProperty('tilelayer', 'fill-color', getMapStyle(theme, geography_name, dataset, uniques));
-
-    // TODO called more than necessary
-    updateLegend(theme, geography_name);
 
 }
 

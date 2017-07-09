@@ -6,12 +6,16 @@ colorscheme picker / classification picker
 
 SERVER
 ------
-remove extra attributes
-enforce tile size limit
-only store relevant info in redux
+tileset attribution: on original
+enforce tile size limit: on original creation
+remove extra attributes: --exclude=key on tilejoin
+
+only store relevant attribute info in redux - maybe use localstorage?
 
 ssl red meteor
 go static
+
+
 
 
 roadmap
