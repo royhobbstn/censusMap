@@ -47,7 +47,7 @@
     "expr-eval": "^1.0.0",
     "jquery": "^3.2.1",
     "localforage": "^1.5.0",
-    "mapbox-gl": "^0.37.0",
+    "mapbox-gl": "^0.38.0",
     "redux": "^3.6.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
