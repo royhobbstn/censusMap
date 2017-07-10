@@ -1,4 +1,5 @@
 
+port to create-react-app?
 
 new datasets
 colorscheme picker / classification picker
@@ -7,12 +8,9 @@ colorscheme picker / classification picker
 SERVER
 ------
 tileset attribution: on original
-enforce tile size limit: on original creation
-remove extra attributes: --exclude=key on tilejoin
+slightly less blocky on resolution
+storing all objects in memory in redux is causing lag?
 
-only store relevant attribute info in redux - maybe use localstorage?
-
-ssl red meteor
 go static
 
 

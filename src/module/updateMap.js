@@ -22,6 +22,7 @@ export default function (map) {
         layers: ['tilelayer']
     });
 
+
     let uniques = Object.assign({}, current_store_values.uniques);
 
     const orig_number_uniques = Object.keys(uniques).length;
@@ -47,7 +48,8 @@ export default function (map) {
     });
 
 
-    map.setPaintProperty('tilelayer', 'fill-opacity', 0.8);
+    // TODO add extra styles at once... don't do extra round of setPaintProperty
+    // map.setPaintProperty('tilelayer', 'fill-opacity', 0.8);
     map.setPaintProperty('tilelayer', 'fill-color', getMapStyle(theme, geography_name, dataset, uniques));
 
 }
