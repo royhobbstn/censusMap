@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/royhobbstn/censusVectorTiles.png?label=ready&title=Ready)](https://waffle.io/royhobbstn/censusVectorTiles?utm_source=badge)
 
 
 
